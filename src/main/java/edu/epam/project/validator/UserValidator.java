@@ -13,7 +13,7 @@ public class UserValidator {
      хотя бы один специальный символ ("@", "#". "$", "%", "^", "&", "( "или") ",
      без пробелов, табуляции и т. Д и не менее 8 символов*/
 
-    public boolean isValidNameAndSurname(String name, String surname) {
+    public static boolean isValidNameAndSurname(String name, String surname) {
         boolean isCorrect = true;
         if (name == null || name.isEmpty() || surname == null || surname.isEmpty()) {
             isCorrect = false;
@@ -21,15 +21,28 @@ public class UserValidator {
         return isCorrect;
     }
 
-    public boolean isValidEmail(String email) {
+    public static boolean isValidEmailAndPassword(String email, String password) {
+        boolean isCorrect = true;
+        if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
+            isCorrect = false;
+        }
+        return isCorrect;
+    }
+
+    public static boolean isValidEmail(String email) {
         if (email == null || email.isEmpty()) return false;
         Matcher matcher = EMAIL_REGEX.matcher(email);
         return matcher.matches();
     }
 
-    public boolean isValidPassword(String password) {
-        if (password == null || password.isEmpty()) return false;
-        Matcher matcher = PASSWORD_PATTERN.matcher(password);
-        return matcher.matches();
+    public static boolean isValidPasswordAndRepeatPassword(String password, String repeatPassword) {
+        boolean isCorrect = false;
+        if (password != null || !password.isEmpty()) {
+            Matcher matcher = PASSWORD_PATTERN.matcher(password);
+            if (matcher.matches() && password.equals(repeatPassword)) {
+                isCorrect = true;
+            }
+        }
+        return isCorrect;
     }
 }

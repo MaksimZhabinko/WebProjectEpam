@@ -1,20 +1,11 @@
 package edu.epam.project;
 
-import edu.epam.project.connector.CustomConnection;
-import edu.epam.project.dao.impl.UserDaoImpl;
+import edu.epam.project.dao.connector.CustomConnection;
 import edu.epam.project.entity.RoleType;
-import edu.epam.project.entity.User;
 import edu.epam.project.exception.DaoException;
-import edu.epam.project.service.UserService;
-import edu.epam.project.service.impl.UserServiceImpl;
 import edu.epam.project.validator.UserValidator;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Base64;
-import java.util.Optional;
+import java.sql.*;
 
 public class Main {
     public static void main(String[] args) throws DaoException {
@@ -34,24 +25,34 @@ public class Main {
 //        System.out.println(user.get().toString());
 
 
+        String role = "User";
+        RoleType user = RoleType.valueOf(role.toUpperCase());
 
 
-
-
-
-
-
-//        String updateUser = "UPDATE rename_base.users SET password = ?, user_name = ? WHERE user_id = ?";
-//        try (Connection connection = CustomConnection.getConnection();
-//             PreparedStatement preparedStatement = connection.prepareStatement(updateUser)) {
-//            preparedStatement.setString(1, "jkrbkvjrbvkbsjvbsfbvksbfkvnsjkvks");
-//            preparedStatement.setString(2, "qwertyuiop");
-//            preparedStatement.setInt(3, 2);
-//            preparedStatement.executeUpdate();
-//
-//        } catch (SQLException e) {
-//            throw new DaoException(e);
-//        }
-//        System.out.println("ok");
+        try {
+            Driver driver = new com.mysql.jdbc.Driver();
+        } catch (SQLException e) {
+            System.out.println("Unable to load driver class.");
+            e.printStackTrace();
+        }
+        String URL = "jdbc:mysql://localhost/test";
+        String USER = "root";
+        String PASSWORD = "Dassik5550";
+//        String sql = "INSERT INTO `users` (`email`, `name`, `surname`, `password`, `role`, `enabled`)\n" +
+//                " VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "";
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, "maxim.ffffff@mail.ru");
+            preparedStatement.setString(2, "Maksim");
+            preparedStatement.setString(3, "Zhabinko");
+            preparedStatement.setString(4, "TWFrc21hbjE0Nzg5NjMyQA==");
+            preparedStatement.setString(5,  "user");
+            preparedStatement.setBoolean(6,  true);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println("OK");
     }
 }

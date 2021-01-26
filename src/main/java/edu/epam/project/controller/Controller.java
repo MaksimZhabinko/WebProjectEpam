@@ -2,6 +2,8 @@ package edu.epam.project.controller;
 
 import edu.epam.project.command.Command;
 import edu.epam.project.command.CommandProvider;
+import edu.epam.project.command.RequestParameter;
+import edu.epam.project.command.Router;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,7 +14,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Optional;
 
 @WebServlet(urlPatterns = {"/controller" , "*.do"})
 public class Controller extends HttpServlet {
@@ -28,17 +29,22 @@ public class Controller extends HttpServlet {
         processRequest(request, response);
     }
 
-    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Optional<Command> commandOptional =
-                CommandProvider.defineCommand(request.getParameter("command"));
-        Command command = commandOptional.orElseThrow(IllegalAccessError::new);
-        String page = command.execute(request);
+    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String commandString = request.getParameter(RequestParameter.COMMAND);
+        Command command = CommandProvider.defineCommand(commandString);
+        Router router = command.execute(request);
 
-        if (page != null) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher(page);
-            dispatcher.forward(request, response);
+        if (router.getType().equals(Router.Type.FORWARD)) {
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher(router.getPagePath());
+            requestDispatcher.forward(request, response);
         } else {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            response.sendRedirect(router.getPagePath());
         }
+
+        //todo
+//        HttpSession session = request.getSession();
+//        String currentPage = (String) session.getAttribute("CurrentPage");
+
+
     }
 }

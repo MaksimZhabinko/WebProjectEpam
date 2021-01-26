@@ -1,4 +1,4 @@
-package edu.epam.project.connector;
+package edu.epam.project.dao.connector;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,10 +26,10 @@ public class CustomConnection {
             return connection;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 

@@ -5,7 +5,6 @@
 </head>
 <body>
 <div class="container" style="text-align: center">
-    <img class="img-thumbnail" src="${pageContext.request.contextPath}/img/error500.jpg">
     <br/>
     <h2>Status code: ${pageContext.errorData.statusCode}</h2>
     <br/>

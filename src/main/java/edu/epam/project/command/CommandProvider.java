@@ -1,19 +1,16 @@
 package edu.epam.project.command;
 
-import java.util.Optional;
+import edu.epam.project.command.impl.InvalidCommand;
 
 public class CommandProvider {
-    public static Optional<Command> defineCommand(String commandName) {
-        Optional<Command> current;
-        if (commandName == null || commandName.isEmpty()) {
-            return Optional.empty();
-        }
+    public static Command defineCommand(String commandName) {
+        Command command;
         try {
             CommandType type = CommandType.valueOf(commandName.toUpperCase());
-            current = Optional.of(type.getCommand());
+            command = type.getCommand();
         } catch (IllegalArgumentException e) {
-            current = Optional.empty();
+            command = new InvalidCommand();
         }
-        return current;
+        return command;
     }
 }

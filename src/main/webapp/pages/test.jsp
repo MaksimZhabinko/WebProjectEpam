@@ -12,13 +12,6 @@
 </head>
 <body>
 <c:import url="fragment/header.jsp"/>
-<%--todo remove--%>
-${user.getEmail()}
-<c:if test="${user.getName() eq 'Maksim'}">
-    <p>You are - Maksim</p>
-</c:if>
-
-
 
 </body>
 </html>

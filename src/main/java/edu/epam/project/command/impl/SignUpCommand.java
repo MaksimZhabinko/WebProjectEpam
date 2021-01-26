@@ -1,61 +1,67 @@
 package edu.epam.project.command.impl;
 
-import edu.epam.project.command.Command;
-import edu.epam.project.command.PagePath;
+import edu.epam.project.command.*;
 import edu.epam.project.entity.RoleType;
 import edu.epam.project.entity.User;
 import edu.epam.project.exception.ServiceException;
 import edu.epam.project.service.UserService;
+import edu.epam.project.validator.UserValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 public class SignUpCommand implements Command {
     private static final Logger logger = LogManager.getLogger(SignUpCommand.class);
-    private final UserService service;
+    private UserService service;
 
     public SignUpCommand(UserService service) {
         this.service = service;
     }
 
     @Override
-    public String execute(HttpServletRequest request) {
-        String page = null;
-        String email = request.getParameter("email");
-        String name = request.getParameter("name");
-        String surname = request.getParameter("surname");
-        String password = request.getParameter("password");
-        String repeatPassword = request.getParameter("repeat_password");
+    public Router execute(HttpServletRequest request) {
+        String email = request.getParameter(RequestParameter.EMAIL);
+        String name = request.getParameter(RequestParameter.NAME);
+        String surname = request.getParameter(RequestParameter.SURNAME);
+        String password = request.getParameter(RequestParameter.PASSWORD);
+        String repeatPassword = request.getParameter(RequestParameter.REPEAT_PASSWORD);
+        HttpSession session = request.getSession();
+        Router router = new Router();
         boolean dataCorrect = true;
         try {
-            if (!service.isValidEmail(email)) {
-                request.setAttribute("errorEmailMessage", "Email is incorrect");
+            if (!UserValidator.isValidEmail(email)) {
+                request.setAttribute(RequestAttribute.ERROR_EMAIL_MESSAGE_INVALID, true);
                 dataCorrect = false;
             }
-            if (!service.isValidNameAndSurname(name, surname)) {
-                request.setAttribute("errorNameAndSurnameMessage", "name and surname cannot be empty");
+            if (!UserValidator.isValidNameAndSurname(name, surname)) {
+                request.setAttribute(RequestAttribute.ERROR_NAME_AND_SURNAME_MESSAGE, true);
                 dataCorrect = false;
             }
-            if (!service.isValidPasswordAndRepeatPassword(password, repeatPassword)) {
-                request.setAttribute("errorPasswordMessage", "Password is incorrect or repeat the password does not match the password");
+            if (!UserValidator.isValidPasswordAndRepeatPassword(password, repeatPassword)) {
+                request.setAttribute(RequestAttribute.ERROR_PASSWORD_MESSAGE, true);
                 dataCorrect = false;
             }
-            if (service.isExistUser(email)) {
-                request.setAttribute("errorEmailMessage", "This email is already in use");
+            Optional<User> userByEmail = service.findUserByEmail(email);
+            if (userByEmail.isPresent()) {
+                request.setAttribute(RequestAttribute.ERROR_EMAIL_MESSAGE_IS_EXIST, true);
                 dataCorrect = false;
             }
             if (dataCorrect) {
                 User user = new User(email, name, surname, RoleType.USER, true);
                 service.addUser(user, password);
-                page = PagePath.MAIN;
+                router.setPagePath(PagePath.MAIN);
+                router.setType(Router.Type.REDIRECT);
+                session.setAttribute(SessionAttribute.CURRENT_PAGE, PagePath.MAIN);
             } else {
-                page = PagePath.SIGN_UP;
+                router.setPagePath(PagePath.SIGN_UP);
             }
         } catch (ServiceException e) {
             logger.error(e);
+            router.setPagePath(PagePath.ERROR_500);
         }
-        return page;
+        return router;
     }
 }

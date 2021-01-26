@@ -1,11 +1,10 @@
 package edu.epam.project.dao.impl;
 
-import edu.epam.project.connector.CustomConnection;
+import edu.epam.project.dao.connector.CustomConnection;
 import edu.epam.project.dao.UserDao;
 import edu.epam.project.entity.RoleType;
 import edu.epam.project.entity.User;
 import edu.epam.project.exception.DaoException;
-import edu.epam.project.util.PasswordEncryption;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,10 +17,9 @@ import java.util.Optional;
 
 public class UserDaoImpl implements UserDao {
     private static final Logger logger = LogManager.getLogger(UserDaoImpl.class);
-    private static final String FIND_USER_BY_EMAIL = "SELECT user_id, email, name, surname, role_name, enabled FROM rename_base.users JOIN rename_base.roles ON fk_role_id = role_id WHERE email = ?";
-    private static final String FIND_USER_BY_EMAIL_AND_PASSWORD = "SELECT user_id, email, name, surname, role_name, enabled FROM rename_base.users JOIN rename_base.roles ON fk_role_id = role_id WHERE email = ? " +
-            "AND password = ?";
-    private static final String ADD_USER = "INSERT INTO `users` (`email`, `name`, `surname`, `password`, `fk_role_id`, `enabled`) VALUES (?, ?, ?, ?, ?, ?)";
+    private static final String FIND_USER_BY_EMAIL = "SELECT user_id, email, name, surname, role, enabled FROM rename_base.users WHERE email = ?";
+    private static final String FIND_USER_BY_EMAIL_AND_PASSWORD = "SELECT user_id, email, name, surname, role, enabled FROM rename_base.users WHERE email = ? AND password = ?";
+    private static final String ADD_USER = "INSERT INTO `users` (`email`, `name`, `surname`, `password`, `role`, `enabled`) VALUES (?, ?, ?, ?, ?, ?)";
 
     @Override
     public Optional<User> findByEmailAndPassword(String email, String password) throws DaoException {
@@ -91,7 +89,7 @@ public class UserDaoImpl implements UserDao {
             preparedStatement.setString(2, user.getName());
             preparedStatement.setString(3, user.getSurname());
             preparedStatement.setString(4, password);
-            preparedStatement.setInt(5, user.getRole().ordinal() + 1);
+            preparedStatement.setString(5, user.getRole().toString());
             preparedStatement.setBoolean(6, user.isEnabled());
 
             update = preparedStatement.executeUpdate() > 0;
