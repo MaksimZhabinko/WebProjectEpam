@@ -1,9 +1,10 @@
-package edu.epam.project.dao.impl;
+package edu.epam.project.model.dao.impl;
 
-import edu.epam.project.dao.connector.CustomConnection;
-import edu.epam.project.dao.UserDao;
-import edu.epam.project.entity.RoleType;
-import edu.epam.project.entity.User;
+import edu.epam.project.model.connection.ConnectionPool;
+import edu.epam.project.model.connection.CustomConnection;
+import edu.epam.project.model.dao.UserDao;
+import edu.epam.project.model.entity.RoleType;
+import edu.epam.project.model.entity.User;
 import edu.epam.project.exception.DaoException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -49,7 +50,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public Optional<User> findByEmail(String email) throws DaoException {
         Optional<User> userOptional = Optional.empty();
-        try (Connection connection = CustomConnection.getConnection();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_BY_EMAIL)) {
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -81,7 +82,12 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean add(User user, String password) throws DaoException {
+    public boolean add(User user) {
+        return false;
+    }
+
+    @Override
+    public boolean addUser(User user, String password) throws DaoException {
         boolean update;
         try (Connection connection = CustomConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(ADD_USER)) {

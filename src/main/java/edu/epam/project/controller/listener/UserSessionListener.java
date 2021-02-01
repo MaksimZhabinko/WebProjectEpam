@@ -1,4 +1,4 @@
-package edu.epam.project.listener;
+package edu.epam.project.controller.listener;
 
 import edu.epam.project.command.PagePath;
 import edu.epam.project.command.SessionAttribute;

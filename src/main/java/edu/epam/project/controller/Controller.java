@@ -4,6 +4,7 @@ import edu.epam.project.command.Command;
 import edu.epam.project.command.CommandProvider;
 import edu.epam.project.command.RequestParameter;
 import edu.epam.project.command.Router;
+import edu.epam.project.model.connection.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -40,11 +41,11 @@ public class Controller extends HttpServlet {
         } else {
             response.sendRedirect(router.getPagePath());
         }
+    }
 
-        //todo
-//        HttpSession session = request.getSession();
-//        String currentPage = (String) session.getAttribute("CurrentPage");
-
-
+    @Override
+    public void destroy() {
+        super.destroy();
+        ConnectionPool.INSTANCE.destroyPool();
     }
 }

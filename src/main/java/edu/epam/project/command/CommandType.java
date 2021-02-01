@@ -4,7 +4,7 @@ import edu.epam.project.command.impl.ChangeLanguageCommand;
 import edu.epam.project.command.impl.PageCommand;
 import edu.epam.project.command.impl.SignInCommand;
 import edu.epam.project.command.impl.SignUpCommand;
-import edu.epam.project.service.impl.UserServiceImpl;
+import edu.epam.project.model.service.impl.UserServiceImpl;
 
 public enum CommandType {
     SIGN_IN_PAGE(new PageCommand(PagePath.SIGN_IN)),

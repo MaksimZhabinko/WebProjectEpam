@@ -19,7 +19,7 @@
     <div id="formContent">
         <form action="${pageContext.request.contextPath}/controller" method="post">
             <input type="hidden" name="command" value="sign_up">
-            <input type="text" id="email" class="fadeIn second" name="email" placeholder="Email" required pattern="^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$">
+            <input type="text" id="email" class="fadeIn second" name="email" placeholder="Gmail" required pattern="^([a-z0-9_-]+\.)*[a-z0-9_-]+@gmail\.com$">
             <c:if test="${errorEmailMessageInvalid}">
                 <div class="alert alert-danger" role="alert">
                     <fmt:message key="error.signUp.emailInvalid"/>

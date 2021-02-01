@@ -1,4 +1,4 @@
-package edu.epam.project.entity;
+package edu.epam.project.model.entity;
 
 public class User extends Entity{
     private long id;

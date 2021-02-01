@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 public class UserValidator {
 
     private static final Pattern EMAIL_REGEX = Pattern
-            .compile("^([a-z0-9_-]+\\.)*[a-z0-9_-]+@[a-z0-9_-]+(\\.[a-z0-9_-]+)*\\.[a-z]{2,6}$");
+            .compile("^([a-z0-9_-]+\\.)*[a-z0-9_-]+@gmail\\.com$");
     private static final Pattern PASSWORD_PATTERN = Pattern
             .compile("^.*(?=.{8,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$");
     /* должен включать хотя бы одну букву в верхнем и нижнем регистре, хотя бы одину цифру,

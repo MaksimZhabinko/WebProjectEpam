@@ -1,10 +1,11 @@
 package edu.epam.project.command.impl;
 
 import edu.epam.project.command.*;
-import edu.epam.project.entity.RoleType;
-import edu.epam.project.entity.User;
+import edu.epam.project.model.entity.RoleType;
+import edu.epam.project.model.entity.User;
 import edu.epam.project.exception.ServiceException;
-import edu.epam.project.service.UserService;
+import edu.epam.project.model.service.UserService;
+import edu.epam.project.util.MailSender;
 import edu.epam.project.validator.UserValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -55,6 +56,8 @@ public class SignUpCommand implements Command {
                 router.setPagePath(PagePath.MAIN);
                 router.setType(Router.Type.REDIRECT);
                 session.setAttribute(SessionAttribute.CURRENT_PAGE, PagePath.MAIN);
+                MailSender mailSender = new MailSender();
+                mailSender.sendMessage(user.getEmail(), user.getName(), user.getSurname());
             } else {
                 router.setPagePath(PagePath.SIGN_UP);
             }

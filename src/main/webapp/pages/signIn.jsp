@@ -19,7 +19,7 @@
     <div id="formContent">
         <form action="${pageContext.request.contextPath}/controller" method="post">
             <input type="hidden" name="command" value="sign_in">
-            <input type="text" id="email" class="fadeIn second" name="email" placeholder="Email" required>
+            <input type="text" id="email" class="fadeIn second" name="email" placeholder="Gmail" required>
             <input type="password" id="password" class="fadeIn third" name="password" placeholder="<fmt:message key="placeholder.password"/>" required>
             <input type="submit" class="fadeIn fourth" value="<fmt:message key="button.signIn"/>">
         </form>

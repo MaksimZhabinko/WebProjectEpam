@@ -1,4 +1,4 @@
-package edu.epam.project.dao.connector;
+package edu.epam.project.model.connection;
 
 import java.io.IOException;
 import java.io.InputStream;

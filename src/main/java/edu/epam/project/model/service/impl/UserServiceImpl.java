@@ -1,11 +1,11 @@
-package edu.epam.project.service.impl;
+package edu.epam.project.model.service.impl;
 
-import edu.epam.project.dao.UserDao;
-import edu.epam.project.dao.impl.UserDaoImpl;
-import edu.epam.project.entity.User;
+import edu.epam.project.model.dao.UserDao;
+import edu.epam.project.model.dao.impl.UserDaoImpl;
+import edu.epam.project.model.entity.User;
 import edu.epam.project.exception.DaoException;
 import edu.epam.project.exception.ServiceException;
-import edu.epam.project.service.UserService;
+import edu.epam.project.model.service.UserService;
 import edu.epam.project.util.PasswordEncryption;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
     public boolean addUser(User user, String password) throws ServiceException {
         try {
             String encoderPassword = PasswordEncryption.getEncoder(password);
-            boolean update = userDao.add(user, encoderPassword);
+            boolean update = userDao.addUser(user, encoderPassword);
             return update;
         } catch (DaoException e) {
             logger.error(e);

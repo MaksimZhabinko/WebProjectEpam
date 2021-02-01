@@ -1,9 +1,9 @@
 package edu.epam.project.command.impl;
 
 import edu.epam.project.command.*;
-import edu.epam.project.entity.User;
+import edu.epam.project.model.entity.User;
 import edu.epam.project.exception.ServiceException;
-import edu.epam.project.service.UserService;
+import edu.epam.project.model.service.UserService;
 import edu.epam.project.validator.UserValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

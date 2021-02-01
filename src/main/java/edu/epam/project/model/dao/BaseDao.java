@@ -1,14 +1,13 @@
-package edu.epam.project.dao;
+package edu.epam.project.model.dao;
 
-import edu.epam.project.entity.Entity;
-import edu.epam.project.exception.DaoException;
+import edu.epam.project.model.entity.Entity;
 
 import java.util.List;
 
 public interface BaseDao <K, T extends Entity>{
     List<T> findAll();
     T findEntityById(K id);
-    boolean add(T t, String password) throws DaoException;
+    boolean add(T t);
     boolean deleteById(K id);
     T update(T t);
 }

@@ -1,6 +1,6 @@
-package edu.epam.project.service;
+package edu.epam.project.model.service;
 
-import edu.epam.project.entity.User;
+import edu.epam.project.model.entity.User;
 import edu.epam.project.exception.ServiceException;
 
 import java.util.Optional;
