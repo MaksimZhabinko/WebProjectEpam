@@ -5,7 +5,6 @@
     <title>Index</title>
 </head>
 <body>
-<%--<jsp:forward page="/pages/signIn.jsp"/>--%>
-<jsp:forward page="/pages/signIn.jsp"/>
+<jsp:forward page="/controller?command=main_page"/>
 </body>
 </html>

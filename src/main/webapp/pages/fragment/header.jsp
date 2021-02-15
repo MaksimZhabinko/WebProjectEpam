@@ -5,7 +5,8 @@
 <fmt:setBundle basename="property.text"/>
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div style="display: flex; flex-grow: inherit; justify-content: flex-end">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div style="display: flex; flex-grow: inherit; justify-content: flex-end" >
                 <form class="form-inline my-2 my-lg-0" action="${pageContext.request.contextPath}/controller"
                       method="post">
                     <input type="hidden" name="command" value="change_language"/>
@@ -21,6 +22,33 @@
                         </div>
                     </div>
                 </form>
+
+                <c:if test="${user == null}">
+                    <form class="form-inline my-2 my-lg-0" action="${pageContext.request.contextPath}/controller" method="get">
+                        <input type="hidden" name="command" value="sign_in_page">
+                        <button class="btn btn-outline-success mx-2 my-2 my-sm-0" type="submit">
+                            <fmt:message key="button.signIn"/>
+                        </button>
+                    </form>
+                </c:if>
+
+                <c:if test="${user == null}">
+                    <form class="form-inline my-2 my-lg-0" action="${pageContext.request.contextPath}/controller" method="get">
+                        <input type="hidden" name="command" value="sign_up_page">
+                        <button class="btn btn-outline-success mx-2 my-2 my-sm-0" type="submit">
+                            <fmt:message key="button.signUp"/>
+                        </button>
+                    </form>
+                </c:if>
+
+                <c:if test="${user != null}">
+                    <form class="form-inline my-2 my-lg-0" action="${pageContext.request.contextPath}/controller" method="post">
+                        <input type="hidden" name="command" value="sign_out">
+                        <button class="btn btn-outline-success mx-2 my-2 my-sm-0" type="submit">
+                            <fmt:message key="header.button.signOut"/>
+                        </button>
+                    </form>
+                </c:if>
             </div>
         </div>
     </nav>

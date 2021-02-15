@@ -19,7 +19,7 @@
     <div id="formContent">
         <form action="${pageContext.request.contextPath}/controller" method="post">
             <input type="hidden" name="command" value="sign_in">
-            <input type="text" id="email" class="fadeIn second" name="email" placeholder="Gmail" required>
+            <input type="text" id="email" class="fadeIn second" name="email" placeholder="<fmt:message key="placeholder.email"/>" value="${email}" required>
             <input type="password" id="password" class="fadeIn third" name="password" placeholder="<fmt:message key="placeholder.password"/>" required>
             <input type="submit" class="fadeIn fourth" value="<fmt:message key="button.signIn"/>">
         </form>
@@ -33,14 +33,19 @@
                 <fmt:message key="error.signIn.emailAndPasswordIsIncorrect"/>
             </div>
         </c:if>
+        <form action="${pageContext.request.contextPath}/controller" method="get">
+            <input type="hidden" name="command" value="forgot_password_page">
+            <input type="submit" value="<fmt:message key="button.signIn.forgotPassword"/>">
+        </form>
 
-        <a href="${pageContext.request.contextPath}/controller?command=ign_up_page">
-            <button type="button">ЖМИ СЮДА (ЭТО ВРЕМЕННО)</button>
-        </a>
         <div id="formFooter">
             <form action="${pageContext.request.contextPath}/controller" method="get">
                 <input type="hidden" name="command" value="sign_up_page">
                 <input type="submit" value="<fmt:message key="button.signUp"/>">
+            </form>
+            <form action="${pageContext.request.contextPath}/controller" method="get">
+                <input type="hidden" name="command" value="main_page">
+                <input type="submit" value="Главная страница">
             </form>
         </div>
     </div>

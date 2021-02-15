@@ -8,17 +8,21 @@
 <head>
     <c:import url="fragment/bootstrap_style.jsp"/>
     <c:import url="fragment/bootstrap_script.jsp"/>
-    <title>Title</title>
+    <title>Main</title>
 </head>
 <body>
 <c:import url="fragment/header.jsp"/>
-<%--todo remove--%>
-${user.getEmail()}
-<c:if test="${user.getName() eq 'Maksim'}">
-    <p>You are - Maksim</p>
-</c:if>
+<c:import url="fragment/sidebar.jsp"/>
 
-
-
+<h1 style="text-align: center"><fmt:message key="main.itCourse"/></h1>
+<div>
+    <c:forEach var="course" items="${courses}">
+        <a href="${pageContext.request.contextPath}/controller?command=lecture_page&course_id=${course.getId()}">
+            <p>
+                <button type="button">${course.getName()}</button>
+            </p>
+        </a>
+    </c:forEach>
+</div>
 </body>
 </html>

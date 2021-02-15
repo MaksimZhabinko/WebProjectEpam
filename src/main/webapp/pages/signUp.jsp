@@ -19,7 +19,7 @@
     <div id="formContent">
         <form action="${pageContext.request.contextPath}/controller" method="post">
             <input type="hidden" name="command" value="sign_up">
-            <input type="text" id="email" class="fadeIn second" name="email" placeholder="Gmail" required pattern="^([a-z0-9_-]+\.)*[a-z0-9_-]+@gmail\.com$">
+            <input type="text" id="email" class="fadeIn second" name="email" placeholder="<fmt:message key="placeholder.email"/>" value="${email}" required pattern="^[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+\.[a-zA-Z]{2,4}">
             <c:if test="${errorEmailMessageInvalid}">
                 <div class="alert alert-danger" role="alert">
                     <fmt:message key="error.signUp.emailInvalid"/>
@@ -30,8 +30,8 @@
                     <fmt:message key="error.signUp.emailIsExist"/>
                 </div>
             </c:if>
-            <input type="text" id="name" class="fadeIn second" name="name" placeholder="<fmt:message key="placeholder.name"/>" required>
-            <input type="text" id="surname" class="fadeIn second" name="surname" placeholder="<fmt:message key="placeholder.surname"/>" required>
+            <input type="text" id="name" class="fadeIn second" name="name" value="${name}" placeholder="<fmt:message key="placeholder.name"/>" required>
+            <input type="text" id="surname" class="fadeIn second" name="surname" value="${surname}" placeholder="<fmt:message key="placeholder.surname"/>" required>
             <c:if test="${errorNameAndSurnameMessage}">
                 <div class="alert alert-danger" role="alert">
                     <fmt:message key="error.signUp.nameAndSurname"/>
@@ -53,6 +53,10 @@
             <form action="${pageContext.request.contextPath}/controller" method="get">
                 <input type="hidden" name="command" value="sign_in_page">
                 <input type="submit" value="<fmt:message key="button.signIn"/>">
+            </form>
+            <form action="${pageContext.request.contextPath}/controller" method="get">
+                <input type="hidden" name="command" value="main_page">
+                <input type="submit" value="Главная страница">
             </form>
         </div>
     </div>
