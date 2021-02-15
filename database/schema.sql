@@ -31,7 +31,8 @@ CREATE TABLE `course_details` (
     `description` TEXT NOT NULL,
     `is_test` BOOLEAN DEFAULT FALSE,
     `start_course` DATE NOT NULL,
-    `finish_course` DATE NOT NULL,
+    `end_course` DATE NOT NULL,
+    `start_of_class` TIME NOT NULL,
     `cost` DECIMAL NOT NULL,
 
     `fk_course_id` INTEGER NOT NULL,
@@ -79,11 +80,11 @@ INSERT INTO `courses`  (`course_name`) VALUES ('Java lab');
 INSERT INTO `courses` (`course_name`) VALUES ('Основы программирования на Python');
 INSERT INTO `courses` (`course_name`) VALUES ('Основы программирования на C#');
 
-INSERT INTO `course_details` (`number_of_hours`, `description`, `start_course`, `finish_course`, `cost`, `fk_course_id`, `fk_teacher_name_id`) VALUES (72, 'Java SE description', '2021-03-15', '2021-06-15', 499, 1, 1);
-INSERT INTO `course_details` (`number_of_hours`, `description`, `is_test`, `start_course`, `finish_course`, `cost`, `fk_course_id`, `fk_teacher_name_id`) VALUES (72, 'Java EE description', true, '2021-03-20', '2021-06-20', 999, 2, 1);
-INSERT INTO `course_details` (`number_of_hours`, `description`, `is_test`, `start_course`, `finish_course`, `cost`, `fk_course_id`, `fk_teacher_name_id`) VALUES (60, 'Java lab description', true, '2021-03-25', '2021-06-25', 1499, 3, 1);
-INSERT INTO `course_details` (`number_of_hours`, `description`, `start_course`, `finish_course`, `cost`,  `fk_course_id`, `fk_teacher_name_id`) VALUES (60, 'Основы программирования на Python description', '2021-04-01', '2021-07-01', 499, 4, 2);
-INSERT INTO `course_details` (`number_of_hours`, `description`, `start_course`, `finish_course`, `cost`,  `fk_course_id`, `fk_teacher_name_id`) VALUES (68, 'Основы программирования на C# description', '2021-04-20', '2021-07-20', 499, 5, 3);
+INSERT INTO `course_details` (`number_of_hours`, `description`, `start_course`, `end_course`, `start_of_class`, `cost`, `fk_course_id`, `fk_teacher_name_id`) VALUES (72, 'Java SE description', '2021-03-15', '2021-06-15', '19:00', 499, 1, 1);
+INSERT INTO `course_details` (`number_of_hours`, `description`, `is_test`, `start_course`, `end_course`, `start_of_class`, `cost`, `fk_course_id`, `fk_teacher_name_id`) VALUES (72, 'Java EE description', true, '2021-03-20', '2021-06-20', '19:00', 999, 2, 1);
+INSERT INTO `course_details` (`number_of_hours`, `description`, `is_test`, `start_course`, `end_course`, `start_of_class`, `cost`, `fk_course_id`, `fk_teacher_name_id`) VALUES (60, 'Java lab description', true, '2021-03-25', '2021-06-25', '19:00', 1499, 3, 1);
+INSERT INTO `course_details` (`number_of_hours`, `description`, `start_course`, `end_course`, `start_of_class`, `cost`,  `fk_course_id`, `fk_teacher_name_id`) VALUES (60, 'Основы программирования на Python description', '2021-04-01', '2021-07-01', '19:00', 499, 4, 2);
+INSERT INTO `course_details` (`number_of_hours`, `description`, `start_course`, `end_course`, `start_of_class`, `cost`,  `fk_course_id`, `fk_teacher_name_id`) VALUES (68, 'Основы программирования на C# description', '2021-04-20', '2021-07-20', '19:00', 499, 5, 3);
 
 INSERT INTO `lectures` (`lecture`, `fk_lecture_x_course_id`) VALUES ('Занятие 1. Введение в Java. Основы языка.', 1);
 INSERT INTO `lectures` (`lecture`, `fk_lecture_x_course_id`) VALUES ('Занятие 2. Операторы управления. Циклы.', 1);
