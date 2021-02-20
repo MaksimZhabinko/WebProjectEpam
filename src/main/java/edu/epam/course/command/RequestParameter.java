@@ -12,6 +12,8 @@ public class RequestParameter {
     public static final String USER_ID = "user_id";
     public static final String REVIEW_ID = "review_id";
     public static final String COURSE_ID = "course_id";
+    public static final String COURSE_NAME = "course_name";
+    public static final String MONEY = "money";
 
     private RequestParameter() {
     }

@@ -12,6 +12,7 @@ import edu.epam.course.util.PasswordEncryption;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -20,8 +21,14 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao = new UserDaoImpl();
 
     @Override
-    public Optional<User> findUserById(long id) {
-        return Optional.empty();
+    public Optional<User> findUserById(long id) throws ServiceException {
+        try {
+            Optional<User> user = userDao.findEntityById(id);
+            return user;
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
     }
 
     @Override
@@ -73,5 +80,20 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException(e);
         }
         return isChange;
+    }
+
+    @Override
+    public User updateUserBalance(String money, User user) throws ServiceException {
+        try {
+            BigDecimal moneyBigDecimal = new BigDecimal(money);
+            BigDecimal userMoney = user.getMoney();
+            BigDecimal result = moneyBigDecimal.add(userMoney);
+            userDao.updateUserBalance(result , user.getId());
+            user.setMoney(result);
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return user;
     }
 }

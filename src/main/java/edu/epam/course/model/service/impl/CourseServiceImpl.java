@@ -26,4 +26,28 @@ public class CourseServiceImpl implements CourseService {
         }
         return courses;
     }
+
+    @Override
+    public boolean addCourse(Course course) throws ServiceException {
+        boolean idAdd;
+        try {
+            idAdd = courseDao.add(course);
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return idAdd;
+    }
+
+    @Override
+    public boolean deleteCourse(Long id) throws ServiceException {
+        boolean isDelete;
+        try {
+            isDelete = courseDao.deleteById(id);
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return isDelete;
+    }
 }

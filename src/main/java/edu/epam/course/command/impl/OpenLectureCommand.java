@@ -6,6 +6,7 @@ import edu.epam.course.model.entity.CourseDetails;
 import edu.epam.course.model.entity.Lecture;
 import edu.epam.course.model.service.CourseDetailsService;
 import edu.epam.course.model.service.LectureService;
+import edu.epam.course.validator.CourseValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,14 +30,23 @@ public class OpenLectureCommand implements Command {
         Router router = new Router();
         HttpSession session = request.getSession();
         String courseId = request.getParameter(RequestParameter.COURSE_ID);
+        boolean dataCorrect = true;
         try {
-            Long courseIdLong = Long.valueOf(courseId);
-            List<Lecture> lectures = lectureService.findAllLectureById(courseIdLong);
-            Optional<CourseDetails> courseDetails = courseDetailsService.findCourseDetailsById(courseIdLong);
-            request.setAttribute(RequestAttribute.LECTURES, lectures);
-            request.setAttribute(RequestAttribute.COURSE_DETAILS, courseDetails.get());
-            router.setPagePath(PagePath.LECTURE.getDirectUrl());
-            session.setAttribute(SessionAttribute.CURRENT_PAGE, PagePath.LECTURE.getServletPath() + courseId);
+            if (!CourseValidator.isValidCourseId(courseId)) {
+                router.setPagePath(PagePath.ERROR_404.getDirectUrl()); // todo куда кидать если courseId будет строкой а не число
+                dataCorrect = false;
+            }
+            if (dataCorrect) {
+                Long courseIdLong = Long.valueOf(courseId);
+                List<Lecture> lectures = lectureService.findAllLectureById(courseIdLong);
+                if (!lectures.isEmpty()) {
+                    Optional<CourseDetails> courseDetails = courseDetailsService.findCourseDetailsById(courseIdLong);
+                    request.setAttribute(RequestAttribute.LECTURES, lectures);
+                    request.setAttribute(RequestAttribute.COURSE_DETAILS, courseDetails.get());
+                }
+                router.setPagePath(PagePath.LECTURE.getDirectUrl());
+                session.setAttribute(SessionAttribute.CURRENT_PAGE, PagePath.LECTURE.getServletPath() + courseId);
+            }
         } catch (ServiceException e) {
             logger.error(e);
             router.setPagePath(PagePath.ERROR_500.getDirectUrl());

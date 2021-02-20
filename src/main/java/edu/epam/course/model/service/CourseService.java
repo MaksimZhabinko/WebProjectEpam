@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface CourseService {
     List<Course> findAll() throws ServiceException;
+    boolean addCourse(Course course) throws ServiceException;
+    boolean deleteCourse(Long id) throws ServiceException;
 }

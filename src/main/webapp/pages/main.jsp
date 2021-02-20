@@ -8,7 +8,7 @@
 <head>
     <c:import url="fragment/bootstrap_style.jsp"/>
     <c:import url="fragment/bootstrap_script.jsp"/>
-    <title>Main</title>
+    <title><fmt:message key="title.main"/></title>
 </head>
 <body>
 <c:import url="fragment/header.jsp"/>
@@ -22,7 +22,24 @@
                 <button type="button">${course.getName()}</button>
             </p>
         </a>
+        <c:if test="${user.getRole().toString() eq 'ADMIN'}">
+            <form action="${pageContext.request.contextPath}/controller" method="post">
+                <input type="hidden" name="command" value="course_delete">
+                <input type="hidden" name="course_id" value="${course.getId()}">
+                <input type="submit" value="DELETE COURSE">
+                    <%--        todo localization--%>
+            </form>
+        </c:if>
     </c:forEach>
 </div>
+<c:if test="${user.getRole().toString() eq 'ADMIN'}">
+    <form action="${pageContext.request.contextPath}/controller" method="post">
+        <input type="hidden" name="command" value="course_add">
+        <input type="text" name="course_name">
+        <input type="submit" value="ADD COURSE">
+<%--        todo localization--%>
+    </form>
+</c:if>
+<c:import url="fragment/footer.jsp"/>
 </body>
 </html>

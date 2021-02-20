@@ -1,35 +1,23 @@
 package edu.epam.course;
 
 import edu.epam.course.exception.DaoException;
-import edu.epam.course.model.connection.ConnectionPool;
-import edu.epam.course.model.dao.*;
-import edu.epam.course.model.dao.impl.*;
-import edu.epam.course.model.entity.*;
-import edu.epam.course.validator.UserValidator;
+import edu.epam.course.exception.ServiceException;
+import edu.epam.course.model.dao.CourseDao;
+import edu.epam.course.model.dao.impl.CourseDaoImpl;
+import edu.epam.course.model.entity.Course;
+import edu.epam.course.model.entity.Lecture;
+import edu.epam.course.model.service.LectureService;
+import edu.epam.course.model.service.impl.LectureServiceImpl;
+import edu.epam.course.validator.CourseValidator;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Optional;
 
 
 public class Main {
-    public static void main(String[] args)  {
-        CourseDetailsDao courseDetailsDao = new CourseDetailsDaoImpl();
-        LectureDao lectureDao = new LectureDaoImpl();
-        List<Lecture> lectureOptional = null;
-        try {
-            lectureOptional = lectureDao.findAllById(1L);
-        } catch (DaoException e) {
-            e.printStackTrace();
-        }
-        lectureOptional.stream().forEach(e -> System.out.println(e.toString()));
+    public static void main(String[] args) throws DaoException {
+        System.out.println(CourseValidator.isValidCourseId("10"));
 
     }
 

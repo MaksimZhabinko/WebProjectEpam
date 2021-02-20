@@ -1,6 +1,10 @@
 package edu.epam.course.command.impl;
 
-import edu.epam.course.command.*;
+import edu.epam.course.command.Command;
+import edu.epam.course.command.PagePath;
+import edu.epam.course.command.RequestAttribute;
+import edu.epam.course.command.RequestParameter;
+import edu.epam.course.command.Router;
 import edu.epam.course.exception.EmailException;
 import edu.epam.course.model.entity.RoleType;
 import edu.epam.course.model.entity.User;

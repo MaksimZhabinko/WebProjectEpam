@@ -18,6 +18,8 @@ import java.util.Optional;
 public class CourseDaoImpl implements CourseDao {
     private static final Logger logger = LogManager.getLogger(CourseDaoImpl.class);
     private static final String FIND_ALL_COURSE = "SELECT course_id, course_name FROM course.courses";
+    private static final String ADD_COURSE = "INSERT INTO courses (course_name) VALUES (?)";
+    private static final String DELETE_COURSE = "DELETE FROM course.courses WHERE course_id = ?";
 
     @Override
     public List<Course> findAll() throws DaoException {
@@ -44,12 +46,32 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    public boolean add(Course course) {
-        return false;
+    public boolean add(Course course) throws DaoException {
+        boolean isAdd;
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(ADD_COURSE)) {
+            preparedStatement.setString(1, course.getName());
+
+            isAdd = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DaoException(e);
+        }
+        return isAdd;
     }
 
     @Override
-    public boolean deleteById(Long id) {
-        return false;
+    public boolean deleteById(Long id) throws DaoException {
+        boolean isDelete;
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(DELETE_COURSE)) {
+            preparedStatement.setLong(1, id);
+
+            isDelete = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DaoException(e);
+        }
+        return isDelete;
     }
 }

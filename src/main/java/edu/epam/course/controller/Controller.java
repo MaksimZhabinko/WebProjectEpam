@@ -1,9 +1,6 @@
 package edu.epam.course.controller;
 
-import edu.epam.course.command.Command;
-import edu.epam.course.command.CommandProvider;
-import edu.epam.course.command.RequestParameter;
-import edu.epam.course.command.Router;
+import edu.epam.course.command.*;
 import edu.epam.course.model.connection.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

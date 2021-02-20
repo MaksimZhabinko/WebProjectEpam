@@ -1,6 +1,10 @@
 package edu.epam.course.command.impl;
 
-import edu.epam.course.command.*;
+import edu.epam.course.command.Command;
+import edu.epam.course.command.PagePath;
+import edu.epam.course.command.RequestAttribute;
+import edu.epam.course.command.RequestParameter;
+import edu.epam.course.command.Router;
 import edu.epam.course.exception.ServiceException;
 import edu.epam.course.model.entity.Review;
 import edu.epam.course.model.entity.User;
@@ -10,21 +14,22 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
-import java.util.Optional;
 
-public class AddReviewCommand implements Command {
-    private static final Logger logger = LogManager.getLogger(AddReviewCommand.class);
+public class ReviewAddCommand implements Command {
+    private static final Logger logger = LogManager.getLogger(ReviewAddCommand.class);
     private ReviewService reviewService;
 
-    public AddReviewCommand(ReviewService reviewService) {
+    public ReviewAddCommand(ReviewService reviewService) {
         this.reviewService = reviewService;
     }
 
     @Override
     public Router execute(HttpServletRequest request) {
         String message = request.getParameter(RequestParameter.MESSAGE);
-        String idUser = request.getParameter(RequestParameter.USER_ID);
+        HttpSession session = request.getSession();
+        User userSession = (User) session.getAttribute(RequestAttribute.USER);
         Router router = new Router();
         boolean dataCorrect = true;
         try {
@@ -36,7 +41,7 @@ public class AddReviewCommand implements Command {
             if (dataCorrect) {
                 Review review = new Review();
                 User user = new User();
-                user.setId(Long.parseLong(idUser));
+                user.setId(userSession.getId());
                 review.setUser(user);
                 review.setMessage(message);
                 review.setDateMessage(LocalDate.now());

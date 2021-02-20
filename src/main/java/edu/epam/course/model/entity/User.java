@@ -1,5 +1,7 @@
 package edu.epam.course.model.entity;
 
+import java.math.BigDecimal;
+
 public class User extends Entity{
     private long id;
     private String email;
@@ -7,6 +9,7 @@ public class User extends Entity{
     private String surname;
     private RoleType role;
     private boolean enabled;
+    private BigDecimal money;
 
     public User() {
     }
@@ -67,6 +70,14 @@ public class User extends Entity{
         this.enabled = enabled;
     }
 
+    public BigDecimal getMoney() {
+        return money;
+    }
+
+    public void setMoney(BigDecimal money) {
+        this.money = money;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -79,7 +90,8 @@ public class User extends Entity{
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
         if (name != null ? !name.equals(user.name) : user.name != null) return false;
         if (surname != null ? !surname.equals(user.surname) : user.surname != null) return false;
-        return role == user.role;
+        if (role != user.role) return false;
+        return money != null ? money.equals(user.money) : user.money == null;
     }
 
     @Override
@@ -90,6 +102,7 @@ public class User extends Entity{
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);
         result = 31 * result + (enabled ? 1 : 0);
+        result = 31 * result + (money != null ? money.hashCode() : 0);
         return result;
     }
 
@@ -102,6 +115,7 @@ public class User extends Entity{
         sb.append(", surname='").append(surname).append('\'');
         sb.append(", role=").append(role);
         sb.append(", enabled=").append(enabled);
+        sb.append(", money=").append(money);
         sb.append('}');
         return sb.toString();
     }

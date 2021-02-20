@@ -45,7 +45,6 @@
         <h1>Добавить отзыв</h1>
         <form action="${pageContext.request.contextPath}/controller" method="post">
             <input type="hidden" name="command" value="review_add">
-            <input type="hidden" name="user_id" value="${user.getId()}">
             <textarea name="message" required></textarea>
             <input type="submit" value="<fmt:message key="button.review.sendReview"/>">
         </form>
@@ -57,5 +56,6 @@
         <fmt:message key="error.review.message"/>
     </div>
 </c:if>
+<c:import url="fragment/footer.jsp"/>
 </body>
 </html>

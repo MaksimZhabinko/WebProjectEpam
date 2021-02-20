@@ -5,9 +5,6 @@ import java.util.regex.Pattern;
 
 public class UserValidator {
 
-    private UserValidator() {
-    }
-
     private static final Pattern EMAIL_REGEX = Pattern
             .compile("^[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+\\.[a-zA-Z]{2,4}");
     private static final Pattern PASSWORD_PATTERN = Pattern
@@ -15,6 +12,9 @@ public class UserValidator {
     /* должен включать хотя бы одну букву в верхнем и нижнем регистре, хотя бы одину цифру,
      хотя бы один специальный символ ("@", "#". "$", "%", "^", "&", "( "или") ",
      без пробелов, табуляции и т. Д и не менее 8 символов*/
+
+    private UserValidator() {
+    }
 
     public static boolean isValidNameAndSurname(String name, String surname) {
         boolean isCorrect = true;

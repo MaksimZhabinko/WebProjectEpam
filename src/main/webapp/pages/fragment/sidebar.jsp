@@ -15,7 +15,7 @@
         <a class="nav-link bd-link" href="${pageContext.request.contextPath}/controller?command=main_page"> <fmt:message key="sidebar.path.main"/> </a>
 
     <%--       костыль, знаю)--%>
-        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<%--        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>--%>
+<%--        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>--%>
     </nav>
 </div>

@@ -20,6 +20,8 @@ public class RequestAttribute {
     public static final String COURSE_DETAILS = "courseDetails";
     public static final String COURSES = "courses";
     public static final String REVIEWS = "reviews";
+    public static final String ERROR_BALANCE_MESSAGE_IS_VALID = "errorBalanceMessageIsValid";
+    public static final String ERROR_BALANCE_USER_ID_IS_NOT_EXIST = "errorBalanceUserIdIsNotExist";
 
     private RequestAttribute() {
     }

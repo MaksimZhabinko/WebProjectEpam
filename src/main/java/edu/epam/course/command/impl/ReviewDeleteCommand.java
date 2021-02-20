@@ -1,6 +1,10 @@
 package edu.epam.course.command.impl;
 
-import edu.epam.course.command.*;
+import edu.epam.course.command.Command;
+import edu.epam.course.command.PagePath;
+import edu.epam.course.command.RequestAttribute;
+import edu.epam.course.command.RequestParameter;
+import edu.epam.course.command.Router;
 import edu.epam.course.exception.ServiceException;
 import edu.epam.course.model.service.ReviewService;
 import org.apache.logging.log4j.LogManager;
@@ -8,11 +12,11 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class DeleteReviewCommand implements Command {
-    private static final Logger logger = LogManager.getLogger(DeleteReviewCommand.class);
+public class ReviewDeleteCommand implements Command {
+    private static final Logger logger = LogManager.getLogger(ReviewDeleteCommand.class);
     private ReviewService reviewService;
 
-    public DeleteReviewCommand(ReviewService reviewService) {
+    public ReviewDeleteCommand(ReviewService reviewService) {
         this.reviewService = reviewService;
     }
 
@@ -21,7 +25,6 @@ public class DeleteReviewCommand implements Command {
         String reviewId = request.getParameter(RequestParameter.REVIEW_ID);
         Router router = new Router();
         try {
-            // todo сделать провекру что этот ид не был удален до того как человек удалил
             reviewService.deleteReview(Long.valueOf(reviewId));
             router.setPagePath(PagePath.REVIEW.getServletPath());
             router.setType(Router.Type.REDIRECT);
