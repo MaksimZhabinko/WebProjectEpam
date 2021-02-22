@@ -13,7 +13,8 @@ public enum PageAccessFilter {
             CommandType.FORGOT_PASSWORD_PAGE,
             CommandType.FORGOT_PASSWORD,
             CommandType.REVIEW_PAGE,
-            CommandType.LECTURE_PAGE
+            CommandType.LECTURE_PAGE,
+            CommandType.ABOUT_US_PAGE
     )),
     USER(Set.of(
             CommandType.MAIN_PAGE,
@@ -24,7 +25,8 @@ public enum PageAccessFilter {
             CommandType.REVIEW_ADD,
             CommandType.LECTURE_PAGE,
             CommandType.BALANCE_REPLENISHMENT_PAGE,
-            CommandType.BALANCE_REPLENISHMENT
+            CommandType.BALANCE_REPLENISHMENT,
+            CommandType.ABOUT_US_PAGE
     )),
     ADMIN(Set.of(
             CommandType.MAIN_PAGE,
@@ -34,7 +36,9 @@ public enum PageAccessFilter {
             CommandType.REVIEW_DELETE,
             CommandType.LECTURE_PAGE,
             CommandType.COURSE_ADD,
-            CommandType.COURSE_DELETE
+            CommandType.COURSE_DELETE,
+            CommandType.ABOUT_US_PAGE,
+            CommandType.ABOUT_US_UPDATE
     ));
 
     private final Set<CommandType> commands;

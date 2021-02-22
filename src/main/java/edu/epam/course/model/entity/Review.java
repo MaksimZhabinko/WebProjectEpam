@@ -3,20 +3,11 @@ package edu.epam.course.model.entity;
 import java.time.LocalDate;
 
 public class Review extends Entity {
-    private Long id;
     private String message;
     private LocalDate dateMessage;
     private User user;
 
     public Review() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getMessage() {
@@ -47,10 +38,10 @@ public class Review extends Entity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
 
         Review review = (Review) o;
 
-        if (id != null ? !id.equals(review.id) : review.id != null) return false;
         if (message != null ? !message.equals(review.message) : review.message != null) return false;
         if (dateMessage != null ? !dateMessage.equals(review.dateMessage) : review.dateMessage != null) return false;
         return user != null ? user.equals(review.user) : review.user == null;
@@ -58,7 +49,7 @@ public class Review extends Entity {
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
+        int result = super.hashCode();
         result = 31 * result + (message != null ? message.hashCode() : 0);
         result = 31 * result + (dateMessage != null ? dateMessage.hashCode() : 0);
         result = 31 * result + (user != null ? user.hashCode() : 0);
@@ -68,8 +59,7 @@ public class Review extends Entity {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Review{");
-        sb.append("id=").append(id);
-        sb.append(", message='").append(message).append('\'');
+        sb.append("message='").append(message).append('\'');
         sb.append(", dateMessage=").append(dateMessage);
         sb.append(", user=").append(user);
         sb.append('}');

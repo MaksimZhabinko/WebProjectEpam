@@ -26,8 +26,7 @@
             <form action="${pageContext.request.contextPath}/controller" method="post">
                 <input type="hidden" name="command" value="course_delete">
                 <input type="hidden" name="course_id" value="${course.getId()}">
-                <input type="submit" value="DELETE COURSE">
-                    <%--        todo localization--%>
+                <input type="submit" value="<fmt:message key="button.delete_course"/>">
             </form>
         </c:if>
     </c:forEach>
@@ -36,8 +35,7 @@
     <form action="${pageContext.request.contextPath}/controller" method="post">
         <input type="hidden" name="command" value="course_add">
         <input type="text" name="course_name">
-        <input type="submit" value="ADD COURSE">
-<%--        todo localization--%>
+        <input type="submit" value="<fmt:message key="button.add_course"/>">
     </form>
 </c:if>
 <c:import url="fragment/footer.jsp"/>

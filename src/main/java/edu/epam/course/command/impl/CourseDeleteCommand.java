@@ -2,9 +2,8 @@ package edu.epam.course.command.impl;
 
 import edu.epam.course.command.*;
 import edu.epam.course.exception.ServiceException;
-import edu.epam.course.model.entity.Course;
 import edu.epam.course.model.service.CourseService;
-import edu.epam.course.validator.CourseValidator;
+import edu.epam.course.validator.IdValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,7 +23,7 @@ public class CourseDeleteCommand implements Command {
         Router router = new Router();
         boolean dataCorrect = true;
         try {
-            if (!CourseValidator.isValidCourseId(courseId)) {
+            if (!IdValidator.isValidId(courseId)) {
                 router.setPagePath(PagePath.ERROR_404.getDirectUrl()); // todo куда кидать если courseId будет строкой а не число
                 dataCorrect = false;
             }

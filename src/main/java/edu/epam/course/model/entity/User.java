@@ -3,7 +3,6 @@ package edu.epam.course.model.entity;
 import java.math.BigDecimal;
 
 public class User extends Entity{
-    private long id;
     private String email;
     private String name;
     private String surname;
@@ -20,14 +19,6 @@ public class User extends Entity{
         this.surname = surname;
         this.role = role;
         this.enabled = enabled;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getEmail() {
@@ -82,10 +73,10 @@ public class User extends Entity{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
 
         User user = (User) o;
 
-        if (id != user.id) return false;
         if (enabled != user.enabled) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
         if (name != null ? !name.equals(user.name) : user.name != null) return false;
@@ -96,7 +87,7 @@ public class User extends Entity{
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
+        int result = super.hashCode();
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
@@ -109,8 +100,7 @@ public class User extends Entity{
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("User{");
-        sb.append("id=").append(id);
-        sb.append(", email='").append(email).append('\'');
+        sb.append("email='").append(email).append('\'');
         sb.append(", name='").append(name).append('\'');
         sb.append(", surname='").append(surname).append('\'');
         sb.append(", role=").append(role);

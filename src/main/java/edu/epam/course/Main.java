@@ -1,23 +1,20 @@
 package edu.epam.course;
 
 import edu.epam.course.exception.DaoException;
-import edu.epam.course.exception.ServiceException;
-import edu.epam.course.model.dao.CourseDao;
-import edu.epam.course.model.dao.impl.CourseDaoImpl;
-import edu.epam.course.model.entity.Course;
-import edu.epam.course.model.entity.Lecture;
-import edu.epam.course.model.service.LectureService;
-import edu.epam.course.model.service.impl.LectureServiceImpl;
-import edu.epam.course.validator.CourseValidator;
+import edu.epam.course.model.dao.AboutUsDao;
+import edu.epam.course.model.dao.impl.AboutUsDaoImpl;
+import edu.epam.course.model.entity.AboutUs;
 
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.List;
 
 
 public class Main {
     public static void main(String[] args) throws DaoException {
-        System.out.println(CourseValidator.isValidCourseId("10"));
+        LocalDate localDate = LocalDate.now();
+
+        Date date = Date.valueOf(localDate);
 
     }
 

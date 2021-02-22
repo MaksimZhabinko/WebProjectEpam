@@ -61,6 +61,6 @@ public class FileUploadingServlet extends HttpServlet {
             logger.error("some error save file or file is exist" + e);
         }
         request.setAttribute("photo", path);
-        request.getRequestDispatcher("/pages/test.jsp").forward(request, response);
+        request.getRequestDispatcher("/pages/uploadTest.jsp").forward(request, response);
     }
 }

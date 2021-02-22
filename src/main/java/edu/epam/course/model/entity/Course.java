@@ -1,19 +1,9 @@
 package edu.epam.course.model.entity;
 
 public class Course extends Entity {
-    private Long id;
     private String name;
 
     public Course() {
-    }
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -28,16 +18,16 @@ public class Course extends Entity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
 
         Course course = (Course) o;
 
-        if (id != null ? !id.equals(course.id) : course.id != null) return false;
         return name != null ? name.equals(course.name) : course.name == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
+        int result = super.hashCode();
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }
@@ -45,8 +35,7 @@ public class Course extends Entity {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Course{");
-        sb.append("id=").append(id);
-        sb.append(", name='").append(name).append('\'');
+        sb.append("name='").append(name).append('\'');
         sb.append('}');
         return sb.toString();
     }

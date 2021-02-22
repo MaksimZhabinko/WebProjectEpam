@@ -20,7 +20,9 @@ public enum CommandType {
     BALANCE_REPLENISHMENT_PAGE(new PageCommand(PagePath.BALANCE_REPLENISHMENT.getDirectUrl())),
     BALANCE_REPLENISHMENT(new BalanceReplenishmentCommand(new UserServiceImpl())),
     COURSE_ADD(new CourseAddCommand(new CourseServiceImpl())),
-    COURSE_DELETE(new CourseDeleteCommand(new CourseServiceImpl()));
+    COURSE_DELETE(new CourseDeleteCommand(new CourseServiceImpl())),
+    ABOUT_US_PAGE(new OpenAboutUsCommand(new AboutUsServiceImpl())),
+    ABOUT_US_UPDATE(new AboutUsUpdateCommand(new AboutUsServiceImpl()));
 
     private Command command;
 

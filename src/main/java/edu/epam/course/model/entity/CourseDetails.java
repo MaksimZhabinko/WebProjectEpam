@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class CourseDetails extends Entity {
-    private Long id;
     private Integer hours;
     private String description;
     private Boolean isTest;
@@ -17,14 +16,6 @@ public class CourseDetails extends Entity {
     private Teacher teacher;
 
     public CourseDetails() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Integer getHours() {
@@ -103,10 +94,10 @@ public class CourseDetails extends Entity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
 
         CourseDetails that = (CourseDetails) o;
 
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (hours != null ? !hours.equals(that.hours) : that.hours != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
         if (isTest != null ? !isTest.equals(that.isTest) : that.isTest != null) return false;
@@ -120,7 +111,7 @@ public class CourseDetails extends Entity {
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
+        int result = super.hashCode();
         result = 31 * result + (hours != null ? hours.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (isTest != null ? isTest.hashCode() : 0);
@@ -136,8 +127,7 @@ public class CourseDetails extends Entity {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("CourseDetails{");
-        sb.append("id=").append(id);
-        sb.append(", hours=").append(hours);
+        sb.append("hours=").append(hours);
         sb.append(", description='").append(description).append('\'');
         sb.append(", isTest=").append(isTest);
         sb.append(", startCourse=").append(startCourse);

@@ -6,7 +6,7 @@ import edu.epam.course.model.entity.CourseDetails;
 import edu.epam.course.model.entity.Lecture;
 import edu.epam.course.model.service.CourseDetailsService;
 import edu.epam.course.model.service.LectureService;
-import edu.epam.course.validator.CourseValidator;
+import edu.epam.course.validator.IdValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -32,7 +32,7 @@ public class OpenLectureCommand implements Command {
         String courseId = request.getParameter(RequestParameter.COURSE_ID);
         boolean dataCorrect = true;
         try {
-            if (!CourseValidator.isValidCourseId(courseId)) {
+            if (!IdValidator.isValidId(courseId)) {
                 router.setPagePath(PagePath.ERROR_404.getDirectUrl()); // todo куда кидать если courseId будет строкой а не число
                 dataCorrect = false;
             }

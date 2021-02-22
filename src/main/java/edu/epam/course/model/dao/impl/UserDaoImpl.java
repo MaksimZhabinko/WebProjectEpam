@@ -60,7 +60,7 @@ public class UserDaoImpl implements UserDao {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 User user = new User();
-                user.setId(resultSet.getInt(1));
+                user.setId(resultSet.getLong(1));
                 user.setEmail(resultSet.getString(2));
                 user.setName(resultSet.getString(3));
                 user.setSurname(resultSet.getString(4));
@@ -90,7 +90,7 @@ public class UserDaoImpl implements UserDao {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 User user = new User();
-                user.setId(resultSet.getInt(1));
+                user.setId(resultSet.getLong(1));
                 user.setEmail(resultSet.getString(2));
                 user.setName(resultSet.getString(3));
                 user.setSurname(resultSet.getString(4));
