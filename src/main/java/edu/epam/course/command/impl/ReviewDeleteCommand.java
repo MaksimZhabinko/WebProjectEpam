@@ -28,12 +28,11 @@ public class ReviewDeleteCommand implements Command {
             reviewService.deleteReview(Long.valueOf(reviewId));
             router.setPagePath(PagePath.REVIEW.getServletPath());
             router.setType(Router.Type.REDIRECT);
-        } catch (ServiceException e) {
+        } catch (ServiceException | NumberFormatException e) {
             logger.error(e);
             router.setPagePath(PagePath.ERROR_500.getDirectUrl());
             request.setAttribute(RequestAttribute.EXCEPTION, e.getMessage());
         }
-
         return router;
     }
 }

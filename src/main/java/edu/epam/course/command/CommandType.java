@@ -16,13 +16,19 @@ public enum CommandType {
     REVIEW_PAGE(new OpenReviewsCommand(new ReviewServiceImpl())),
     REVIEW_DELETE(new ReviewDeleteCommand(new ReviewServiceImpl())),
     REVIEW_ADD(new ReviewAddCommand(new ReviewServiceImpl())),
-    LECTURE_PAGE(new OpenLectureCommand(new LectureServiceImpl(), new CourseDetailsServiceImpl())),
+    LECTURE_PAGE(new OpenLectureCommand(new LectureServiceImpl(), new CourseDetailsServiceImpl(), new CourseServiceImpl())),
     BALANCE_REPLENISHMENT_PAGE(new PageCommand(PagePath.BALANCE_REPLENISHMENT.getDirectUrl())),
     BALANCE_REPLENISHMENT(new BalanceReplenishmentCommand(new UserServiceImpl())),
     COURSE_ADD(new CourseAddCommand(new CourseServiceImpl())),
     COURSE_DELETE(new CourseDeleteCommand(new CourseServiceImpl())),
     ABOUT_US_PAGE(new OpenAboutUsCommand(new AboutUsServiceImpl())),
-    ABOUT_US_UPDATE(new AboutUsUpdateCommand(new AboutUsServiceImpl()));
+    ABOUT_US_UPDATE(new AboutUsUpdateCommand(new AboutUsServiceImpl())),
+    LECTURE_ADD(new LectureAddCommand(new LectureServiceImpl())),
+    LECTURE_DELETE(new LectureDeleteCommand(new LectureServiceImpl())),
+    LECTURE_UPDATE(new LectureUpdateCommand(new LectureServiceImpl())),
+    PERSONAL_AREA_PAGE(new PageCommand(PagePath.PERSONAL_AREA.getDirectUrl())), // todo придеться делать open command чтоб отобразить кусры его записанные
+    SHOW_ALL_USERS(new ShowAllUsersCommand(new UserServiceImpl())),
+    ENROLL_COURSE(new EnrollCourseCommand(new UserServiceImpl()));
 
     private Command command;
 

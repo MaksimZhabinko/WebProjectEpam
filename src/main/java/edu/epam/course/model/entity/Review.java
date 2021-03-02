@@ -59,7 +59,8 @@ public class Review extends Entity {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Review{");
-        sb.append("message='").append(message).append('\'');
+        sb.append("id=").append(getId());
+        sb.append(", message='").append(message).append('\'');
         sb.append(", dateMessage=").append(dateMessage);
         sb.append(", user=").append(user);
         sb.append('}');

@@ -9,7 +9,7 @@ import edu.epam.course.exception.ServiceException;
 import edu.epam.course.model.entity.Review;
 import edu.epam.course.model.entity.User;
 import edu.epam.course.model.service.ReviewService;
-import edu.epam.course.validator.ReviewValidator;
+import edu.epam.course.validator.ValidMessage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -33,8 +33,8 @@ public class ReviewAddCommand implements Command {
         Router router = new Router();
         boolean dataCorrect = true;
         try {
-            if (!ReviewValidator.isValidMessage(message)) {
-                request.setAttribute(RequestAttribute.ERROR_REVIEW_MESSAGE, true);
+            if (!ValidMessage.isValidMessage(message)) {
+                request.setAttribute(RequestAttribute.ERROR_MESSAGE, true);
                 router.setPagePath(PagePath.REVIEW.getServletPath());
                 dataCorrect = false;
             }

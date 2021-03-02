@@ -14,6 +14,9 @@ public class RequestParameter {
     public static final String COURSE_ID = "course_id";
     public static final String COURSE_NAME = "course_name";
     public static final String MONEY = "money";
+    public static final String ABOUT_US_ID = "about_us_id";
+    public static final String LECTURE_ID = "lecture_id";
+    public static final String COURSE_COST = "course_cost";
 
     private RequestParameter() {
     }

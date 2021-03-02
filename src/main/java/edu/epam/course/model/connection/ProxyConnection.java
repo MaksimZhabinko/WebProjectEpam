@@ -60,7 +60,7 @@ public class ProxyConnection implements Connection {
     @Override
     public void close()  {
         try {
-            ConnectionPool.INSTANCE.releaseConnection(this);
+            ConnectionPool.getInstance().releaseConnection(this);
         } catch (ConnectionException e) {
             logger.error("Invalid connection type passed");
         }

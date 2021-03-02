@@ -24,7 +24,7 @@ public class AboutUsDaoImpl implements AboutUsDao {
     @Override
     public List<AboutUs> findAll() throws DaoException {
         List<AboutUs> aboutUsList = new ArrayList<>();
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_ABOUT_US)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -58,7 +58,7 @@ public class AboutUsDaoImpl implements AboutUsDao {
     @Override
     public boolean updateMessage(AboutUs aboutUs) throws DaoException {
         boolean isUpdate;
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_MESSAGE)) {
             preparedStatement.setString(1, aboutUs.getMessage());
             preparedStatement.setLong(2, aboutUs.getId());

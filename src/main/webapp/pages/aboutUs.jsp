@@ -23,8 +23,7 @@
                 <input type="hidden" name="command" value="about_us_update">
                 <input type="hidden" name="about_us_id" value="${aboutUs.getId()}">
                 <textarea name="message" required></textarea>
-                <input type="submit" value="UPDATE ABOUT US">
-<%--                todo localization--%>
+                <input type="submit" value="<fmt:message key="button.update_about_us"/>">
             </form>
         </c:if>
     </c:forEach>

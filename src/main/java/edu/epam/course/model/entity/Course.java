@@ -35,7 +35,8 @@ public class Course extends Entity {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Course{");
-        sb.append("name='").append(name).append('\'');
+        sb.append("id=").append(getId());
+        sb.append(", name='").append(name).append('\'');
         sb.append('}');
         return sb.toString();
     }

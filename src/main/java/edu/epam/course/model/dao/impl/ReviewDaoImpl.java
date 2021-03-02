@@ -23,7 +23,7 @@ public class ReviewDaoImpl implements ReviewDao {
     @Override
     public List<Review> findAll() throws DaoException {
         List<Review> reviews = new ArrayList<>();
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_REVIEW)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -56,7 +56,7 @@ public class ReviewDaoImpl implements ReviewDao {
     @Override
     public boolean add(Review review) throws DaoException {
         boolean isAdd;
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(ADD_REVIEW)) {
             preparedStatement.setString(1, review.getMessage());
             preparedStatement.setDate(2, Date.valueOf(review.getDateMessage()));
@@ -73,7 +73,7 @@ public class ReviewDaoImpl implements ReviewDao {
     @Override
     public boolean deleteById(Long id) throws DaoException {
         boolean isDelete;
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_REVIEW)) {
             preparedStatement.setLong(1, id);
 

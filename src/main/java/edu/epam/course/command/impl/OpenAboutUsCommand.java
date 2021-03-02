@@ -26,7 +26,7 @@ public class OpenAboutUsCommand implements Command {
         HttpSession session = request.getSession();
         try {
             List<AboutUs> aboutUsList = aboutUsService.findAll();
-            request.setAttribute("aboutUsList", aboutUsList); // todo constant
+            request.setAttribute(RequestAttribute.ABOUT_US_LIST, aboutUsList);
             router.setPagePath(PagePath.ABOUT_US.getDirectUrl());
             session.setAttribute(SessionAttribute.CURRENT_PAGE, PagePath.ABOUT_US.getServletPath());
         } catch (ServiceException e) {

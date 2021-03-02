@@ -19,31 +19,55 @@ import java.util.Optional;
 public class LectureDaoImpl implements LectureDao {
     private static final Logger logger = LogManager.getLogger(LectureDaoImpl.class);
     private static final String FIND_LECTURE_BY_ID = "SELECT lecture_id, lecture, course_id, course_name  FROM course.lectures INNER JOIN course.courses ON fk_lecture_x_course_id = course_id WHERE course_id = ?";
+    private static final String ADD_LECTURE = "INSERT INTO `lectures` (`lecture`, `fk_lecture_x_course_id`) VALUES (?, ?)";
+    private static final String DELETE_LECTURE = "DELETE FROM course.lectures WHERE lecture_id = ?";
+    private static final String UPDATE_LECTURE = "UPDATE course.lectures SET lecture = ? WHERE lecture_id = ?";
 
     @Override
     public List<Lecture> findAll() throws DaoException {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Optional<Lecture> findEntityById(Long id) throws DaoException {
-        return Optional.empty();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean add(Lecture lecture) throws DaoException {
-        return false;
+        boolean isAdd;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(ADD_LECTURE)) {
+            preparedStatement.setString(1, lecture.getLecture());
+            preparedStatement.setLong(2, lecture.getCourse().getId());
+
+            isAdd = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DaoException(e);
+        }
+        return isAdd;
     }
 
     @Override
     public boolean deleteById(Long id) throws DaoException {
-        return false;
+        boolean isDelete;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_LECTURE)) {
+            preparedStatement.setLong(1, id);
+
+            isDelete = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DaoException(e);
+        }
+        return isDelete;
     }
 
     @Override
-    public List<Lecture> findAllById(Long id) throws DaoException {
+    public List<Lecture> findAllByCourseId(Long id) throws DaoException {
         List<Lecture> lectures = new ArrayList<>();
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_LECTURE_BY_ID)) {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -62,5 +86,21 @@ public class LectureDaoImpl implements LectureDao {
             throw new DaoException(e);
         }
         return lectures;
+    }
+
+    @Override
+    public boolean updateLecture(Lecture lecture) throws DaoException {
+        boolean isUpdate;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_LECTURE)) {
+            preparedStatement.setString(1, lecture.getLecture());
+            preparedStatement.setLong(2, lecture.getId());
+
+            isUpdate = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DaoException(e);
+        }
+        return isUpdate;
     }
 }

@@ -32,7 +32,8 @@ public class AboutUs extends Entity{
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("AboutUs{");
-        sb.append("message='").append(message).append('\'');
+        sb.append("id=").append(getId());
+        sb.append(", message='").append(message).append('\'');
         sb.append('}');
         return sb.toString();
     }

@@ -5,12 +5,12 @@
     <tlib-version>1.0</tlib-version> <short-name>ctg</short-name> <uri>customtags</uri>
     <tag>
         <name>footerTag</name>
-        <tag-class>edu.epam.course.custom_tag.FooterTag</tag-class>
+        <tag-class>edu.epam.course.tag.FooterTag</tag-class>
         <body-content>empty</body-content>
     </tag>
     <tag>
         <name>headerUserTag</name>
-        <tag-class>edu.epam.course.custom_tag.HeaderUserTag</tag-class>
+        <tag-class>edu.epam.course.tag.HeaderUserTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>role</name>

@@ -100,7 +100,8 @@ public class User extends Entity{
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("User{");
-        sb.append("email='").append(email).append('\'');
+        sb.append("id=").append(getId());
+        sb.append(", email='").append(email).append('\'');
         sb.append(", name='").append(name).append('\'');
         sb.append(", surname='").append(surname).append('\'');
         sb.append(", role=").append(role);

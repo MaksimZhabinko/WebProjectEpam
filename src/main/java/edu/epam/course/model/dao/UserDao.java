@@ -12,4 +12,6 @@ public interface UserDao extends BaseDao<Long, User> {
     boolean addUser(User user, String password) throws DaoException;
     boolean updateUserPassword(String password, Long userId) throws DaoException;
     boolean updateUserBalance(BigDecimal money, Long userId) throws DaoException;
+    boolean enrollCourse(User user, Long courseId) throws DaoException;
+    boolean userHaveCourse(Long userId, Long courseId) throws DaoException;
 }

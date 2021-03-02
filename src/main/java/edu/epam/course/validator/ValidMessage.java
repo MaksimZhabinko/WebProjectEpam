@@ -1,7 +1,7 @@
 package edu.epam.course.validator;
 
-public class ReviewValidator {
-    private ReviewValidator() {
+public class ValidMessage {
+    private ValidMessage() {
     }
 
     public static boolean isValidMessage(String message) {

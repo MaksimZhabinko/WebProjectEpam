@@ -6,5 +6,6 @@ import edu.epam.course.model.entity.Lecture;
 import java.util.List;
 
 public interface LectureDao extends BaseDao<Long, Lecture> {
-    List<Lecture> findAllById(Long id) throws DaoException;
+    List<Lecture> findAllByCourseId(Long id) throws DaoException;
+    boolean updateLecture(Lecture lecture) throws DaoException;
 }

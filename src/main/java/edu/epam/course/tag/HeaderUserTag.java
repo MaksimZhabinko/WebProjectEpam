@@ -1,4 +1,4 @@
-package edu.epam.course.custom_tag;
+package edu.epam.course.tag;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;

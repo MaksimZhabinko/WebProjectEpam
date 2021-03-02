@@ -1,23 +1,78 @@
 package edu.epam.course;
 
 import edu.epam.course.exception.DaoException;
-import edu.epam.course.model.dao.AboutUsDao;
-import edu.epam.course.model.dao.impl.AboutUsDaoImpl;
-import edu.epam.course.model.entity.AboutUs;
+import edu.epam.course.model.dao.LectureDao;
+import edu.epam.course.model.dao.UserDao;
+import edu.epam.course.model.dao.impl.LectureDaoImpl;
+import edu.epam.course.model.dao.impl.UserDaoImpl;
+import edu.epam.course.model.entity.Lecture;
+import edu.epam.course.model.entity.User;
+import edu.epam.course.util.PasswordEncryption;
+import edu.epam.course.validator.UserValidator;
 
-import java.sql.Date;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class Main {
     public static void main(String[] args) throws DaoException {
-        LocalDate localDate = LocalDate.now();
-
-        Date date = Date.valueOf(localDate);
-
+//        UserDao userDao = new UserDaoImpl();
+        EscapeUtil escapeUtil = new EscapeUtil();
+        escapeUtil.escapeHtml();
     }
 
+    private void forUploadFile() {
+        String uploadName = "fdbfdbfdbfdbfd.jpeg";
+        UUID uuid = UUID.randomUUID();
+        String name = uuid.toString();
+        int index = uploadName.lastIndexOf(".");
+        String extension = uploadName.substring(index);
+        System.out.println(name + extension);
+    }
+
+    private void deleteRepeatNumber() {
+        List<String> array = new ArrayList<>();
+        array.add("11");
+        array.add("11");
+        array.add("12");
+        array.add("12");
+        array.add("12");
+        array.add("12");
+        array.add("13");
+        array.add("13");
+        array.add("14");
+        array.add("15");
+
+        HashSet<String> set = new HashSet<>(array);
+
+        List<String> collect = array.stream().distinct().collect(Collectors.toList());
+        collect.stream().forEach(e -> System.out.println(e));
+
+
+        List<String> secondArray = new ArrayList<>();
+        for (int i = 0; i < array.size(); i++) {
+            boolean isNeedAdd = true;
+            String a = array.get(i);
+            if (secondArray.size() == 0) {
+                secondArray.add(a);
+                continue;
+            }
+            for (int j = 0; j < secondArray.size(); j++) {
+                String s = secondArray.get(j);
+                if (a.equals(s)) {
+                    isNeedAdd = false;
+                    continue;
+                }
+            }
+            if (isNeedAdd) {
+                secondArray.add(a);
+            }
+        }
+        secondArray.stream().forEach(e -> System.out.println(e));
+    }
 
     private void DateToIntAndIntToString () {
         SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss");

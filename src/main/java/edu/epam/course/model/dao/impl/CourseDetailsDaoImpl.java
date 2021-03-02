@@ -28,7 +28,7 @@ public class CourseDetailsDaoImpl implements CourseDetailsDao {
     @Override
     public Optional<CourseDetails> findEntityById(Long id) throws DaoException {
         Optional<CourseDetails> courseDetailsOptional = Optional.empty();
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_COURSE_DETAILS_BY_COURSE_ID)) {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -51,7 +51,7 @@ public class CourseDetailsDaoImpl implements CourseDetailsDao {
                 teacher.setSurname(resultSet.getString(13));
                 courseDetails.setCourse(course);
                 courseDetails.setTeacher(teacher);
-                courseDetailsOptional = Optional.of(courseDetails);
+                courseDetailsOptional = Optional.ofNullable(courseDetails);
             }
         } catch (SQLException e) {
             logger.error(e);

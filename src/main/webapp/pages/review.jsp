@@ -51,9 +51,9 @@
     </div>
 </c:if>
 
-<c:if test="${errorReviewMessage}">
+<c:if test="${errorMessage}">
     <div class="alert alert-danger" role="alert">
-        <fmt:message key="error.review.message"/>
+        <fmt:message key="error.message"/>
     </div>
 </c:if>
 <c:import url="fragment/footer.jsp"/>

@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
+import java.util.Optional;
 
 public class CourseServiceImpl implements CourseService {
     private static final Logger logger = LogManager.getLogger(CourseServiceImpl.class);
@@ -49,5 +50,17 @@ public class CourseServiceImpl implements CourseService {
             throw new ServiceException(e);
         }
         return isDelete;
+    }
+
+    @Override
+    public Optional<Course> findCourseById(Long id) throws ServiceException {
+        Optional<Course> courseOptional;
+        try {
+            courseOptional = courseDao.findEntityById(id);
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return courseOptional;
     }
 }

@@ -127,7 +127,8 @@ public class CourseDetails extends Entity {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("CourseDetails{");
-        sb.append("hours=").append(hours);
+        sb.append("id=").append(getId());
+        sb.append(", hours=").append(hours);
         sb.append(", description='").append(description).append('\'');
         sb.append(", isTest=").append(isTest);
         sb.append(", startCourse=").append(startCourse);

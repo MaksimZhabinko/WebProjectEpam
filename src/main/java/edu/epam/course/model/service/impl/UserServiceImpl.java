@@ -13,6 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -83,17 +84,56 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUserBalance(String money, User user) throws ServiceException {
+    public boolean updateUserBalance(String money, User user) throws ServiceException {
+        boolean isUpdate;
         try {
             BigDecimal moneyBigDecimal = new BigDecimal(money);
             BigDecimal userMoney = user.getMoney();
             BigDecimal result = moneyBigDecimal.add(userMoney);
-            userDao.updateUserBalance(result , user.getId());
+            isUpdate = userDao.updateUserBalance(result , user.getId());
             user.setMoney(result);
         } catch (DaoException e) {
             logger.error(e);
             throw new ServiceException(e);
         }
-        return user;
+        return isUpdate;
+    }
+
+    @Override
+    public List<User> findAllUsers() throws ServiceException {
+        List<User> users;
+        try {
+            users = userDao.findAll();
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return users;
+    }
+
+    @Override
+    public boolean enrollCourse(User user, Long courseId, BigDecimal transaction) throws ServiceException {
+        boolean isUpdate;
+        try {
+            userDao.updateUserBalance(transaction, user.getId());
+            user.setMoney(transaction);
+            isUpdate = userDao.enrollCourse(user, courseId);
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return isUpdate;
+    }
+
+    @Override
+    public boolean userHaveCourse(Long userId, Long courseId) throws ServiceException {
+        boolean isHave;
+        try {
+            isHave = userDao.userHaveCourse(userId, courseId);
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return isHave;
     }
 }

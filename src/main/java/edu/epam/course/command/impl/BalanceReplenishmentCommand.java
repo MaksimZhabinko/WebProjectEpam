@@ -1,10 +1,6 @@
 package edu.epam.course.command.impl;
 
-import edu.epam.course.command.Command;
-import edu.epam.course.command.PagePath;
-import edu.epam.course.command.RequestAttribute;
-import edu.epam.course.command.RequestParameter;
-import edu.epam.course.command.Router;
+import edu.epam.course.command.*;
 import edu.epam.course.exception.ServiceException;
 import edu.epam.course.model.entity.User;
 import edu.epam.course.model.service.UserService;
@@ -28,7 +24,7 @@ public class BalanceReplenishmentCommand implements Command {
         String money = request.getParameter(RequestParameter.MONEY);
         Router router = new Router();
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute(RequestAttribute.USER);
+        User user = (User) session.getAttribute(SessionAttribute.USER);
         boolean dataCorrect = true;
         try {
             if (!BalanceReplenishmentValidator.isValidMoney(money)) {
@@ -39,7 +35,7 @@ public class BalanceReplenishmentCommand implements Command {
             if (dataCorrect) {
                 userService.updateUserBalance(money, user);
                 session.setAttribute(RequestAttribute.USER, user);
-                router.setPagePath(PagePath.MAIN.getServletPath());
+                router.setPagePath(PagePath.MAIN.getServletPath()); // todo возможни кидать на personal area
                 router.setType(Router.Type.REDIRECT);
             }
         } catch (ServiceException e) {

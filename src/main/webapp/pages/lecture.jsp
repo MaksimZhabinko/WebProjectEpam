@@ -28,13 +28,59 @@
     <div>
         <c:forEach var="lecture" items="${lectures}">
             <p>${lecture.getLecture()}</p>
+            <c:if test="${user.getRole().toString() eq 'ADMIN'}">
+                <form action="${pageContext.request.contextPath}/controller" method="post">
+                    <input type="hidden" name="command" value="lecture_update">
+                    <input type="hidden" name="lecture_id" value="${lecture.getId()}">
+                    <input type="hidden" name="course_id" value="${courseId}">
+                    <input type="text" name="message" required>
+                    <input type="submit" value="<fmt:message key="button.update_lecture"/>">
+                </form>
+                <form action="${pageContext.request.contextPath}/controller" method="post">
+                    <input type="hidden" name="command" value="lecture_delete">
+                    <input type="hidden" name="lecture_id" value="${lecture.getId()}">
+                    <input type="hidden" name="course_id" value="${courseId}">
+                    <input type="submit" value="<fmt:message key="button.delete_lecture"/>">
+                </form>
+            </c:if>
         </c:forEach>
     </div>
 </c:if>
 
+<c:if test="${user.getRole().toString() eq 'ADMIN'}">
+    <form action="${pageContext.request.contextPath}/controller" method="post">
+        <input type="hidden" name="command" value="lecture_add">
+        <input type="hidden" name="course_id" value="${courseId}">
+        <input type="text" name="message" required>
+        <input type="submit" value="<fmt:message key="button.add_lecture"/>">
+    </form>
+</c:if>
+
+<c:if test="${errorUserHaveLittleMoney}">
+    <div class="alert alert-danger" role="alert">
+        <fmt:message key="error.lecture.user_have_little_money"/>
+    </div>
+</c:if>
+<c:if test="${errorUserHaveCourse}">
+    <div class="alert alert-danger" role="alert">
+        <fmt:message key="error.lecture.user_have_course"/>
+    </div>
+</c:if>
+
+<c:if test="${user.getRole().toString() eq 'USER'}">
+    <form action="${pageContext.request.contextPath}/controller" method="post">
+        <input type="hidden" name="command" value="enroll_course">
+        <input type="hidden" name="course_id" value="${courseId}">
+        <input type="hidden" name="course_cost" value="${courseDetails.getCost()}">
+        <input type="submit" value="<fmt:message key="button.submit.lecture"/>">
+    </form>
+</c:if>
+
 <c:if test="${lectures == null}">
-    <h1>ТУТ НЕТ ЕЩЕ НИЧЕГО</h1>
-<%--    todo localizaton--%>
+    <h1><fmt:message key="h1.no_lecture"/></h1>
+</c:if>
+<c:if test="${courseDetails == null}">
+    <h1><fmt:message key="h1.no_course_details"/></h1>
 </c:if>
 
 <c:import url="fragment/footer.jsp"/>

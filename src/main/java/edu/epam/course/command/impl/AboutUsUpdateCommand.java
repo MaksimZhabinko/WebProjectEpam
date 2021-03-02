@@ -4,7 +4,6 @@ import edu.epam.course.command.*;
 import edu.epam.course.exception.ServiceException;
 import edu.epam.course.model.entity.AboutUs;
 import edu.epam.course.model.service.AboutUsService;
-import edu.epam.course.validator.IdValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,14 +19,11 @@ public class AboutUsUpdateCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) {
-        String aboutUsId = request.getParameter("about_us_id");
-        String message = request.getParameter("message"); // todo constant
+        String aboutUsId = request.getParameter(RequestParameter.ABOUT_US_ID);
+        String message = request.getParameter(RequestParameter.MESSAGE);
         Router router = new Router();
         boolean dataCorrect = true;
         try {
-            if (!IdValidator.isValidId(aboutUsId)) {
-                // todo что делать?
-            }
             if (dataCorrect) {
                 AboutUs aboutUs = new AboutUs();
                 aboutUs.setId(Long.valueOf(aboutUsId));
@@ -35,7 +31,7 @@ public class AboutUsUpdateCommand implements Command {
                 aboutUsService.updateMessage(aboutUs);
                 router.setPagePath(PagePath.ABOUT_US.getServletPath());
             }
-        } catch (ServiceException e) {
+        } catch (ServiceException | NumberFormatException e) {
             logger.error(e);
             router.setPagePath(PagePath.ERROR_500.getDirectUrl());
             request.setAttribute(RequestAttribute.EXCEPTION, e.getMessage());

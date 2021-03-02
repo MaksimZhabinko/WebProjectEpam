@@ -9,7 +9,7 @@ public class RequestAttribute {
     public static final String ERROR_EMAIL_MESSAGE_IS_NOT_EXIST = "errorEmailMessageIsNotExist";
     public static final String ERROR_NAME_AND_SURNAME_MESSAGE = "errorNameAndSurnameMessage";
     public static final String ERROR_PASSWORD_MESSAGE = "errorPasswordMessage";
-    public static final String ERROR_REVIEW_MESSAGE = "errorReviewMessage";
+    public static final String ERROR_MESSAGE = "errorMessage";
     public static final String EXCEPTION = "Exception";
     public static final String EMAIL = "email";
     public static final String NAME = "name";
@@ -21,7 +21,12 @@ public class RequestAttribute {
     public static final String COURSES = "courses";
     public static final String REVIEWS = "reviews";
     public static final String ERROR_BALANCE_MESSAGE_IS_VALID = "errorBalanceMessageIsValid";
-    public static final String ERROR_BALANCE_USER_ID_IS_NOT_EXIST = "errorBalanceUserIdIsNotExist";
+    public static final String ABOUT_US_LIST = "aboutUsList";
+    public static final String COURSE_ID = "courseId";
+    public static final String ALL_USERS = "allUsers";
+    public static final String ERROR_USER_HAVE_LITTLE_MONEY = "errorUserHaveLittleMoney";
+    public static final String ERROR_USER_HAVE_COURSE = "errorUserHaveCourse";
+
 
     private RequestAttribute() {
     }
