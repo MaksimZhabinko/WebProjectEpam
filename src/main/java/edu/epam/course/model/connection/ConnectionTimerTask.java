@@ -16,18 +16,21 @@ public class ConnectionTimerTask extends TimerTask {
 
     @Override
     public void run() {
-        lock.lock();
-        ConnectionPool instance = ConnectionPool.getInstance();
-        while (instance.getSize() < ConnectionPool.DEFAULT_POOL_SIZE) {
-            try {
+        try {
+            lock.lock();
+            ConnectionPool instance = ConnectionPool.getInstance();
+            ConnectionPool.timeTaskIsWork.set(true);
+            while (instance.getSize() < ConnectionPool.DEFAULT_POOL_SIZE) {
                 Connection connection = ConnectionCreator.getConnection();
                 ProxyConnection proxyConnection = new ProxyConnection(connection);
-                instance.freeConnection.offer(proxyConnection); // todo нужно так делать?
-            } catch (SQLException e) {
-                logger.fatal(e);
-                throw new RuntimeException(e);
+                instance.freeConnection.offer(proxyConnection);
             }
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new RuntimeException(e);
+        } finally {
+            lock.unlock();
+            ConnectionPool.timeTaskIsWork.set(false);
         }
-        lock.unlock();
     }
 }

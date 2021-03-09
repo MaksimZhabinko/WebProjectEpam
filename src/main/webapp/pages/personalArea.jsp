@@ -59,6 +59,21 @@
         </c:forEach>
     </table>
 </c:if>
+<c:if test="${userEnrolledByCourse != null}">
+    <p>Ваши курсы</p>
+    <table border="1">
+        <tr>
+                <%--            fixme localization--%>
+            <th>course name</th>
+        </tr>
+        <c:forEach var="course" items="${userEnrolledByCourse}">
+            <tr>
+                <td>${course.getName()}</td>
+            </tr>
+        </c:forEach>
+    </table>
+</c:if>
+
 
 <c:import url="fragment/footer.jsp"/>
 </body>

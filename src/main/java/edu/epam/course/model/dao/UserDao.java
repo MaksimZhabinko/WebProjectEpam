@@ -1,5 +1,6 @@
 package edu.epam.course.model.dao;
 
+import edu.epam.course.model.entity.AboutUs;
 import edu.epam.course.model.entity.User;
 import edu.epam.course.exception.DaoException;
 
@@ -14,4 +15,5 @@ public interface UserDao extends BaseDao<Long, User> {
     boolean updateUserBalance(BigDecimal money, Long userId) throws DaoException;
     boolean enrollCourse(User user, Long courseId) throws DaoException;
     boolean userHaveCourse(Long userId, Long courseId) throws DaoException;
+    boolean test(String[] usersId); // todo remove
 }

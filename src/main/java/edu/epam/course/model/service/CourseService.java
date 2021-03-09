@@ -11,4 +11,5 @@ public interface CourseService {
     boolean addCourse(Course course) throws ServiceException;
     boolean deleteCourse(Long id) throws ServiceException;
     Optional<Course> findCourseById(Long id) throws ServiceException;
+    List<Course> findUserEnrolledByCourse(Long userId) throws ServiceException;
 }

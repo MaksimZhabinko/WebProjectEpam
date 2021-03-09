@@ -1,28 +1,29 @@
 package edu.epam.course;
 
 import edu.epam.course.exception.DaoException;
-import edu.epam.course.model.dao.LectureDao;
+import edu.epam.course.model.connection.ConnectionPool;
 import edu.epam.course.model.dao.UserDao;
-import edu.epam.course.model.dao.impl.LectureDaoImpl;
 import edu.epam.course.model.dao.impl.UserDaoImpl;
-import edu.epam.course.model.entity.Lecture;
-import edu.epam.course.model.entity.User;
-import edu.epam.course.util.PasswordEncryption;
-import edu.epam.course.validator.UserValidator;
 
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 
 public class Main {
     public static void main(String[] args) throws DaoException {
-//        UserDao userDao = new UserDaoImpl();
-        EscapeUtil escapeUtil = new EscapeUtil();
-        escapeUtil.escapeHtml();
+        UserDao userDao = new UserDaoImpl();
+        String[] a = new String[2];
+        a[0] = "3";
+        a[1] = "4";
+        userDao.test(a);
+
     }
+
 
     private void forUploadFile() {
         String uploadName = "fdbfdbfdbfdbfd.jpeg";

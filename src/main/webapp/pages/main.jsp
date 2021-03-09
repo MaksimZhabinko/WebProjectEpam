@@ -38,6 +38,14 @@
         <input type="submit" value="<fmt:message key="button.add_course"/>">
     </form>
 </c:if>
+
+<form action="${pageContext.request.contextPath}/controller" method="post">
+    <input type="hidden" name="command" value="test">
+    <input type="checkbox" name="name" value="3">John</input>
+    <input type="checkbox" name="name" value="4">Matt</input>
+    <input type="checkbox" name="name" value="5">Chris</input>
+    <input type="submit" value="ОТПРАВИТЬ">
+</form>
 <c:import url="fragment/footer.jsp"/>
 </body>
 </html>

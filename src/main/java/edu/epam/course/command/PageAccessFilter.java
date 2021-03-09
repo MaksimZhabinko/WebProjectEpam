@@ -15,7 +15,8 @@ public enum PageAccessFilter {
             CommandType.REVIEW_PAGE,
             CommandType.LECTURE_PAGE,
             CommandType.ABOUT_US_PAGE,
-            CommandType.PERSONAL_AREA_PAGE
+            CommandType.PERSONAL_AREA_PAGE,
+            CommandType.TEST // todo remove
     )),
     USER(Set.of(
             CommandType.MAIN_PAGE,

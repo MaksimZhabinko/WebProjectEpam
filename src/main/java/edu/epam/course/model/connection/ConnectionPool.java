@@ -12,14 +12,21 @@ import java.util.Queue;
 import java.util.Timer;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
-public class ConnectionPool { // todo посмотрите ConnectionPool getConnection и releaseConnection и ConnectionTimerTask
+public class ConnectionPool {
     private static final Logger logger = LogManager.getLogger(ConnectionPool.class);
     private static ConnectionPool instance;
     private static final Timer timerTask = new Timer();
     static final int DEFAULT_POOL_SIZE = 8;
     final BlockingQueue<ProxyConnection> freeConnection;
     private final Queue<ProxyConnection> givenAwayConnection;
+    private static final AtomicBoolean isInitialized = new AtomicBoolean(false);
+    private static final Lock lock = new ReentrantLock();
+    static final AtomicBoolean timeTaskIsWork = new AtomicBoolean(false);
 
     private ConnectionPool() {
         freeConnection = new LinkedBlockingQueue<>(DEFAULT_POOL_SIZE);
@@ -29,29 +36,51 @@ public class ConnectionPool { // todo посмотрите ConnectionPool getCon
     }
 
     public static ConnectionPool getInstance() {
-        if (instance == null) {
-            instance = new ConnectionPool();
+        if (!isInitialized.get()) {
+            lock.lock();
+            if (instance == null) {
+                instance = new ConnectionPool();
+                isInitialized.set(true);
+            }
+            lock.unlock();
         }
         return instance;
     }
 
-    public ProxyConnection getConnection() {
+    public Connection getConnection() { // todo нормально?
+        while (timeTaskIsWork.get()) {
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                logger.error(e);
+                Thread.currentThread().interrupt();
+            }
+        }
         ProxyConnection proxyConnection = null;
         try {
             proxyConnection = freeConnection.take();
             givenAwayConnection.offer(proxyConnection);
         } catch (InterruptedException e) {
-            logger.fatal("The connection is not received " + e);
-//            Thread.currentThread().interrupt(); todo зачем он тут?
+            logger.error("The connection is not received " + e);
+            Thread.currentThread().interrupt();
         }
         return proxyConnection;
     }
 
     public void releaseConnection(Connection connection) throws ConnectionException {
+        while (timeTaskIsWork.get()) {
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                logger.error(e);
+                Thread.currentThread().interrupt();
+            }
+        }
         if (connection instanceof ProxyConnection) {
             givenAwayConnection.remove(connection);
             freeConnection.offer((ProxyConnection) connection);
         } else {
+            logger.error("Connection is not proxy or null!");
             throw new ConnectionException("Invalid connection type passed");
         }
     }
@@ -62,7 +91,7 @@ public class ConnectionPool { // todo посмотрите ConnectionPool getCon
                 freeConnection.take().reallyClose();
             } catch (SQLException | InterruptedException e) {
                 logger.error("The pool was not destroyed " + e);
-//                Thread.currentThread().interrupt(); // todo remove
+                Thread.currentThread().interrupt();
             }
         }
         deregisterDrivers();

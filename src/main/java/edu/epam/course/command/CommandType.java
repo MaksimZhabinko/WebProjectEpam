@@ -26,9 +26,10 @@ public enum CommandType {
     LECTURE_ADD(new LectureAddCommand(new LectureServiceImpl())),
     LECTURE_DELETE(new LectureDeleteCommand(new LectureServiceImpl())),
     LECTURE_UPDATE(new LectureUpdateCommand(new LectureServiceImpl())),
-    PERSONAL_AREA_PAGE(new PageCommand(PagePath.PERSONAL_AREA.getDirectUrl())), // todo придеться делать open command чтоб отобразить кусры его записанные
+    PERSONAL_AREA_PAGE(new OpenPersonalAreaCommand(new CourseServiceImpl())),
     SHOW_ALL_USERS(new ShowAllUsersCommand(new UserServiceImpl())),
-    ENROLL_COURSE(new EnrollCourseCommand(new UserServiceImpl()));
+    ENROLL_COURSE(new EnrollCourseCommand(new UserServiceImpl())),
+    TEST(new TEST()); // todo remove
 
     private Command command;
 

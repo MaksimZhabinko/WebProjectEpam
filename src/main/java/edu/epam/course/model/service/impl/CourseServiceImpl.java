@@ -63,4 +63,16 @@ public class CourseServiceImpl implements CourseService {
         }
         return courseOptional;
     }
+
+    @Override
+    public List<Course> findUserEnrolledByCourse(Long userId) throws ServiceException {
+        List<Course> courses;
+        try {
+            courses = courseDao.findUserEnrolledByCourse(userId);
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return courses;
+    }
 }

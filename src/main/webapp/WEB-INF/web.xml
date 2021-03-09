@@ -24,7 +24,16 @@
     </filter>
     <filter-mapping>
         <filter-name>EncodingFilter</filter-name>
-        <url-pattern>/controller</url-pattern>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>XSSProtectFilter</filter-name>
+        <filter-class>edu.epam.course.controller.filter.XSSProtectFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>XSSProtectFilter</filter-name>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
 
     <filter>

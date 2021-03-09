@@ -84,7 +84,7 @@ public class UserDaoImpl implements UserDao {
     public List<User> findAll() throws DaoException {
         List<User> users = new ArrayList<>();
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_USERS)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_USERS)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 User user = new User();
@@ -163,7 +163,7 @@ public class UserDaoImpl implements UserDao {
     public boolean updateUserPassword(String password, Long userId) throws DaoException {
         boolean isUpdate;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_PASSWORD)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_PASSWORD)) {
             preparedStatement.setString(1, password);
             preparedStatement.setLong(2, userId);
 
@@ -179,7 +179,7 @@ public class UserDaoImpl implements UserDao {
     public boolean updateUserBalance(BigDecimal money, Long userId) throws DaoException {
         boolean isUpdate;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_BALANCE)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_BALANCE)) {
             preparedStatement.setBigDecimal(1, money);
             preparedStatement.setLong(2, userId);
 
@@ -195,7 +195,7 @@ public class UserDaoImpl implements UserDao {
     public boolean enrollCourse(User user, Long courseId) throws DaoException {
         boolean isUpdate;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(ENROLL_COURSE)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(ENROLL_COURSE)) {
             preparedStatement.setLong(1, user.getId());
             preparedStatement.setLong(2, courseId);
 
@@ -224,5 +224,36 @@ public class UserDaoImpl implements UserDao {
             throw new DaoException(e);
         }
         return isHave;
+    }
+
+    private static final String ddd = "UPDATE course.users SET enabled = false WHERE user_id = ?"; // todo remove
+    @Override
+    public boolean test(String[] usersId) {
+        boolean isUpdate = false;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = ConnectionPool.getInstance().getConnection();
+            connection.setAutoCommit(false);
+            preparedStatement = connection.prepareStatement(ddd);
+            for (int i = 0; i < usersId.length; i++) {
+                preparedStatement.setLong(1, Long.parseLong(usersId[i]));
+                preparedStatement.executeUpdate();
+            }
+            connection.commit();
+            isUpdate = true;
+        } catch (SQLException e) {
+            if (connection != null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException ex) {
+                    logger.error("rollback error");
+                }
+            }
+        } finally {
+            close(preparedStatement);
+            close(connection);
+        }
+        return isUpdate;
     }
 }

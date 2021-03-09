@@ -21,6 +21,7 @@ public class CourseDaoImpl implements CourseDao {
     private static final String ADD_COURSE = "INSERT INTO courses (course_name) VALUES (?)";
     private static final String DELETE_COURSE = "DELETE FROM course.courses WHERE course_id = ?";
     private static final String FIND_COURSE_BY_ID = "SELECT course_id, course_name FROM course.courses WHERE course_id = ?";
+    private static final String FIND_USER_ENROLLED_BY_COURSE = "SELECT course_id, course_name FROM course.users INNER JOIN course.users_x_courses ON fk_user_id = user_id INNER JOIN course.courses ON fk_course_id = course_id WHERE fk_user_id = ?";
 
     @Override
     public List<Course> findAll() throws DaoException {
@@ -89,5 +90,25 @@ public class CourseDaoImpl implements CourseDao {
             throw new DaoException(e);
         }
         return isDelete;
+    }
+
+    @Override
+    public List<Course> findUserEnrolledByCourse(Long userId) throws DaoException {
+        List<Course> courses = new ArrayList<>();
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_ENROLLED_BY_COURSE)) {
+            preparedStatement.setLong(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Course course = new Course();
+                course.setId(resultSet.getLong(1));
+                course.setName(resultSet.getString(2));
+                courses.add(course);
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DaoException(e);
+        }
+        return courses;
     }
 }
