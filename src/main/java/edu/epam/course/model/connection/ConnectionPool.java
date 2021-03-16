@@ -47,14 +47,9 @@ public class ConnectionPool {
         return instance;
     }
 
-    public Connection getConnection() { // todo нормально?
+    public Connection getConnection() {
         while (timeTaskIsWork.get()) {
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            } catch (InterruptedException e) {
-                logger.error(e);
-                Thread.currentThread().interrupt();
-            }
+            waitingOneSecond();
         }
         ProxyConnection proxyConnection = null;
         try {
@@ -69,12 +64,7 @@ public class ConnectionPool {
 
     public void releaseConnection(Connection connection) throws ConnectionException {
         while (timeTaskIsWork.get()) {
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            } catch (InterruptedException e) {
-                logger.error(e);
-                Thread.currentThread().interrupt();
-            }
+            waitingOneSecond();
         }
         if (connection instanceof ProxyConnection) {
             givenAwayConnection.remove(connection);
@@ -122,5 +112,14 @@ public class ConnectionPool {
 
     int getSize() {
         return freeConnection.size() + givenAwayConnection.size();
+    }
+
+    private static void waitingOneSecond() {
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            logger.error(e);
+            Thread.currentThread().interrupt();
+        }
     }
 }

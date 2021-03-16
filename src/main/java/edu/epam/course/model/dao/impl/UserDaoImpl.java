@@ -20,7 +20,7 @@ import java.util.Optional;
 public class UserDaoImpl implements UserDao {
     private static final Logger logger = LogManager.getLogger(UserDaoImpl.class);
     private static final String FIND_USER_BY_EMAIL = "SELECT user_id, email, name, surname, role, enabled, money FROM course.users WHERE email = ?";
-    private static final String FIND_USER_BY_EMAIL_AND_PASSWORD = "SELECT user_id, email, name, surname, role, enabled, money FROM course.users WHERE email = ? AND password = ?";
+    private static final String FIND_USER_BY_EMAIL_AND_PASSWORD = "SELECT user_id, email, name, surname, role, enabled, money, photo FROM course.users WHERE email = ? AND password = ?";
     private static final String FIND_USER_BY_ID = "SELECT user_id, email, name, surname, role, enabled, money FROM course.users WHERE user_id = ?";
     private static final String ADD_USER = "INSERT INTO `users` (`email`, `name`, `surname`, `password`, `role`, `enabled`) VALUES (?, ?, ?, ?, ?, ?)";
     private static final String UPDATE_USER_PASSWORD = "UPDATE course.users SET password = ? WHERE user_id = ?";
@@ -28,6 +28,8 @@ public class UserDaoImpl implements UserDao {
     private static final String FIND_ALL_USERS = "SELECT user_id, email, name, surname, role, enabled, money FROM course.users";
     private static final String ENROLL_COURSE = "INSERT INTO `users_x_courses` (`fk_user_id`, `fk_course_id`) VALUES (?, ?)";
     private static final String USER_ENROLL_THIS_COURSE = "SELECT fk_user_id, fk_course_id FROM course.users_x_courses WHERE fk_user_id = ? AND fk_course_id = ?";
+    private static final String UPDATE_USER_PHOTO = "UPDATE course.users SET photo = ? WHERE user_id = ?";
+    private static final String BLOCK_USER = "UPDATE course.users SET enabled = false WHERE user_id = ?";
 
     @Override
     public Optional<User> findByEmailAndPassword(String email, String password) throws DaoException {
@@ -46,6 +48,7 @@ public class UserDaoImpl implements UserDao {
                 user.setRole(RoleType.valueOf(resultSet.getString(5).toUpperCase()));
                 user.setEnabled(resultSet.getBoolean(6));
                 user.setMoney(resultSet.getBigDecimal(7));
+                user.setPhoto(resultSet.getString(8));
                 userOptional = Optional.ofNullable(user);
             }
         } catch (SQLException e) {
@@ -226,23 +229,38 @@ public class UserDaoImpl implements UserDao {
         return isHave;
     }
 
-    private static final String ddd = "UPDATE course.users SET enabled = false WHERE user_id = ?"; // todo remove
     @Override
-    public boolean test(String[] usersId) {
-        boolean isUpdate = false;
+    public boolean updateUserPhoto(User user) throws DaoException {
+        boolean isUpdate;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_PHOTO)) {
+            preparedStatement.setString(1, user.getPhoto());
+            preparedStatement.setLong(2, user.getId());
+
+            isUpdate = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DaoException(e);
+        }
+        return isUpdate;
+    }
+
+    @Override
+    public boolean blockUser(List<Long> usersId) throws DaoException {
+        boolean isUpdate;
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             connection.setAutoCommit(false);
-            preparedStatement = connection.prepareStatement(ddd);
-            for (int i = 0; i < usersId.length; i++) {
-                preparedStatement.setLong(1, Long.parseLong(usersId[i]));
+            preparedStatement = connection.prepareStatement(BLOCK_USER);
+            for (Long userId : usersId) {
+                preparedStatement.setLong(1, userId);
                 preparedStatement.executeUpdate();
             }
             connection.commit();
             isUpdate = true;
-        } catch (SQLException e) {
+        } catch (SQLException e) { // todo look
             if (connection != null) {
                 try {
                     connection.rollback();
@@ -250,6 +268,8 @@ public class UserDaoImpl implements UserDao {
                     logger.error("rollback error");
                 }
             }
+            logger.error(e);
+            throw new DaoException(e);
         } finally {
             close(preparedStatement);
             close(connection);

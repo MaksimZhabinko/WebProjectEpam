@@ -1,26 +1,27 @@
 package edu.epam.course;
 
 import edu.epam.course.exception.DaoException;
-import edu.epam.course.model.connection.ConnectionPool;
 import edu.epam.course.model.dao.UserDao;
 import edu.epam.course.model.dao.impl.UserDaoImpl;
+import edu.epam.course.model.entity.User;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
 public class Main {
     public static void main(String[] args) throws DaoException {
         UserDao userDao = new UserDaoImpl();
-        String[] a = new String[2];
-        a[0] = "3";
-        a[1] = "4";
-        userDao.test(a);
+//        String[] a = new String[2];
+//        a[0] = "3";
+//        a[1] = "4";
+//        List<Long> userId = new ArrayList<>();
+//        for (int i = 0; i < a.length; i++) {
+//            userId.add(Long.valueOf(a[i]));
+//        }
+//        userId.stream().forEach(e -> System.out.println(e));
 
     }
 
@@ -95,5 +96,11 @@ public class Main {
         System.out.println(sec);
         String stringDate = year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sec;
         System.out.println(stringDate);
+    }
+
+    public static String getDecoder(String string) {
+        byte[] decode = Base64.getDecoder().decode(string.getBytes());
+        String decodeString = new String(decode);
+        return decodeString;
     }
 }

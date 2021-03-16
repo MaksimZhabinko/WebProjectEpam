@@ -24,10 +24,7 @@ public class RequestAttribute {
     public static final String ABOUT_US_LIST = "aboutUsList";
     public static final String COURSE_ID = "courseId";
     public static final String ALL_USERS = "allUsers";
-    public static final String ERROR_USER_HAVE_LITTLE_MONEY = "errorUserHaveLittleMoney";
-    public static final String ERROR_USER_HAVE_COURSE = "errorUserHaveCourse";
     public static final String USER_ENROLLED_BY_COURSE = "userEnrolledByCourse";
-
 
     private RequestAttribute() {
     }

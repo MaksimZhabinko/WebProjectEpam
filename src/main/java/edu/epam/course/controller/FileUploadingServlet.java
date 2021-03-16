@@ -1,20 +1,24 @@
 package edu.epam.course.controller;
 
+import edu.epam.course.command.Command;
+import edu.epam.course.command.CommandProvider;
+import edu.epam.course.command.RequestParameter;
+import edu.epam.course.command.Router;
+import edu.epam.course.util.FileUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.imageio.ImageIO;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.awt.image.BufferedImage;
+import java.io.*;
 
 @WebServlet(urlPatterns = {"/upload/*"})
 @MultipartConfig(fileSizeThreshold = 1024 * 1024,
@@ -22,45 +26,43 @@ import java.io.IOException;
         maxRequestSize = 1024 * 1024 * 5 * 5)
 public class FileUploadingServlet extends HttpServlet {
     private static final Logger logger = LogManager.getLogger(FileUploadingServlet.class);
-    // fixme нету вывода фотки, фотки с одним и тем же название нельзя созранять( можно по идее добавить UUID на имя)
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = request.getParameter("url");
-        response.setContentType("image/jpeg");
-        ServletOutputStream out;
-        out = response.getOutputStream();
-        FileInputStream flinp = new FileInputStream(url);
-        BufferedInputStream buffinp = new BufferedInputStream(flinp);
-        BufferedOutputStream buffoup = new BufferedOutputStream(out);
-        int ch=0;
-        while ((ch=buffinp.read()) != -1) {
-
-            buffoup.write(ch);
-
-        }
-        buffinp.close();
-        flinp.close();
-        buffoup.close();
+        File file = new File(url);
+        BufferedImage bi = ImageIO.read(file);
+        OutputStream out = response.getOutputStream();
+        ImageIO.write(bi, "jpg", out);
         out.close();
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String path = null;
-        try {
-            for (Part part : request.getParts()) {
-                if (part.getSubmittedFileName() != null) {
-                    part.write("/Users/dasik/Desktop/" + part.getSubmittedFileName());
-                    path = "/Users/dasik/Desktop/" + part.getSubmittedFileName();
-                }
-            }
-        } catch (IOException e) {
-            logger.error("some error save file or file is exist" + e);
+        String commandString = request.getParameter(RequestParameter.COMMAND);
+        Command command = CommandProvider.defineCommand(commandString);
+        Router router = command.execute(request);
+
+        if (router.getType().equals(Router.Type.FORWARD)) {
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher(router.getPagePath());
+            requestDispatcher.forward(request, response);
+        } else {
+            response.sendRedirect(router.getPagePath());
         }
-        request.setAttribute("photo", path);
-        request.getRequestDispatcher("/pages/uploadTest.jsp").forward(request, response);
+
+
+
+//        try {
+//            for (Part part : request.getParts()) {
+//                if (part.getSubmittedFileName() != null) {
+//                    String fileName = part.getSubmittedFileName();
+//                    String newFileName = FileUtil.generateName(fileName);
+//                    part.write("/Users/dasik/Desktop/" + newFileName);
+//                }
+//            }
+//        } catch (IOException | ServletException e) {
+//            logger.error("some error save file" + e);
+//        }
+//        request.getRequestDispatcher("/pages/uploadTest.jsp").forward(request, response);
     }
 }

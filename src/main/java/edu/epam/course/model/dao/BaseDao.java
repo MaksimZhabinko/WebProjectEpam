@@ -25,6 +25,7 @@ public interface BaseDao <K, T extends Entity>{
             }
         } catch (SQLException e) {
             logger.error(e);
+            // todo нудно throw?
         }
     }
 

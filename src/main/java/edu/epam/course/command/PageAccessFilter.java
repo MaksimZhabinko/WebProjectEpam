@@ -15,8 +15,7 @@ public enum PageAccessFilter {
             CommandType.REVIEW_PAGE,
             CommandType.LECTURE_PAGE,
             CommandType.ABOUT_US_PAGE,
-            CommandType.PERSONAL_AREA_PAGE,
-            CommandType.TEST // todo remove
+            CommandType.PERSONAL_AREA_PAGE
     )),
     USER(Set.of(
             CommandType.MAIN_PAGE,
@@ -30,6 +29,7 @@ public enum PageAccessFilter {
             CommandType.BALANCE_REPLENISHMENT,
             CommandType.ABOUT_US_PAGE,
             CommandType.PERSONAL_AREA_PAGE,
+            CommandType.UPLOAD_FILE,
             CommandType.ENROLL_COURSE
     )),
     ADMIN(Set.of(
@@ -47,7 +47,9 @@ public enum PageAccessFilter {
             CommandType.LECTURE_DELETE,
             CommandType.LECTURE_UPDATE,
             CommandType.PERSONAL_AREA_PAGE,
-            CommandType.SHOW_ALL_USERS
+            CommandType.UPLOAD_FILE,
+            CommandType.SHOW_ALL_USERS,
+            CommandType.BLOCK_USER
     ));
 
     private final Set<CommandType> commands;

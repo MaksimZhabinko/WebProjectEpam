@@ -50,13 +50,10 @@ public class UserValidator {
     }
 
     public static boolean isValidPasswordAndRepeatPassword(String password, String repeatPassword) {
-        boolean isCorrect = false;
-        if (password != null || !password.isBlank()) {
-            Matcher matcher = PASSWORD_PATTERN.matcher(password);
-            if (matcher.matches() && password.equals(repeatPassword)) {
-                isCorrect = true;
-            }
+        if (password == null || password.isBlank() || repeatPassword == null || repeatPassword.isBlank() || !password.equals(repeatPassword)) {
+            return false;
         }
-        return isCorrect;
+        Matcher matcher = PASSWORD_PATTERN.matcher(password);
+        return matcher.matches();
     }
 }

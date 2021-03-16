@@ -14,10 +14,12 @@
 <c:import url="fragment/header.jsp"/>
 Uploads
 <FORM action="upload" enctype="multipart/form-data" method="POST">
+    <input type="hidden" name="command" value="upload_file">
     Upload File: <INPUT type="file" name="content" height="130">
     <INPUT type="submit" value="Upload File">
 
 </FORM>
-<img src="${pageContext.request.contextPath}/upload?url=/Users/dasik/Desktop/photo5388829697913237096.jpg"/>
+<img width="120" height="120" src="${pageContext.request.contextPath}/upload?url=/Users/dasik/Desktop/photo users courses/${photo}"/>
+<%--<img width="120" height="120" src="${pageContext.request.contextPath}/upload?url=/Users/dasik/Desktop/photo5388829697913237096.jpg"/>--%>
 </body>
 </html>

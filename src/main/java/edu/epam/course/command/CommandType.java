@@ -29,7 +29,8 @@ public enum CommandType {
     PERSONAL_AREA_PAGE(new OpenPersonalAreaCommand(new CourseServiceImpl())),
     SHOW_ALL_USERS(new ShowAllUsersCommand(new UserServiceImpl())),
     ENROLL_COURSE(new EnrollCourseCommand(new UserServiceImpl())),
-    TEST(new TEST()); // todo remove
+    UPLOAD_FILE(new UploadFileCommand(new UserServiceImpl())),
+    BLOCK_USER(new BlockUserCommand(new UserServiceImpl()));
 
     private Command command;
 

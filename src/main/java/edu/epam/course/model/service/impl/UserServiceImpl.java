@@ -136,4 +136,28 @@ public class UserServiceImpl implements UserService {
         }
         return isHave;
     }
+
+    @Override
+    public boolean updateUserPhoto(User user) throws ServiceException {
+        boolean isUpdate;
+        try {
+            isUpdate = userDao.updateUserPhoto(user);
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return isUpdate;
+    }
+
+    @Override
+    public boolean blockUser(List<Long> usersId) throws ServiceException {
+        boolean isUpdate;
+        try {
+            isUpdate = userDao.blockUser(usersId);
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return isUpdate;
+    }
 }

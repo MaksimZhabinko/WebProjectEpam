@@ -10,13 +10,10 @@ public class BalanceReplenishmentValidator {
     }
 
     public static boolean isValidMoney(String stringNumber) {
-        boolean isCorrect = false;
-        if (stringNumber != null || !stringNumber.isBlank()) {
-            Matcher matcher = MONEY_VALIDATOR.matcher(stringNumber);
-            if (matcher.matches()) {
-                isCorrect = true;
-            }
+        if (stringNumber == null || stringNumber.isBlank()) {
+            return false;
         }
-        return isCorrect;
+        Matcher matcher = MONEY_VALIDATOR.matcher(stringNumber);
+        return matcher.matches();
     }
 }

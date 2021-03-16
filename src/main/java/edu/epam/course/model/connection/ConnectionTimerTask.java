@@ -18,8 +18,8 @@ public class ConnectionTimerTask extends TimerTask {
     public void run() {
         try {
             lock.lock();
-            ConnectionPool instance = ConnectionPool.getInstance();
             ConnectionPool.timeTaskIsWork.set(true);
+            ConnectionPool instance = ConnectionPool.getInstance();
             while (instance.getSize() < ConnectionPool.DEFAULT_POOL_SIZE) {
                 Connection connection = ConnectionCreator.getConnection();
                 ProxyConnection proxyConnection = new ProxyConnection(connection);
@@ -29,8 +29,8 @@ public class ConnectionTimerTask extends TimerTask {
             logger.error(e);
             throw new RuntimeException(e);
         } finally {
-            lock.unlock();
             ConnectionPool.timeTaskIsWork.set(false);
+            lock.unlock();
         }
     }
 }

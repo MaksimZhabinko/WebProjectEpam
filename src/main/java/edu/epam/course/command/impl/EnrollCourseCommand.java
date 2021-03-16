@@ -42,12 +42,14 @@ public class EnrollCourseCommand implements Command {
                     router.setType(Router.Type.REDIRECT);
                     router.setPagePath(PagePath.PERSONAL_AREA.getServletPath());
                 } else {
-                    request.setAttribute(RequestAttribute.ERROR_USER_HAVE_LITTLE_MONEY, true);
+                    session.setAttribute(SessionAttribute.ERROR_USER_HAVE_LITTLE_MONEY, true);
                     router.setPagePath(PagePath.LECTURE.getServletPath() + courseId);
+                    router.setType(Router.Type.REDIRECT);
                 }
             } else {
-                request.setAttribute(RequestAttribute.ERROR_USER_HAVE_COURSE, true);
+                session.setAttribute(SessionAttribute.ERROR_USER_HAVE_COURSE, true);
                 router.setPagePath(PagePath.LECTURE.getServletPath() + courseId);
+                router.setType(Router.Type.REDIRECT);
             }
         } catch (ServiceException | NumberFormatException e) {
             logger.error(e);

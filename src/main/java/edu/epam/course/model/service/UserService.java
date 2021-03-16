@@ -17,4 +17,6 @@ public interface UserService {
     List<User> findAllUsers() throws ServiceException;
     boolean enrollCourse(User user, Long courseId, BigDecimal transaction) throws ServiceException;
     boolean userHaveCourse(Long userId, Long courseId) throws ServiceException;
+    boolean updateUserPhoto(User user) throws ServiceException;
+    boolean blockUser(List<Long> usersId) throws ServiceException;
 }

@@ -30,6 +30,7 @@ public class AboutUsUpdateCommand implements Command {
                 aboutUs.setMessage(message);
                 aboutUsService.updateMessage(aboutUs);
                 router.setPagePath(PagePath.ABOUT_US.getServletPath());
+                router.setType(Router.Type.REDIRECT);
             }
         } catch (ServiceException | NumberFormatException e) {
             logger.error(e);

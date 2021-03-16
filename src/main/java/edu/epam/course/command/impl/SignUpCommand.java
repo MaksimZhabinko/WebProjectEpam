@@ -34,7 +34,6 @@ public class SignUpCommand implements Command {
         String surname = request.getParameter(RequestParameter.SURNAME);
         String password = request.getParameter(RequestParameter.PASSWORD);
         String repeatPassword = request.getParameter(RequestParameter.REPEAT_PASSWORD);
-        HttpSession session = request.getSession();
         Router router = new Router();
         boolean dataCorrect = true;
         try {
@@ -59,9 +58,8 @@ public class SignUpCommand implements Command {
                 User user = new User(email, name, surname, RoleType.USER, true);
                 service.addUser(user, password);
                 MailSender.sendMessage(user.getEmail(), user.getName(), user.getSurname());
-                router.setPagePath(PagePath.MAIN.getServletPath());
+                router.setPagePath(PagePath.SIGN_IN.getServletPath());
                 router.setType(Router.Type.REDIRECT);
-                session.setAttribute(RequestAttribute.USER, user);
             } else {
                 router.setPagePath(PagePath.SIGN_UP.getDirectUrl());
                 request.setAttribute(RequestAttribute.EMAIL, email);

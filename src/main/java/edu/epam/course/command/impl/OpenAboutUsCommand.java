@@ -3,7 +3,6 @@ package edu.epam.course.command.impl;
 import edu.epam.course.command.*;
 import edu.epam.course.exception.ServiceException;
 import edu.epam.course.model.entity.AboutUs;
-import edu.epam.course.model.entity.Course;
 import edu.epam.course.model.service.AboutUsService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
