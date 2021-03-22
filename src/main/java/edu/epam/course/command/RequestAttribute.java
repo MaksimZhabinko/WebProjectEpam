@@ -25,6 +25,7 @@ public class RequestAttribute {
     public static final String COURSE_ID = "courseId";
     public static final String ALL_USERS = "allUsers";
     public static final String USER_ENROLLED_BY_COURSE = "userEnrolledByCourse";
+    public static final String ERROR_USER_BLOCK = "errorUserBlock";
 
     private RequestAttribute() {
     }

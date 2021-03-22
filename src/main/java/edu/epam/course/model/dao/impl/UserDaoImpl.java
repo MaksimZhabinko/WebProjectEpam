@@ -25,11 +25,12 @@ public class UserDaoImpl implements UserDao {
     private static final String ADD_USER = "INSERT INTO `users` (`email`, `name`, `surname`, `password`, `role`, `enabled`) VALUES (?, ?, ?, ?, ?, ?)";
     private static final String UPDATE_USER_PASSWORD = "UPDATE course.users SET password = ? WHERE user_id = ?";
     private static final String UPDATE_USER_BALANCE = "UPDATE course.users SET money = ? WHERE user_id = ?";
-    private static final String FIND_ALL_USERS = "SELECT user_id, email, name, surname, role, enabled, money FROM course.users";
+    private static final String FIND_ALL_USERS = "SELECT user_id, email, name, surname, role, enabled, money, photo FROM course.users";
     private static final String ENROLL_COURSE = "INSERT INTO `users_x_courses` (`fk_user_id`, `fk_course_id`) VALUES (?, ?)";
     private static final String USER_ENROLL_THIS_COURSE = "SELECT fk_user_id, fk_course_id FROM course.users_x_courses WHERE fk_user_id = ? AND fk_course_id = ?";
     private static final String UPDATE_USER_PHOTO = "UPDATE course.users SET photo = ? WHERE user_id = ?";
     private static final String BLOCK_USER = "UPDATE course.users SET enabled = false WHERE user_id = ?";
+    private static final String UNBLOCK_USER = "UPDATE course.users SET enabled = true WHERE user_id = ?";
 
     @Override
     public Optional<User> findByEmailAndPassword(String email, String password) throws DaoException {
@@ -98,6 +99,7 @@ public class UserDaoImpl implements UserDao {
                 user.setRole(RoleType.valueOf(resultSet.getString(5).toUpperCase()));
                 user.setEnabled(resultSet.getBoolean(6));
                 user.setMoney(resultSet.getBigDecimal(7));
+                user.setPhoto(resultSet.getString(8));
                 users.add(user);
             }
         } catch (SQLException e) {
@@ -133,11 +135,6 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean add(User user) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public boolean addUser(User user, String password) throws DaoException {
         boolean isAdd;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
@@ -155,11 +152,6 @@ public class UserDaoImpl implements UserDao {
             throw new DaoException(e);
         }
         return isAdd;
-    }
-
-    @Override
-    public boolean deleteById(Long id) {
-        return false;
     }
 
     @Override
@@ -260,14 +252,8 @@ public class UserDaoImpl implements UserDao {
             }
             connection.commit();
             isUpdate = true;
-        } catch (SQLException e) { // todo look
-            if (connection != null) {
-                try {
-                    connection.rollback();
-                } catch (SQLException ex) {
-                    logger.error("rollback error");
-                }
-            }
+        } catch (SQLException e) {
+            rollback(connection);
             logger.error(e);
             throw new DaoException(e);
         } finally {
@@ -275,5 +261,41 @@ public class UserDaoImpl implements UserDao {
             close(connection);
         }
         return isUpdate;
+    }
+
+    @Override
+    public boolean unblockUser(List<Long> usersId) throws DaoException {
+        boolean isUpdate;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = ConnectionPool.getInstance().getConnection();
+            connection.setAutoCommit(false);
+            preparedStatement = connection.prepareStatement(UNBLOCK_USER);
+            for (Long userId : usersId) {
+                preparedStatement.setLong(1, userId);
+                preparedStatement.executeUpdate();
+            }
+            connection.commit();
+            isUpdate = true;
+        } catch (SQLException e) {
+            rollback(connection);
+            logger.error(e);
+            throw new DaoException(e);
+        } finally {
+            close(preparedStatement);
+            close(connection);
+        }
+        return isUpdate;
+    }
+
+    @Override
+    public boolean add(User user) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean deleteById(Long id) {
+        throw new UnsupportedOperationException();
     }
 }

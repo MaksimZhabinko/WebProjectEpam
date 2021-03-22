@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
 
-public class UserUtilTest {
+public class CountMoneyTest {
 
     @DataProvider(name = "transaction")
     public static Object[][] transaction() {
@@ -18,7 +18,7 @@ public class UserUtilTest {
 
     @Test(dataProvider = "transaction")
     public void testTransaction(String courseCost, BigDecimal userMoney, BigDecimal expected) {
-        BigDecimal actual = UserUtil.transaction(courseCost, userMoney);
+        BigDecimal actual = CountMoney.transaction(courseCost, userMoney);
         Assert.assertEquals(actual, expected);
     }
 }

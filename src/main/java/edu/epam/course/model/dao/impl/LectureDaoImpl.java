@@ -24,16 +24,6 @@ public class LectureDaoImpl implements LectureDao {
     private static final String UPDATE_LECTURE = "UPDATE course.lectures SET lecture = ? WHERE lecture_id = ?";
 
     @Override
-    public List<Lecture> findAll() throws DaoException {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Optional<Lecture> findEntityById(Long id) throws DaoException {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public boolean add(Lecture lecture) throws DaoException {
         boolean isAdd;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
@@ -102,5 +92,15 @@ public class LectureDaoImpl implements LectureDao {
             throw new DaoException(e);
         }
         return isUpdate;
+    }
+
+    @Override
+    public List<Lecture> findAll() throws DaoException {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<Lecture> findEntityById(Long id) throws DaoException {
+        throw new UnsupportedOperationException();
     }
 }

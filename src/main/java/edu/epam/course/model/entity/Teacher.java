@@ -3,6 +3,7 @@ package edu.epam.course.model.entity;
 public class Teacher extends Entity {
     private String name;
     private String surname;
+    private String photo;
 
     public Teacher() {
     }
@@ -23,6 +24,14 @@ public class Teacher extends Entity {
         this.surname = surname;
     }
 
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -32,7 +41,8 @@ public class Teacher extends Entity {
         Teacher teacher = (Teacher) o;
 
         if (name != null ? !name.equals(teacher.name) : teacher.name != null) return false;
-        return surname != null ? surname.equals(teacher.surname) : teacher.surname == null;
+        if (surname != null ? !surname.equals(teacher.surname) : teacher.surname != null) return false;
+        return photo != null ? photo.equals(teacher.photo) : teacher.photo == null;
     }
 
     @Override
@@ -40,6 +50,7 @@ public class Teacher extends Entity {
         int result = super.hashCode();
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
+        result = 31 * result + (photo != null ? photo.hashCode() : 0);
         return result;
     }
 
@@ -49,6 +60,7 @@ public class Teacher extends Entity {
         sb.append("id=").append(getId());
         sb.append(", name='").append(name).append('\'');
         sb.append(", surname='").append(surname).append('\'');
+        sb.append(", photo='").append(photo).append('\'');
         sb.append('}');
         return sb.toString();
     }

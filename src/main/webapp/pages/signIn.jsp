@@ -28,6 +28,11 @@
                 <fmt:message key="error.signIn.emailAndPasswordIsValid"/>
             </div>
         </c:if>
+        <c:if test="${errorUserBlock}">
+            <div class="alert alert-danger" role="alert">
+                <fmt:message key="error.signIn.user_locked"/>
+            </div>
+        </c:if>
         <c:if test="${errorUserMessageIsNotExist}">
             <div class="alert alert-danger" role="alert">
                 <fmt:message key="error.signIn.emailAndPasswordIsIncorrect"/>

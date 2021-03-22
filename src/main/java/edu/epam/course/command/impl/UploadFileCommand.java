@@ -1,10 +1,15 @@
 package edu.epam.course.command.impl;
 
-import edu.epam.course.command.*;
+import edu.epam.course.command.Command;
+import edu.epam.course.command.PagePath;
+import edu.epam.course.command.RequestAttribute;
+import edu.epam.course.command.Router;
+import edu.epam.course.command.SessionAttribute;
 import edu.epam.course.exception.ServiceException;
 import edu.epam.course.model.entity.User;
 import edu.epam.course.model.service.UserService;
 import edu.epam.course.util.FileUtil;
+import edu.epam.course.util.PropertyReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,7 +21,7 @@ import java.io.IOException;
 
 public class UploadFileCommand implements Command {
     private static final Logger logger = LogManager.getLogger(UploadFileCommand.class);
-    private static final String PATH = "/Users/dasik/Desktop/photoUsersCourses/";
+    private static final String PATH = PropertyReader.getPath();
     private UserService userService;
 
     public UploadFileCommand(UserService userService) {
@@ -29,6 +34,7 @@ public class UploadFileCommand implements Command {
         User user = (User) session.getAttribute(RequestAttribute.USER);
         Router router = new Router();
         boolean isCorrect = false;
+        String oldUserImage = user.getPhoto();
         try {
             for (Part part : request.getParts()) {
                 if (part.getSubmittedFileName() != null) {
@@ -48,7 +54,7 @@ public class UploadFileCommand implements Command {
                 router.setType(Router.Type.REDIRECT);
                 router.setPagePath(PagePath.PERSONAL_AREA.getServletPath());
                 session.setAttribute(RequestAttribute.USER, user);
-                // todo придумать как удалить фото
+                FileUtil.deleteImage(PATH + oldUserImage);
             } else {
                 session.setAttribute(SessionAttribute.UPLOAD_FILE_ERROR, true);
                 router.setPagePath(PagePath.PERSONAL_AREA.getServletPath());

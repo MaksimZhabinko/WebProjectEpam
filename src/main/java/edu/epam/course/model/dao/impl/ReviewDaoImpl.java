@@ -9,7 +9,11 @@ import edu.epam.course.model.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -49,11 +53,6 @@ public class ReviewDaoImpl implements ReviewDao {
     }
 
     @Override
-    public Optional<Review> findEntityById(Long id) {
-        return null;
-    }
-
-    @Override
     public boolean add(Review review) throws DaoException {
         boolean isAdd;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
@@ -83,5 +82,10 @@ public class ReviewDaoImpl implements ReviewDao {
             throw new DaoException(e);
         }
         return isDelete;
+    }
+
+    @Override
+    public Optional<Review> findEntityById(Long id) {
+        throw new UnsupportedOperationException();
     }
 }

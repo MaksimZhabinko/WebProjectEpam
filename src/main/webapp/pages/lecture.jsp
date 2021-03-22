@@ -20,6 +20,8 @@
     <p><fmt:message key="lecture.start_course"/>: ${courseDetails.getStartCourse()}</p>
     <p><fmt:message key="lecture.end_course"/>: ${courseDetails.getEndCourse()}</p>
     <p><fmt:message key="lecture.time_course"/>: ${courseDetails.getStartOfClass()}</p>
+    <p><img width="200" height="200"
+            src="${pageContext.request.contextPath}/upload?url=/Users/dasik/Desktop/photoUsersCourses/${courseDetails.getTeacher().getPhoto()}"/></p>
     <p><fmt:message
             key="lecture.teacher"/>: ${courseDetails.getTeacher().getName()} ${courseDetails.getTeacher().getSurname()}</p>
     <p><fmt:message key="lecture.cost"/>: ${courseDetails.getCost()}</p>

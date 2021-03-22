@@ -1,12 +1,9 @@
 package edu.epam.course.util;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
+import java.io.File;
 import java.util.UUID;
 
 public class FileUtil {
-    private static final Logger logger = LogManager.getLogger(FileUtil.class);
     private static final String EXTENSION_SEPARATOR = ".";
 
     private FileUtil() {
@@ -18,5 +15,10 @@ public class FileUtil {
         int index = fileName.lastIndexOf(EXTENSION_SEPARATOR);
         String extension = fileName.substring(index);
         return name + extension;
+    }
+
+    public static void deleteImage(String fileName) {
+        File file = new File(fileName);
+        file.delete();
     }
 }

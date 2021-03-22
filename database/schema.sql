@@ -11,18 +11,21 @@ CREATE TABLE `users` (
     `surname` VARCHAR(255) NOT NULL,
     `password` VARCHAR(255) NOT NULL,
     `role` ENUM('User', 'Admin'),
-    `enabled` BOOLEAN NOT NULL
+    `enabled` BOOLEAN NOT NULL,
+    `money` DECIMAL(10,2) DEFAULT 0,
+    `photo` VARCHAR(255) DEFAULT NULL
 );
 
 CREATE TABLE `teachers` (
 	`teacher_id` INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL ,
-    `surname` VARCHAR(255) NOT NULL
+    `surname` VARCHAR(255) NOT NULL,
+    `photo` VARCHAR(255) DEFAULT NULL
 );
 
 CREATE TABLE `courses` (
 	`course_id` INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    `course_name` VARCHAR(255) NOT NULL
+    `course_name` VARCHAR(255) NOT NULL UNIQUE
 );
 
 CREATE TABLE `course_details` (
@@ -65,10 +68,32 @@ CREATE TABLE `reviews` (
     CONSTRAINT `fk_reviews_x_user` FOREIGN KEY (`fk_reviews_x_user_id`) REFERENCES `users`(`user_id`)
 );
 
+CREATE TABLE `about_us` (
+	`about_us_id` INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `message` TEXT NOT NULL
+);
+
+CREATE TABLE `users_x_courses` (
+	`fk_user_id` INTEGER NOT NULL,
+	`fk_course_id` INTEGER NOT NULL,
+
+    UNIQUE KEY(`fk_user_id`, `fk_course_id`),
+
+    CONSTRAINT `fk_x_user` FOREIGN KEY (`fk_user_id`) REFERENCES `users` (`user_id`)
+		ON DELETE CASCADE,
+
+	CONSTRAINT `fk_x_course` FOREIGN KEY (`fk_course_id`) REFERENCES `courses` (`course_id`)
+		ON DELETE CASCADE
+);
+
 INSERT INTO `users` (`email`, `name`, `surname`, `password`, `role`, `enabled`)
- VALUES ('maxim.style@mail.ru', 'Maksim', 'Zhabinko', 'TWFrc21hbjE0Nzg5NjMyQA==', 'admin', true),
- ('m.style@mail.ru', 'Vlad', 'Sakovich', 'TWFrc21hbjE0Nzg5NjMyQA==', 'user', true),
- ('m.fd@mail.ru', 'Dima', 'Stalchenko', 'TWFrc21hbjE0Nzg5NjMyQA==', 'user', true);
+ VALUES ('admin@mail.ru', 'Maksim', 'Zhabinko', 'TWFrc21hbjE0Nzg5NjMyQA==', 'admin', true),
+('testAdmin@mail.ru', 'admin', 'admin', 'MQ==', 'admin', true),
+('testUser@mail.ru', 'user', 'user', 'MQ==', 'user', true),
+('m.style@mail.ru', 'Vlad', 'Sakovich', 'TWFrc21hbjE0Nzg5NjMyQA==', 'user', true),
+('m.fd@mail.ru', 'Dima', 'Stalchenko', 'TWFrc21hbjE0Nzg5NjMyQA==', 'user', true);
+
+ INSERT INTO `about_us` (`message`) VALUES ('Мы лучшая компания по изучению ИТ специалистов');
 
 INSERT INTO `teachers` (`name`, `surname`) VALUES ('Никита', 'Решала');
 INSERT INTO `teachers`  (`name`, `surname`) VALUES ('Артем', 'Шевчюк');
@@ -123,7 +148,8 @@ INSERT INTO `lectures` (`lecture`, `fk_lecture_x_course_id`) VALUES ('Занят
 INSERT INTO `lectures` (`lecture`, `fk_lecture_x_course_id`) VALUES ('Занятие 17. Основы Linux.', 2);
 INSERT INTO `lectures` (`lecture`, `fk_lecture_x_course_id`) VALUES ('Занятие 18. Последнее занятие.', 2);
 
-
+INSERT INTO `users_x_courses` (`fk_user_id`, `fk_course_id`) VALUES (3, 1);
+INSERT INTO `users_x_courses` (`fk_user_id`, `fk_course_id`) VALUES (3, 2);
 
 INSERT INTO `reviews` (`message`, `date_message`, `fk_reviews_x_user_id`) VALUES ('прошел java SE все поравилось!', '2008-11-11', 2);
 INSERT INTO `reviews` (`message`, `date_message`, `fk_reviews_x_user_id`) VALUES ('прошел java SE все поравилось! НО пздц сложно', '2008-11-11', 2);

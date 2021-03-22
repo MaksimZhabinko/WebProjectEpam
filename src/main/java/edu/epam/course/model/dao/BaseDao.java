@@ -25,7 +25,6 @@ public interface BaseDao <K, T extends Entity>{
             }
         } catch (SQLException e) {
             logger.error(e);
-            // todo нудно throw?
         }
     }
 
@@ -37,6 +36,16 @@ public interface BaseDao <K, T extends Entity>{
             }
         } catch (SQLException e) {
             logger.error(e);
+        }
+    }
+
+    default void rollback(Connection connection) {
+        try {
+            if (connection != null) {
+                connection.rollback();
+            }
+        } catch (SQLException e ){
+            logger.error("rollback error");
         }
     }
 }

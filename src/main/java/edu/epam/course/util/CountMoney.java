@@ -2,8 +2,8 @@ package edu.epam.course.util;
 
 import java.math.BigDecimal;
 
-public class UserUtil {
-    private UserUtil() {
+public class CountMoney {
+    private CountMoney() {
     }
 
     public static BigDecimal transaction(String courseCost, BigDecimal userMoney) {

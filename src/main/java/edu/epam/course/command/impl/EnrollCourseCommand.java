@@ -9,7 +9,7 @@ import edu.epam.course.command.SessionAttribute;
 import edu.epam.course.exception.ServiceException;
 import edu.epam.course.model.entity.User;
 import edu.epam.course.model.service.UserService;
-import edu.epam.course.util.UserUtil;
+import edu.epam.course.util.CountMoney;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -35,7 +35,7 @@ public class EnrollCourseCommand implements Command {
         try {
             boolean isUserHaveCourse = userService.userHaveCourse(userSession.getId(), Long.valueOf(courseId));
             if (!isUserHaveCourse) {
-                BigDecimal transaction = UserUtil.transaction(courseCost, userSession.getMoney());
+                BigDecimal transaction = CountMoney.transaction(courseCost, userSession.getMoney());
                 if (transaction.compareTo(BigDecimal.ZERO) > 0) {
                     userService.enrollCourse(userSession, Long.valueOf(courseId), transaction);
                     session.setAttribute(SessionAttribute.USER, userSession);

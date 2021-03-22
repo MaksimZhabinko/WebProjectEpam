@@ -19,4 +19,5 @@ public interface UserService {
     boolean userHaveCourse(Long userId, Long courseId) throws ServiceException;
     boolean updateUserPhoto(User user) throws ServiceException;
     boolean blockUser(List<Long> usersId) throws ServiceException;
+    boolean unblockUser(List<Long> usersId) throws ServiceException;
 }

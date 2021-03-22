@@ -160,4 +160,16 @@ public class UserServiceImpl implements UserService {
         }
         return isUpdate;
     }
+
+    @Override
+    public boolean unblockUser(List<Long> usersId) throws ServiceException {
+        boolean isUpdate;
+        try {
+            isUpdate = userDao.unblockUser(usersId);
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return isUpdate;
+    }
 }

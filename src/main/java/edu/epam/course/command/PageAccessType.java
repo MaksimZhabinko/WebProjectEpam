@@ -2,7 +2,7 @@ package edu.epam.course.command;
 
 import java.util.Set;
 
-public enum PageAccessFilter {
+public enum PageAccessType {
     GUEST(Set.of(
             CommandType.SIGN_IN_PAGE,
             CommandType.SIGN_IN,
@@ -49,12 +49,13 @@ public enum PageAccessFilter {
             CommandType.PERSONAL_AREA_PAGE,
             CommandType.UPLOAD_FILE,
             CommandType.SHOW_ALL_USERS,
-            CommandType.BLOCK_USER
+            CommandType.BLOCK_USER,
+            CommandType.UNBLOCK_USER
     ));
 
     private final Set<CommandType> commands;
 
-    PageAccessFilter(Set<CommandType> commandNames) {
+    PageAccessType(Set<CommandType> commandNames) {
         this.commands = commandNames;
     }
 

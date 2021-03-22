@@ -4,7 +4,6 @@ import edu.epam.course.exception.DaoException;
 import edu.epam.course.model.connection.ConnectionPool;
 import edu.epam.course.model.dao.AboutUsDao;
 import edu.epam.course.model.entity.AboutUs;
-import edu.epam.course.model.entity.Entity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -41,21 +40,6 @@ public class AboutUsDaoImpl implements AboutUsDao {
     }
 
     @Override
-    public Optional<AboutUs> findEntityById(Long id) throws DaoException {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean add(AboutUs aboutUs) throws DaoException {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean deleteById(Long id) throws DaoException {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public boolean updateMessage(AboutUs aboutUs) throws DaoException {
         boolean isUpdate;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
@@ -69,5 +53,20 @@ public class AboutUsDaoImpl implements AboutUsDao {
             throw new DaoException(e);
         }
         return isUpdate;
+    }
+
+    @Override
+    public Optional<AboutUs> findEntityById(Long id) throws DaoException {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean add(AboutUs aboutUs) throws DaoException {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean deleteById(Long id) throws DaoException {
+        throw new UnsupportedOperationException();
     }
 }

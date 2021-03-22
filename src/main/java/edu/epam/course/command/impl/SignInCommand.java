@@ -36,9 +36,15 @@ public class SignInCommand implements Command {
             if (dataCorrect) {
                 Optional<User> user = service.findUserByEmailAndPassword(email, password);
                 if (user.isPresent()) {
-                    router.setPagePath(PagePath.MAIN.getServletPath());
-                    router.setType(Router.Type.REDIRECT);
-                    session.setAttribute(RequestAttribute.USER, user.get());
+                    if (user.get().isEnabled()) {
+                        router.setPagePath(PagePath.MAIN.getServletPath());
+                        router.setType(Router.Type.REDIRECT);
+                        session.setAttribute(RequestAttribute.USER, user.get());
+                    } else {
+                        request.setAttribute(RequestAttribute.ERROR_USER_BLOCK, true);
+                        request.setAttribute(RequestAttribute.EMAIL, email);
+                        router.setPagePath(PagePath.SIGN_IN.getDirectUrl());
+                    }
                 } else {
                     request.setAttribute(RequestAttribute.ERROR_USER_MESSAGE_IS_INCORRECT, true);
                     request.setAttribute(RequestAttribute.EMAIL, email);

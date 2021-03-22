@@ -1,7 +1,7 @@
 package edu.epam.course.controller.filter;
 
 import edu.epam.course.command.CommandType;
-import edu.epam.course.command.PageAccessFilter;
+import edu.epam.course.command.PageAccessType;
 import edu.epam.course.command.PagePath;
 import edu.epam.course.command.RequestAttribute;
 import edu.epam.course.command.RequestParameter;
@@ -47,13 +47,13 @@ public class RoleAccessFilter implements Filter {
         }
         switch (role) {
             case ADMIN:
-                commandsByRole = PageAccessFilter.ADMIN.getCommands();
+                commandsByRole = PageAccessType.ADMIN.getCommands();
                 break;
             case USER:
-                commandsByRole = PageAccessFilter.USER.getCommands();
+                commandsByRole = PageAccessType.USER.getCommands();
                 break;
             default:
-                commandsByRole = PageAccessFilter.GUEST.getCommands();
+                commandsByRole = PageAccessType.GUEST.getCommands();
                 break;
         }
 

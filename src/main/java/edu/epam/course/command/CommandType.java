@@ -30,7 +30,8 @@ public enum CommandType {
     SHOW_ALL_USERS(new ShowAllUsersCommand(new UserServiceImpl())),
     ENROLL_COURSE(new EnrollCourseCommand(new UserServiceImpl())),
     UPLOAD_FILE(new UploadFileCommand(new UserServiceImpl())),
-    BLOCK_USER(new BlockUserCommand(new UserServiceImpl()));
+    BLOCK_USER(new BlockUserCommand(new UserServiceImpl())),
+    UNBLOCK_USER(new UnblockUserCommand(new UserServiceImpl()));
 
     private Command command;
 

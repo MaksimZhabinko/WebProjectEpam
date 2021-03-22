@@ -13,15 +13,7 @@ import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) throws DaoException {
-        UserDao userDao = new UserDaoImpl();
-//        String[] a = new String[2];
-//        a[0] = "3";
-//        a[1] = "4";
-//        List<Long> userId = new ArrayList<>();
-//        for (int i = 0; i < a.length; i++) {
-//            userId.add(Long.valueOf(a[i]));
-//        }
-//        userId.stream().forEach(e -> System.out.println(e));
+
 
     }
 

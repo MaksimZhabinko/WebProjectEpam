@@ -17,4 +17,5 @@ public interface UserDao extends BaseDao<Long, User> {
     boolean userHaveCourse(Long userId, Long courseId) throws DaoException;
     boolean updateUserPhoto(User user) throws DaoException;
     boolean blockUser(List<Long> usersId) throws DaoException;
+    boolean unblockUser(List<Long> usersId) throws DaoException;
 }

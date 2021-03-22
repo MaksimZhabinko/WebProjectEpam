@@ -4,7 +4,6 @@ import edu.epam.course.command.Command;
 import edu.epam.course.command.CommandProvider;
 import edu.epam.course.command.RequestParameter;
 import edu.epam.course.command.Router;
-import edu.epam.course.util.FileUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,9 +15,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
 
 @WebServlet(urlPatterns = {"/upload/*"})
 @MultipartConfig(fileSizeThreshold = 1024 * 1024,

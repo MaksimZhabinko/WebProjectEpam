@@ -18,12 +18,7 @@ import java.util.Optional;
 
 public class CourseDetailsDaoImpl implements CourseDetailsDao {
     private static final Logger logger = LogManager.getLogger(CourseDetailsDaoImpl.class);
-    private static final String FIND_COURSE_DETAILS_BY_COURSE_ID = "SELECT course_detail_id, number_of_hours, description, is_test, start_course, end_course, start_of_class, cost, course_id, course_name, teacher_id, name, surname FROM course.course_details INNER JOIN course.courses ON fk_course_id = course_id INNER JOIN course.teachers ON fk_teacher_name_id = teacher_id WHERE course_id = ?";
-
-    @Override
-    public List<CourseDetails> findAll() throws DaoException {
-        return null;
-    }
+    private static final String FIND_COURSE_DETAILS_BY_COURSE_ID = "SELECT course_detail_id, number_of_hours, description, is_test, start_course, end_course, start_of_class, cost, course_id, course_name, teacher_id, name, surname, photo FROM course.course_details INNER JOIN course.courses ON fk_course_id = course_id INNER JOIN course.teachers ON fk_teacher_name_id = teacher_id WHERE course_id = ?";
 
     @Override
     public Optional<CourseDetails> findEntityById(Long id) throws DaoException {
@@ -49,6 +44,7 @@ public class CourseDetailsDaoImpl implements CourseDetailsDao {
                 teacher.setId(resultSet.getLong(11));
                 teacher.setName(resultSet.getString(12));
                 teacher.setSurname(resultSet.getString(13));
+                teacher.setPhoto(resultSet.getString(14));
                 courseDetails.setCourse(course);
                 courseDetails.setTeacher(teacher);
                 courseDetailsOptional = Optional.ofNullable(courseDetails);
@@ -61,12 +57,17 @@ public class CourseDetailsDaoImpl implements CourseDetailsDao {
     }
 
     @Override
+    public List<CourseDetails> findAll() throws DaoException {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public boolean add(CourseDetails courseDetails) throws DaoException {
-        return false;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean deleteById(Long id) throws DaoException {
-        return false;
+        throw new UnsupportedOperationException();
     }
 }
