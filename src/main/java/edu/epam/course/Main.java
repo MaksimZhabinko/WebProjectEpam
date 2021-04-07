@@ -1,12 +1,14 @@
 package edu.epam.course;
 
 import edu.epam.course.exception.DaoException;
-import edu.epam.course.model.dao.UserDao;
-import edu.epam.course.model.dao.impl.UserDaoImpl;
-import edu.epam.course.model.entity.User;
+import edu.epam.course.model.dao.*;
+import edu.epam.course.model.dao.impl.*;
+import edu.epam.course.model.entity.*;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -14,17 +16,13 @@ import java.util.stream.Collectors;
 public class Main {
     public static void main(String[] args) throws DaoException {
 
-
-    }
-
-
-    private void forUploadFile() {
-        String uploadName = "fdbfdbfdbfdbfd.jpeg";
-        UUID uuid = UUID.randomUUID();
-        String name = uuid.toString();
-        int index = uploadName.lastIndexOf(".");
-        String extension = uploadName.substring(index);
-        System.out.println(name + extension);
+        CourseDao courseDao = new CourseDaoImpl();
+        Optional<Course> course = courseDao.findEntityById(1L);
+        CourseDetailsDao courseDetailsDao = new CourseDetailsDaoImpl();
+        Optional<CourseDetails> courseDetails = courseDetailsDao.findCourseDetailsByCourseId(course.get().getId());
+        LectureDao lectureDao = new LectureDaoImpl();
+        List<Lecture> lectures = lectureDao.findAllByCourseId(course.get().getId());
+        courseDao.example(course.get(), courseDetails.get(), lectures);
     }
 
     private void deleteRepeatNumber() {
@@ -88,6 +86,48 @@ public class Main {
         System.out.println(sec);
         String stringDate = year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sec;
         System.out.println(stringDate);
+
+
+
+
+
+
+
+        String startString = new String("2020-04-02");
+        String endString = new String("2020-04-02");
+        Long start = Long.parseLong(startString.replaceAll("[-]", ""));
+        Long end = Long.parseLong(endString.replaceAll("[-]", ""));
+        int yearStart = (int) (start/Math.pow(10,4));
+        int yearEnd = (int) (end/Math.pow(10,4));
+//        System.out.println(yearStart);
+//        System.out.println(yearEnd);
+        int monthStart = (int) (start/Math.pow(10,2)) % 100;
+        int monthEnd = (int) (end/Math.pow(10,2)) % 100;
+        System.out.println(monthStart);
+        System.out.println(monthEnd);
+        int dayStart = (int) (start % 100);
+        int dayEnd = (int) (end % 100);
+//        System.out.println(dayStart);
+//        System.out.println(dayEnd);
+
+//        if (yearEnd >= yearStart) {
+//            if (monthEnd >= monthStart) {
+//                if (dayEnd >= dayStart) {
+//                    System.out.println("all good");
+//                } else {
+//                    System.out.println("bad day end < start");
+//                }
+//            } else {
+//                System.out.println("bad month end < start");
+//            }
+//        } else {
+//            System.out.println("bad year end < start");
+//        }
+        if (yearEnd >= yearStart && monthEnd > monthStart && dayEnd >= dayStart) {
+            System.out.println("all good");
+        } else {
+            System.out.println("all bad");
+        }
     }
 
     public static String getDecoder(String string) {

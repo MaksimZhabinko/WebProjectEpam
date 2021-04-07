@@ -17,15 +17,30 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * The type Connection pool.
+ */
 public class ConnectionPool {
+    /**
+     * The constant logger.
+     */
     private static final Logger logger = LogManager.getLogger(ConnectionPool.class);
     private static ConnectionPool instance;
     private static final Timer timerTask = new Timer();
+    /**
+     * The Default pool size.
+     */
     static final int DEFAULT_POOL_SIZE = 8;
+    /**
+     * The Free connection.
+     */
     final BlockingQueue<ProxyConnection> freeConnection;
     private final Queue<ProxyConnection> givenAwayConnection;
     private static final AtomicBoolean isInitialized = new AtomicBoolean(false);
     private static final Lock lock = new ReentrantLock();
+    /**
+     * The Time task is work.
+     */
     static final AtomicBoolean timeTaskIsWork = new AtomicBoolean(false);
 
     private ConnectionPool() {
@@ -35,6 +50,11 @@ public class ConnectionPool {
         timerTask.schedule(new ConnectionTimerTask(), 3600000, 3600000); // через час и каждый час
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static ConnectionPool getInstance() {
         if (!isInitialized.get()) {
             lock.lock();
@@ -47,6 +67,11 @@ public class ConnectionPool {
         return instance;
     }
 
+    /**
+     * Gets connection.
+     *
+     * @return the connection
+     */
     public Connection getConnection() {
         while (timeTaskIsWork.get()) {
             waitingOneSecond();
@@ -62,6 +87,12 @@ public class ConnectionPool {
         return proxyConnection;
     }
 
+    /**
+     * Release connection.
+     *
+     * @param connection the connection
+     * @throws ConnectionException the connection exception
+     */
     public void releaseConnection(Connection connection) throws ConnectionException {
         while (timeTaskIsWork.get()) {
             waitingOneSecond();
@@ -75,6 +106,9 @@ public class ConnectionPool {
         }
     }
 
+    /**
+     * Destroy pool.
+     */
     public void destroyPool() {
         for (int i = 0; i < DEFAULT_POOL_SIZE; i++) {
             try {
@@ -97,6 +131,9 @@ public class ConnectionPool {
         });
     }
 
+    /**
+     * Initialize pool.
+     */
     void initializePool() {
         for (int i = 0; i < DEFAULT_POOL_SIZE; i++) {
             try {
@@ -110,6 +147,11 @@ public class ConnectionPool {
         }
     }
 
+    /**
+     * Gets size.
+     *
+     * @return the size
+     */
     int getSize() {
         return freeConnection.size() + givenAwayConnection.size();
     }

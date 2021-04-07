@@ -10,8 +10,17 @@ import java.util.TimerTask;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * The type Connection timer task.
+ */
 public class ConnectionTimerTask extends TimerTask {
+    /**
+     * The constant logger.
+     */
     private static final Logger logger = LogManager.getLogger(ConnectionTimerTask.class);
+    /**
+     * The constant lock.
+     */
     private static final Lock lock = new ReentrantLock();
 
     @Override

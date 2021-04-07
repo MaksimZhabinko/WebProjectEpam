@@ -4,9 +4,17 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 
+/**
+ * The type header user tag.
+ */
 public class HeaderUserTag extends TagSupport {
     private String email;
 
+    /**
+     * Set email.
+     *
+     * @param email the email
+     */
     public void setRole(String email) {
         this.email = email;
     }

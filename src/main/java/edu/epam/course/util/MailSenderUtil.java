@@ -16,26 +16,62 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class MailSender {
+/**
+ * The type mail sender util.
+ */
+public class MailSenderUtil {
+    /**
+     * The constant logger.
+     */
     private static final Logger logger = LogManager.getLogger();
+    /**
+     * The constant mail.
+     */
     private static final String MAIL_PROPERTIES = "mail.properties";
+    /**
+     * The constant user name.
+     */
     private static final String USER_NAME_PROPERTIES = "mail.user.name";
+    /**
+     * The constant user password.
+     */
     private static final String USER_PASSWORD_PROPERTIES = "mail.user.password";
+    /**
+     * The constant message subject.
+     */
     private static final String MESSAGE_SUBJECT = "Thank you for registering";
+    /**
+     * The constant message text.
+     */
     private static final String MESSAGE_TEXT = "Thank you for registering ";
+    /**
+     * The constant message text forgot password.
+     */
     private static final String MESSAGE_TEXT_FORGOT_PASSWORD = "Your password - ";
+    /**
+     * The constant message subject forgot password.
+     */
     private static final String MESSAGE_SUBJECT_FORGOT_PASSWORD = "Forgot password ";
+    /**
+     * The user name.
+     */
     private static String username;
+    /**
+     * The password.
+     */
     private static String password;
+    /**
+     * The properties.
+     */
     private static Properties properties;
 
-    private MailSender() {
+    private MailSenderUtil() {
     }
 
     static  {
         properties = new Properties();
         try {
-            ClassLoader classLoader = MailSender.class.getClassLoader();
+            ClassLoader classLoader = MailSenderUtil.class.getClassLoader();
             InputStream resourceAsStream = classLoader.getResourceAsStream(MAIL_PROPERTIES);
             properties.load(resourceAsStream);
             username = properties.getProperty(USER_NAME_PROPERTIES);
@@ -46,6 +82,14 @@ public class MailSender {
         }
     }
 
+    /**
+     * Send message.
+     *
+     * @param email   the email
+     * @param name    the name
+     * @param surname the surname
+     * @throws EmailException the email exception
+     */
     public static void sendMessage(String email, String name, String surname) throws EmailException {
         Authenticator authenticator = new Authenticator() {
             @Override
@@ -68,6 +112,13 @@ public class MailSender {
         }
     }
 
+    /**
+     * Send password.
+     *
+     * @param email        the email
+     * @param userPassword the password
+     * @throws EmailException the email exception
+     */
     public static void sendPassword(String email, String userPassword) throws EmailException {
         Authenticator authenticator = new Authenticator() {
             @Override

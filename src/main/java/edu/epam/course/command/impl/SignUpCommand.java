@@ -10,19 +10,29 @@ import edu.epam.course.model.entity.RoleType;
 import edu.epam.course.model.entity.User;
 import edu.epam.course.exception.ServiceException;
 import edu.epam.course.model.service.UserService;
-import edu.epam.course.util.MailSender;
+import edu.epam.course.util.MailSenderUtil;
 import edu.epam.course.validator.UserValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
+/**
+ * The type Sign up command.
+ */
 public class SignUpCommand implements Command {
+    /**
+     * The constant logger.
+     */
     private static final Logger logger = LogManager.getLogger(SignUpCommand.class);
     private UserService service;
 
+    /**
+     * Instantiates a new Sign up command.
+     *
+     * @param service the service
+     */
     public SignUpCommand(UserService service) {
         this.service = service;
     }
@@ -57,7 +67,7 @@ public class SignUpCommand implements Command {
             if (dataCorrect) {
                 User user = new User(email, name, surname, RoleType.USER, true);
                 service.addUser(user, password);
-                MailSender.sendMessage(user.getEmail(), user.getName(), user.getSurname());
+                MailSenderUtil.sendMessage(user.getEmail(), user.getName(), user.getSurname());
                 router.setPagePath(PagePath.SIGN_IN.getServletPath());
                 router.setType(Router.Type.REDIRECT);
             } else {

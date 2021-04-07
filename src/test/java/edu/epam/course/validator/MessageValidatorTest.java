@@ -4,7 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class ValidMessageTest {
+public class MessageValidatorTest {
 
     @DataProvider(name = "validMessage")
     public static Object[][] validMessage() {
@@ -17,7 +17,7 @@ public class ValidMessageTest {
 
     @Test(dataProvider = "validMessage")
     public void testIsValidMessage(String text, boolean expected) {
-        boolean actual = ValidMessage.isValidMessage(text);
+        boolean actual = MessageValidator.isValidMessage(text);
         Assert.assertEquals(actual, expected);
     }
 }

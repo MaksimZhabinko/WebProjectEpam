@@ -2,34 +2,70 @@ package edu.epam.course.model.entity;
 
 import java.time.LocalDate;
 
+/**
+ * The type Review.
+ */
 public class Review extends Entity {
     private String message;
     private LocalDate dateMessage;
     private User user;
 
+    /**
+     * Instantiates a new Review.
+     */
     public Review() {
     }
 
+    /**
+     * Gets message.
+     *
+     * @return the message
+     */
     public String getMessage() {
         return message;
     }
 
+    /**
+     * Sets message.
+     *
+     * @param message the message
+     */
     public void setMessage(String message) {
         this.message = message;
     }
 
+    /**
+     * Gets date message.
+     *
+     * @return the date message
+     */
     public LocalDate getDateMessage() {
         return dateMessage;
     }
 
+    /**
+     * Sets date message.
+     *
+     * @param dateMessage the date message
+     */
     public void setDateMessage(LocalDate dateMessage) {
         this.dateMessage = dateMessage;
     }
 
+    /**
+     * Gets user.
+     *
+     * @return the user
+     */
     public User getUser() {
         return user;
     }
 
+    /**
+     * Sets user.
+     *
+     * @param user the user
+     */
     public void setUser(User user) {
         this.user = user;
     }

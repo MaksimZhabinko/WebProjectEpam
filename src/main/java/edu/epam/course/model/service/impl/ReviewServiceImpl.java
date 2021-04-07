@@ -11,12 +11,18 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * The type Review service.
+ */
 public class ReviewServiceImpl implements ReviewService {
+    /**
+     * The constant logger.
+     */
     private static final Logger logger = LogManager.getLogger(ReviewServiceImpl.class);
     private ReviewDao reviewDao = new ReviewDaoImpl();
 
     @Override
-    public List<Review> findAllReviews() throws ServiceException {
+    public List<Review> findAllReview() throws ServiceException {
         List<Review> reviews;
         try {
             reviews = reviewDao.findAll();
@@ -49,5 +55,17 @@ public class ReviewServiceImpl implements ReviewService {
             throw new ServiceException(e);
         }
         return isDelete;
+    }
+
+    @Override
+    public boolean isHaveReviewUserById(Long reviewId, Long userId) throws ServiceException {
+        boolean isHave;
+        try {
+            isHave = reviewDao.isHaveReviewUserById(reviewId, userId);
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return isHave;
     }
 }

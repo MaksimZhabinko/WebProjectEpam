@@ -18,11 +18,30 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The type Review dao.
+ */
 public class ReviewDaoImpl implements ReviewDao {
+    /**
+     * The constant logger.
+     */
     private static final Logger logger = LogManager.getLogger(ReviewDaoImpl.class);
+    /**
+     * The constant find all review.
+     */
     private static final String FIND_ALL_REVIEW = "SELECT review_id, message, date_message, user_id, email, name, surname, role, enabled FROM course.reviews INNER JOIN users ON fk_reviews_x_user_id = user_id ORDER BY date_message";
+    /**
+     * The constant add review.
+     */
     private static final String ADD_REVIEW = "INSERT INTO `reviews` (`message`, `date_message`, `fk_reviews_x_user_id`) VALUES (?, ?, ?);";
+    /**
+     * The constant delete review.
+     */
     private static final String DELETE_REVIEW = "DELETE FROM course.reviews WHERE review_id = ?";
+    /**
+     * The constant user has review.
+     */
+    private static final String USER_HAVE_REVIEW = "SELECT * FROM course.reviews WHERE review_id = ? AND fk_reviews_x_user_id = ?";
 
     @Override
     public List<Review> findAll() throws DaoException {
@@ -82,6 +101,24 @@ public class ReviewDaoImpl implements ReviewDao {
             throw new DaoException(e);
         }
         return isDelete;
+    }
+
+    @Override
+    public boolean isHaveReviewUserById(Long reviewId, Long userId) throws DaoException {
+        boolean isHave = false;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(USER_HAVE_REVIEW)) {
+            preparedStatement.setLong(1, reviewId);
+            preparedStatement.setLong(2, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                isHave = true;
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DaoException(e);
+        }
+        return isHave;
     }
 
     @Override

@@ -1,6 +1,10 @@
 package edu.epam.course.command.impl;
 
-import edu.epam.course.command.*;
+import edu.epam.course.command.Command;
+import edu.epam.course.command.PagePath;
+import edu.epam.course.command.RequestAttribute;
+import edu.epam.course.command.Router;
+import edu.epam.course.command.SessionAttribute;
 import edu.epam.course.exception.ServiceException;
 import edu.epam.course.model.entity.Course;
 import edu.epam.course.model.service.CourseService;
@@ -11,10 +15,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+/**
+ * The type Open main command.
+ */
 public class OpenMainCommand implements Command {
+    /**
+     * The constant logger.
+     */
     private static final Logger logger = LogManager.getLogger(OpenMainCommand.class);
     private CourseService courseService;
 
+    /**
+     * Instantiates a new Open main command.
+     *
+     * @param courseService the course service
+     */
     public OpenMainCommand(CourseService courseService) {
         this.courseService = courseService;
     }

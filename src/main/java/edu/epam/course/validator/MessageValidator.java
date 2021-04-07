@@ -1,9 +1,19 @@
 package edu.epam.course.validator;
 
-public class ValidMessage {
-    private ValidMessage() {
+/**
+ * The type message validator
+ */
+public class MessageValidator {
+
+    private MessageValidator() {
     }
 
+    /**
+     * Is message valid.
+     *
+     * @param message the message
+     * @return the boolean
+     */
     public static boolean isValidMessage(String message) {
         boolean isCorrect = true;
         if (message == null || message.isBlank()) {

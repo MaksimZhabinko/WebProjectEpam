@@ -3,12 +3,24 @@ package edu.epam.course.util;
 import java.io.File;
 import java.util.UUID;
 
+/**
+ * The type file util.
+ */
 public class FileUtil {
+    /**
+     * The extension separator.
+     */
     private static final String EXTENSION_SEPARATOR = ".";
 
     private FileUtil() {
     }
 
+    /**
+     * Generate name.
+     *
+     * @param fileName the file name
+     * @return the string
+     */
     public static String generateName(String fileName) {
         UUID uuid = UUID.randomUUID();
         String name = uuid.toString();
@@ -17,6 +29,11 @@ public class FileUtil {
         return name + extension;
     }
 
+    /**
+     * Delete image.
+     *
+     * @param fileName the file name
+     */
     public static void deleteImage(String fileName) {
         File file = new File(fileName);
         file.delete();

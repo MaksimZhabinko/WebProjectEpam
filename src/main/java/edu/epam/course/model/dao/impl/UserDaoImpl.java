@@ -17,20 +17,66 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The type User dao.
+ */
 public class UserDaoImpl implements UserDao {
+    /**
+     * The constant logger.
+     */
     private static final Logger logger = LogManager.getLogger(UserDaoImpl.class);
+    /**
+     * The constant find user by email.
+     */
     private static final String FIND_USER_BY_EMAIL = "SELECT user_id, email, name, surname, role, enabled, money FROM course.users WHERE email = ?";
+    /**
+     * The constant find user by email and password.
+     */
     private static final String FIND_USER_BY_EMAIL_AND_PASSWORD = "SELECT user_id, email, name, surname, role, enabled, money, photo FROM course.users WHERE email = ? AND password = ?";
+    /**
+     * The constant find user by id.
+     */
     private static final String FIND_USER_BY_ID = "SELECT user_id, email, name, surname, role, enabled, money FROM course.users WHERE user_id = ?";
+    /**
+     * The constant add user.
+     */
     private static final String ADD_USER = "INSERT INTO `users` (`email`, `name`, `surname`, `password`, `role`, `enabled`) VALUES (?, ?, ?, ?, ?, ?)";
+    /**
+     * The constant update user password.
+     */
     private static final String UPDATE_USER_PASSWORD = "UPDATE course.users SET password = ? WHERE user_id = ?";
+    /**
+     * The constant update user balance.
+     */
     private static final String UPDATE_USER_BALANCE = "UPDATE course.users SET money = ? WHERE user_id = ?";
-    private static final String FIND_ALL_USERS = "SELECT user_id, email, name, surname, role, enabled, money, photo FROM course.users";
+    /**
+     * The constant find all user limit.
+     */
+    private static final String FIND_ALL_USERS_LIMIT = "SELECT user_id, email, name, surname, role, enabled, money, photo FROM course.users LIMIT ?, ?";
+    /**
+     * The constant enroll course.
+     */
     private static final String ENROLL_COURSE = "INSERT INTO `users_x_courses` (`fk_user_id`, `fk_course_id`) VALUES (?, ?)";
-    private static final String USER_ENROLL_THIS_COURSE = "SELECT fk_user_id, fk_course_id FROM course.users_x_courses WHERE fk_user_id = ? AND fk_course_id = ?";
+    /**
+     * The constant user enroll course.
+     */
+    private static final String USER_ENROLL_COURSE = "SELECT fk_user_id, fk_course_id FROM course.users_x_courses WHERE fk_user_id = ? AND fk_course_id = ?";
+    /**
+     * The constant update user photo.
+     */
     private static final String UPDATE_USER_PHOTO = "UPDATE course.users SET photo = ? WHERE user_id = ?";
+    /**
+     * The constant block user.
+     */
     private static final String BLOCK_USER = "UPDATE course.users SET enabled = false WHERE user_id = ?";
+    /**
+     * The constant unblock user.
+     */
     private static final String UNBLOCK_USER = "UPDATE course.users SET enabled = true WHERE user_id = ?";
+    /**
+     * The constant find max user id.
+     */
+    private static final String FIND_MAX_USER_ID = "SELECT MAX(user_id) FROM users";
 
     @Override
     public Optional<User> findByEmailAndPassword(String email, String password) throws DaoException {
@@ -85,10 +131,27 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<User> findAll() throws DaoException {
+    public Long findMaxUserId() throws DaoException {
+        Long id;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_MAX_USER_ID)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            id = resultSet.getLong(1);
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DaoException(e);
+        }
+        return id;
+    }
+
+    @Override
+    public List<User> findAllLimit(int start, int limit) throws DaoException {
         List<User> users = new ArrayList<>();
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_USERS)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_USERS_LIMIT)) {
+            preparedStatement.setInt(1, start);
+            preparedStatement.setInt(2, limit);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 User user = new User();
@@ -206,7 +269,7 @@ public class UserDaoImpl implements UserDao {
     public boolean userHaveCourse(Long userId, Long courseId) throws DaoException {
         boolean isHave = false;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(USER_ENROLL_THIS_COURSE)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(USER_ENROLL_COURSE)) {
             preparedStatement.setLong(1, userId);
             preparedStatement.setLong(2, courseId);
 
@@ -296,6 +359,11 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean deleteById(Long id) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<User> findAll() throws DaoException {
         throw new UnsupportedOperationException();
     }
 }

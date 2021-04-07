@@ -29,6 +29,42 @@
     </c:forEach>
 </div>
 
+<c:if test="${errorMessage}">
+    <script>
+        $(document).ready(function () {
+            $("#myModalBox").modal('show');
+        });
+    </script>
+</c:if>
+<div id="myModalBox" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Заголовок модального окна -->
+            <%--            <div class="modal-header">--%>
+            <%--                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>--%>
+            <%--                <h4 class="modal-title">Error</h4>--%>
+            <%--            </div>--%>
+            <!-- Основное содержимое модального окна -->
+            <div class="modal-body">
+                <c:if test="${errorMessage}">
+                    <div class="alert alert-danger" role="alert">
+                        <fmt:message key="error.message"/>
+                    </div>
+                </c:if>
+            </div>
+            <!-- Футер модального окна -->
+            <div class="modal-footer">
+                <c:if test="${errorMessage}">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                            onclick="<c:remove var="errorMessage" scope="session"/>">Ок
+                    </button>
+                </c:if>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <c:import url="fragment/footer.jsp"/>
 </body>
 </html>

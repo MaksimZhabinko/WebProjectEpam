@@ -2,7 +2,13 @@ package edu.epam.course.command;
 
 import java.util.Set;
 
+/**
+ * The enum Page access type.
+ */
 public enum PageAccessType {
+    /**
+     * Guest page access type.
+     */
     GUEST(Set.of(
             CommandType.SIGN_IN_PAGE,
             CommandType.SIGN_IN,
@@ -17,6 +23,9 @@ public enum PageAccessType {
             CommandType.ABOUT_US_PAGE,
             CommandType.PERSONAL_AREA_PAGE
     )),
+    /**
+     * User page access type.
+     */
     USER(Set.of(
             CommandType.MAIN_PAGE,
             CommandType.CHANGE_LANGUAGE,
@@ -32,6 +41,9 @@ public enum PageAccessType {
             CommandType.UPLOAD_FILE,
             CommandType.ENROLL_COURSE
     )),
+    /**
+     * Admin page access type.
+     */
     ADMIN(Set.of(
             CommandType.MAIN_PAGE,
             CommandType.CHANGE_LANGUAGE,
@@ -50,7 +62,18 @@ public enum PageAccessType {
             CommandType.UPLOAD_FILE,
             CommandType.SHOW_ALL_USERS,
             CommandType.BLOCK_USER,
-            CommandType.UNBLOCK_USER
+            CommandType.UNBLOCK_USER,
+            CommandType.HIDE_ALL_USERS,
+            CommandType.SHOW_ALL_TEACHERS,
+            CommandType.HIDE_ALL_TEACHERS,
+            CommandType.TEACHER_ADD,
+            CommandType.TEACHER_DELETE,
+            CommandType.UPLOAD_FILE_TEACHER,
+            CommandType.ADD_COURSE_DETAILS,
+            CommandType.UPDATE_DESCRIPTION,
+            CommandType.UPDATE_HOURS,
+            CommandType.UPDATE_START_OF_CLASS,
+            CommandType.UPDATE_COST
     ));
 
     private final Set<CommandType> commands;
@@ -59,6 +82,11 @@ public enum PageAccessType {
         this.commands = commandNames;
     }
 
+    /**
+     * Gets commands.
+     *
+     * @return the commands
+     */
     public Set<CommandType> getCommands() {
         return commands;
     }

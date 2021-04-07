@@ -16,11 +16,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The type Lecture dao.
+ */
 public class LectureDaoImpl implements LectureDao {
+    /**
+     * The constant logger.
+     */
     private static final Logger logger = LogManager.getLogger(LectureDaoImpl.class);
+    /**
+     * The constant find lecture by id.
+     */
     private static final String FIND_LECTURE_BY_ID = "SELECT lecture_id, lecture, course_id, course_name  FROM course.lectures INNER JOIN course.courses ON fk_lecture_x_course_id = course_id WHERE course_id = ?";
+    /**
+     * The constant add lecture.
+     */
     private static final String ADD_LECTURE = "INSERT INTO `lectures` (`lecture`, `fk_lecture_x_course_id`) VALUES (?, ?)";
+    /**
+     * The constant delete lecture.
+     */
     private static final String DELETE_LECTURE = "DELETE FROM course.lectures WHERE lecture_id = ?";
+    /**
+     * The constant update lecture.
+     */
     private static final String UPDATE_LECTURE = "UPDATE course.lectures SET lecture = ? WHERE lecture_id = ?";
 
     @Override

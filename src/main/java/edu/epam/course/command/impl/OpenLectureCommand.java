@@ -1,6 +1,11 @@
 package edu.epam.course.command.impl;
 
-import edu.epam.course.command.*;
+import edu.epam.course.command.Command;
+import edu.epam.course.command.PagePath;
+import edu.epam.course.command.RequestAttribute;
+import edu.epam.course.command.RequestParameter;
+import edu.epam.course.command.Router;
+import edu.epam.course.command.SessionAttribute;
 import edu.epam.course.exception.ServiceException;
 import edu.epam.course.model.entity.Course;
 import edu.epam.course.model.entity.CourseDetails;
@@ -8,6 +13,7 @@ import edu.epam.course.model.entity.Lecture;
 import edu.epam.course.model.service.CourseDetailsService;
 import edu.epam.course.model.service.CourseService;
 import edu.epam.course.model.service.LectureService;
+import edu.epam.course.util.IdUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,12 +22,25 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The type Open lecture command.
+ */
 public class OpenLectureCommand implements Command {
+    /**
+     * The constant logger.
+     */
     private static final Logger logger = LogManager.getLogger(OpenLectureCommand.class);
     private LectureService lectureService;
     private CourseDetailsService courseDetailsService;
     private CourseService courseService;
 
+    /**
+     * Instantiates a new Open lecture command.
+     *
+     * @param lectureService       the lecture service
+     * @param courseDetailsService the course details service
+     * @param courseService        the course service
+     */
     public OpenLectureCommand(LectureService lectureService, CourseDetailsService courseDetailsService,
                               CourseService courseService) {
         this.lectureService = lectureService;
@@ -31,15 +50,15 @@ public class OpenLectureCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) {
-        Router router = new Router();
+        String courseIdString = request.getParameter(RequestParameter.COURSE_ID);
         HttpSession session = request.getSession();
-        String courseId = request.getParameter(RequestParameter.COURSE_ID);
+        Router router = new Router();
         try {
-            Long courseIdLong = Long.valueOf(courseId);
-            Optional<Course> courseById = courseService.findCourseById(courseIdLong);
+            Long courseId = IdUtil.stringToLong(courseIdString);
+            Optional<Course> courseById = courseService.findCourseById(courseId);
             if (courseById.isPresent()) {
-                List<Lecture> lectures = lectureService.findAllLectureByCourseId(courseIdLong);
-                Optional<CourseDetails> courseDetails = courseDetailsService.findCourseDetailsById(courseIdLong);
+                List<Lecture> lectures = lectureService.findAllLectureByCourseId(courseId);
+                Optional<CourseDetails> courseDetails = courseDetailsService.findCourseDetailsById(courseId);
                 if (!lectures.isEmpty()) {
                     request.setAttribute(RequestAttribute.LECTURES, lectures);
                 }

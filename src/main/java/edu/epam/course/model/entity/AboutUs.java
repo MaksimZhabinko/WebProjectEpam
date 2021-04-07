@@ -1,12 +1,25 @@
 package edu.epam.course.model.entity;
 
+/**
+ * The type about us.
+ */
 public class AboutUs extends Entity{
     private String message;
 
+    /**
+     * Get message.
+     *
+     * @return the email
+     */
     public String getMessage() {
         return message;
     }
 
+    /**
+     * Set message.
+     *
+     * @param message the message
+     */
     public void setMessage(String message) {
         this.message = message;
     }

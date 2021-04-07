@@ -11,7 +11,13 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * The type About us service.
+ */
 public class AboutUsServiceImpl implements AboutUsService {
+    /**
+     * The constant logger.
+     */
     private static final Logger logger = LogManager.getLogger(AboutUsServiceImpl.class);
     private AboutUsDao aboutUsDao = new AboutUsDaoImpl();
 

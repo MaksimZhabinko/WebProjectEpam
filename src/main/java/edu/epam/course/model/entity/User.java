@@ -2,6 +2,9 @@ package edu.epam.course.model.entity;
 
 import java.math.BigDecimal;
 
+/**
+ * The type User.
+ */
 public class User extends Entity{
     private String email;
     private String name;
@@ -11,9 +14,21 @@ public class User extends Entity{
     private BigDecimal money;
     private String photo;
 
+    /**
+     * Instantiates a new User.
+     */
     public User() {
     }
 
+    /**
+     * Instantiates a new User.
+     *
+     * @param email   the email
+     * @param name    the name
+     * @param surname the surname
+     * @param role    the role
+     * @param enabled the enabled
+     */
     public User(String email, String name, String surname, RoleType role, boolean enabled) {
         this.email = email;
         this.name = name;
@@ -22,58 +37,128 @@ public class User extends Entity{
         this.enabled = enabled;
     }
 
+    /**
+     * Gets email.
+     *
+     * @return the email
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * Sets email.
+     *
+     * @param email the email
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets name.
+     *
+     * @param name the name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Gets surname.
+     *
+     * @return the surname
+     */
     public String getSurname() {
         return surname;
     }
 
+    /**
+     * Sets surname.
+     *
+     * @param surname the surname
+     */
     public void setSurname(String surname) {
         this.surname = surname;
     }
 
+    /**
+     * Gets role.
+     *
+     * @return the role
+     */
     public RoleType getRole() {
         return role;
     }
 
+    /**
+     * Sets role.
+     *
+     * @param role the role
+     */
     public void setRole(RoleType role) {
         this.role = role;
     }
 
+    /**
+     * Is enabled boolean.
+     *
+     * @return the boolean
+     */
     public boolean isEnabled() {
         return enabled;
     }
 
+    /**
+     * Sets enabled.
+     *
+     * @param enabled the enabled
+     */
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 
+    /**
+     * Gets money.
+     *
+     * @return the money
+     */
     public BigDecimal getMoney() {
         return money;
     }
 
+    /**
+     * Sets money.
+     *
+     * @param money the money
+     */
     public void setMoney(BigDecimal money) {
         this.money = money;
     }
 
+    /**
+     * Gets photo.
+     *
+     * @return the photo
+     */
     public String getPhoto() {
         return photo;
     }
 
+    /**
+     * Sets photo.
+     *
+     * @param photo the photo
+     */
     public void setPhoto(String photo) {
         this.photo = photo;
     }

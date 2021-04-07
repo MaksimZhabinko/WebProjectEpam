@@ -1,6 +1,10 @@
 package edu.epam.course.command.impl;
 
-import edu.epam.course.command.*;
+import edu.epam.course.command.Command;
+import edu.epam.course.command.PagePath;
+import edu.epam.course.command.RequestAttribute;
+import edu.epam.course.command.Router;
+import edu.epam.course.command.SessionAttribute;
 import edu.epam.course.exception.ServiceException;
 import edu.epam.course.model.entity.Review;
 import edu.epam.course.model.service.ReviewService;
@@ -11,10 +15,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+/**
+ * The type Open reviews command.
+ */
 public class OpenReviewsCommand implements Command {
+    /**
+     * The constant logger.
+     */
     private static final Logger logger = LogManager.getLogger(OpenReviewsCommand.class);
     private ReviewService reviewService;
 
+    /**
+     * Instantiates a new Open reviews command.
+     *
+     * @param reviewService the review service
+     */
     public OpenReviewsCommand(ReviewService reviewService) {
         this.reviewService = reviewService;
     }
@@ -24,7 +39,7 @@ public class OpenReviewsCommand implements Command {
         Router router = new Router();
         HttpSession session = request.getSession();
         try {
-            List<Review> reviews = reviewService.findAllReviews();
+            List<Review> reviews = reviewService.findAllReview();
             request.setAttribute(RequestAttribute.REVIEWS, reviews);
             router.setPagePath(PagePath.REVIEW.getDirectUrl());
             session.setAttribute(SessionAttribute.CURRENT_PAGE, PagePath.REVIEW.getServletPath());

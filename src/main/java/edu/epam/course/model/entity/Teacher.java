@@ -1,33 +1,69 @@
 package edu.epam.course.model.entity;
 
+/**
+ * The type Teacher.
+ */
 public class Teacher extends Entity {
     private String name;
     private String surname;
     private String photo;
 
+    /**
+     * Instantiates a new Teacher.
+     */
     public Teacher() {
     }
 
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets name.
+     *
+     * @param name the name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Gets surname.
+     *
+     * @return the surname
+     */
     public String getSurname() {
         return surname;
     }
 
+    /**
+     * Sets surname.
+     *
+     * @param surname the surname
+     */
     public void setSurname(String surname) {
         this.surname = surname;
     }
 
+    /**
+     * Gets photo.
+     *
+     * @return the photo
+     */
     public String getPhoto() {
         return photo;
     }
 
+    /**
+     * Sets photo.
+     *
+     * @param photo the photo
+     */
     public void setPhoto(String photo) {
         this.photo = photo;
     }

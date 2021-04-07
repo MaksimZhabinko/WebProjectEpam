@@ -1,6 +1,10 @@
 package edu.epam.course.command.impl;
 
-import edu.epam.course.command.*;
+import edu.epam.course.command.Command;
+import edu.epam.course.command.PagePath;
+import edu.epam.course.command.RequestAttribute;
+import edu.epam.course.command.RequestParameter;
+import edu.epam.course.command.Router;
 import edu.epam.course.model.entity.User;
 import edu.epam.course.exception.ServiceException;
 import edu.epam.course.model.service.UserService;
@@ -12,10 +16,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
+/**
+ * The type Sign in command.
+ */
 public class SignInCommand implements Command {
     private static final Logger logger = LogManager.getLogger(SignInCommand.class);
     private UserService service;
 
+    /**
+     * Instantiates a new Sign in command.
+     *
+     * @param service the service
+     */
     public SignInCommand(UserService service) {
         this.service = service;
     }

@@ -11,7 +11,13 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * The type Lecture service.
+ */
 public class LectureServiceImpl implements LectureService {
+    /**
+     * The constant logger.
+     */
     private static final Logger logger = LogManager.getLogger(LectureDaoImpl.class);
     private LectureDao lectureDao = new LectureDaoImpl();
 

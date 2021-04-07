@@ -8,13 +8,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class PropertyReader {
-    private static final Logger logger = LogManager.getLogger(PropertyReader.class);
+/**
+ * The type property reader util.
+ */
+public class PropertyReaderUtil {
+    /**
+     * The constant logger.
+     */
+    private static final Logger logger = LogManager.getLogger(PropertyReaderUtil.class);
     private static final String PATH_PROPERTIES = "path.properties";
     private static final String PATH_PROPERTY = "path";
     private static final String PATH;
 
-    private PropertyReader() {
+    private PropertyReaderUtil() {
     }
 
     static {
@@ -30,6 +36,11 @@ public class PropertyReader {
         }
     }
 
+    /**
+     * Gets path.
+     *
+     * @return the string
+     */
     public static String getPath() {
         return PATH;
     }

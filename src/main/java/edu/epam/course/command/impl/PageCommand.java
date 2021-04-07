@@ -7,10 +7,18 @@ import edu.epam.course.command.SessionAttribute;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The type Page command.
+ */
 public class PageCommand implements Command {
 
     private String page;
 
+    /**
+     * Instantiates a new Page command.
+     *
+     * @param page the page
+     */
     public PageCommand(String page) {
         this.page = page;
     }

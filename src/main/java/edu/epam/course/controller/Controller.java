@@ -1,9 +1,10 @@
 package edu.epam.course.controller;
 
-import edu.epam.course.command.*;
+import edu.epam.course.command.Command;
+import edu.epam.course.command.CommandProvider;
+import edu.epam.course.command.RequestParameter;
+import edu.epam.course.command.Router;
 import edu.epam.course.model.connection.ConnectionPool;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,9 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * The type Controller.
+ */
 @WebServlet(urlPatterns = {"/controller" , "*.do"})
 public class Controller extends HttpServlet {
-    private static final Logger logger = LogManager.getLogger(Controller.class);
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

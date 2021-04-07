@@ -3,6 +3,7 @@ package edu.epam.course.command.impl;
 import edu.epam.course.command.Command;
 import edu.epam.course.command.PagePath;
 import edu.epam.course.command.RequestAttribute;
+import edu.epam.course.command.RequestParameter;
 import edu.epam.course.command.Router;
 import edu.epam.course.command.SessionAttribute;
 import edu.epam.course.exception.ServiceException;
@@ -16,17 +17,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
+/**
+ * The type Forgot password command.
+ */
 public class ForgotPasswordCommand implements Command {
+    /**
+     * The constant logger.
+     */
     private static final Logger logger = LogManager.getLogger(ForgotPasswordCommand.class);
     private UserService userService;
 
+    /**
+     * Instantiates a new Forgot password command.
+     *
+     * @param userService the user service
+     */
     public ForgotPasswordCommand(UserService userService) {
         this.userService = userService;
     }
 
     @Override
     public Router execute(HttpServletRequest request) {
-        String email = request.getParameter("email");
+        String email = request.getParameter(RequestParameter.EMAIL);
         Router router = new Router();
         HttpSession session = request.getSession();
         boolean dataCorrect = true;

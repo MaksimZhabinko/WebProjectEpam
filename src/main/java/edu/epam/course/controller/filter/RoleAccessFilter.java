@@ -21,8 +21,13 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Set;
 
-
+/**
+ * The type Role access filter.
+ */
 public class RoleAccessFilter implements Filter {
+    /**
+     * The constant logger.
+     */
     private static final Logger logger = LogManager.getLogger(RoleAccessFilter.class);
 
     @Override

@@ -9,7 +9,7 @@ import edu.epam.course.exception.ServiceException;
 import edu.epam.course.model.entity.User;
 import edu.epam.course.model.service.UserService;
 import edu.epam.course.util.FileUtil;
-import edu.epam.course.util.PropertyReader;
+import edu.epam.course.util.PropertyReaderUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,11 +19,25 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import java.io.IOException;
 
+/**
+ * The type Upload file command.
+ */
 public class UploadFileCommand implements Command {
+    /**
+     * The constant logger.
+     */
     private static final Logger logger = LogManager.getLogger(UploadFileCommand.class);
-    private static final String PATH = PropertyReader.getPath();
+    /**
+     * The constant path.
+     */
+    private static final String PATH = PropertyReaderUtil.getPath();
     private UserService userService;
 
+    /**
+     * Instantiates a new Upload file command.
+     *
+     * @param userService the user service
+     */
     public UploadFileCommand(UserService userService) {
         this.userService = userService;
     }

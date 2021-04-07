@@ -1,24 +1,50 @@
 package edu.epam.course.model.entity;
 
+/**
+ * The type Lecture.
+ */
 public class Lecture extends Entity {
     private String lecture;
     private Course course;
 
+    /**
+     * Instantiates a new Lecture.
+     */
     public Lecture() {
     }
 
+    /**
+     * Gets lecture.
+     *
+     * @return the lecture
+     */
     public String getLecture() {
         return lecture;
     }
 
+    /**
+     * Sets lecture.
+     *
+     * @param lecture the lecture
+     */
     public void setLecture(String lecture) {
         this.lecture = lecture;
     }
 
+    /**
+     * Gets course.
+     *
+     * @return the course
+     */
     public Course getCourse() {
         return course;
     }
 
+    /**
+     * Sets course.
+     *
+     * @param course the course
+     */
     public void setCourse(Course course) {
         this.course = course;
     }

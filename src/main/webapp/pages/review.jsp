@@ -42,7 +42,7 @@
 </c:if>
 <c:if test="${user.getRole().toString() eq 'USER'}">
     <div>
-        <h1>Добавить отзыв</h1>
+        <h1><fmt:message key="h1.review.add"/></h1>
         <form action="${pageContext.request.contextPath}/controller" method="post">
             <input type="hidden" name="command" value="review_add">
             <textarea name="message" required></textarea>
@@ -52,10 +52,58 @@
 </c:if>
 
 <c:if test="${errorMessage}">
-    <div class="alert alert-danger" role="alert">
-        <fmt:message key="error.message"/>
-    </div>
+    <script>
+        $(document).ready(function () {
+            $("#myModalBox").modal('show');
+        });
+    </script>
 </c:if>
+<c:if test="${errorDeleteNotYourReview}">
+    <script>
+        $(document).ready(function () {
+            $("#myModalBox").modal('show');
+        });
+    </script>
+</c:if>
+<div id="myModalBox" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Заголовок модального окна -->
+            <%--            <div class="modal-header">--%>
+            <%--                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>--%>
+            <%--                <h4 class="modal-title">Error</h4>--%>
+            <%--            </div>--%>
+            <!-- Основное содержимое модального окна -->
+            <div class="modal-body">
+                <c:if test="${errorDeleteNotYourReview}">
+                    <div class="alert alert-danger" role="alert">
+                        Вы не можете удалить чужой комментарий
+                        <fmt:message key="error.review.delete_another_review"/>
+                    </div>
+                </c:if>
+                <c:if test="${errorMessage}">
+                    <div class="alert alert-danger" role="alert">
+                        <fmt:message key="error.message"/>
+                    </div>
+                </c:if>
+            </div>
+            <!-- Футер модального окна -->
+            <div class="modal-footer">
+                <c:if test="${errorDeleteNotYourReview}">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                            onclick="<c:remove var="errorDeleteNotYourReview" scope="session"/>">Ок
+                    </button>
+                </c:if>
+                <c:if test="${errorMessage}">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                            onclick="<c:remove var="errorMessage" scope="session"/>">Ок
+                    </button>
+                </c:if>
+            </div>
+        </div>
+    </div>
+</div>
+
 <c:import url="fragment/footer.jsp"/>
 </body>
 </html>

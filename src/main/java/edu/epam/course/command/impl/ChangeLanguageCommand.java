@@ -9,8 +9,17 @@ import edu.epam.course.command.SessionAttribute;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The type Change language command.
+ */
 public class ChangeLanguageCommand implements Command {
+    /**
+     * The constant ru.
+     */
     private static final String RU = "ru";
+    /**
+     * The constant en.
+     */
     private static final String EN = "en";
 
     @Override

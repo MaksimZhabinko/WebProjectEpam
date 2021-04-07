@@ -15,9 +15,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The type About us dao.
+ */
 public class AboutUsDaoImpl implements AboutUsDao {
+    /**
+     * The constant logger.
+     */
     private static final Logger logger = LogManager.getLogger(AboutUsDaoImpl.class);
+    /**
+     * The constant find about us.
+     */
     private static final String FIND_ABOUT_US = "SELECT about_us_id, message FROM course.about_us";
+    /**
+     * The constant update message.
+     */
     private static final String UPDATE_MESSAGE = "update course.about_us SET message = ? WHERE about_us_id = ?";
 
     @Override

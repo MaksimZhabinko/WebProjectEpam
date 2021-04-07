@@ -7,6 +7,9 @@ import edu.epam.course.command.Router;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The type Sign out command.
+ */
 public class SignOutCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {

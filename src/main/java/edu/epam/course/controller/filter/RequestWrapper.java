@@ -5,9 +5,17 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The type Request wrapper.
+ */
 public class RequestWrapper extends HttpServletRequestWrapper {
     private final Map<String,String> params = new HashMap<>();
 
+    /**
+     * Instantiates a new Request wrapper.
+     *
+     * @param request the request
+     */
     public RequestWrapper(HttpServletRequest request) {
         super(request);
     }
@@ -19,6 +27,12 @@ public class RequestWrapper extends HttpServletRequestWrapper {
         return super.getParameter(name);
     }
 
+    /**
+     * Set parameter.
+     *
+     * @param name      the name
+     * @param parameter the parameter
+     */
     public void setParameter(String name, String parameter){
         if(super.getParameter(name)==null||!super.getParameter(name).equals(parameter)) {
             params.put(name, parameter);
