@@ -48,11 +48,11 @@ public class CourseDetailsAddCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {
         String courseIdString = request.getParameter(RequestParameter.COURSE_ID);
-        String description = request.getParameter(RequestParameter.DESCRIPTION);
+        String description = request.getParameter(RequestParameter.DESCRIPTION).trim();
         String hours = request.getParameter(RequestParameter.HOURS);
         String startOfClass = request.getParameter(RequestParameter.START_OF_CLASS);
-        String name = request.getParameter(RequestParameter.NAME);
-        String surname = request.getParameter(RequestParameter.SURNAME);
+        String name = request.getParameter(RequestParameter.NAME).trim();
+        String surname = request.getParameter(RequestParameter.SURNAME).trim();
         String startCourse = request.getParameter(RequestParameter.START_COURSE);
         String endCourse = request.getParameter(RequestParameter.END_COURSE);
         String cost = request.getParameter(RequestParameter.COST);

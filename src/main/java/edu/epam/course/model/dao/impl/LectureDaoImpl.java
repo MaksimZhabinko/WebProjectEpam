@@ -27,7 +27,7 @@ public class LectureDaoImpl implements LectureDao {
     /**
      * The constant find lecture by id.
      */
-    private static final String FIND_LECTURE_BY_ID = "SELECT lecture_id, lecture, course_id, course_name  FROM course.lectures INNER JOIN course.courses ON fk_lecture_x_course_id = course_id WHERE course_id = ?";
+    private static final String FIND_ALL_LECTURE_BY_ID = "SELECT lecture_id, lecture, course_id, course_name  FROM course.lectures INNER JOIN course.courses ON fk_lecture_x_course_id = course_id WHERE course_id = ?";
     /**
      * The constant add lecture.
      */
@@ -40,6 +40,10 @@ public class LectureDaoImpl implements LectureDao {
      * The constant update lecture.
      */
     private static final String UPDATE_LECTURE = "UPDATE course.lectures SET lecture = ? WHERE lecture_id = ?";
+    /**
+     * The constant find lecture by id.
+     */
+    private static final String FIND_LECTURE_BY_ID_AND_COURSE_ID = "SELECT lecture_id, lecture, course_id, course_name, enrollment_active FROM course.lectures INNER JOIN course.courses ON fk_lecture_x_course_id = course_id WHERE lecture_id = ? AND course_id = ?";
 
     @Override
     public boolean add(Lecture lecture) throws DaoException {
@@ -76,7 +80,7 @@ public class LectureDaoImpl implements LectureDao {
     public List<Lecture> findAllByCourseId(Long id) throws DaoException {
         List<Lecture> lectures = new ArrayList<>();
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(FIND_LECTURE_BY_ID)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_LECTURE_BY_ID)) {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -113,12 +117,38 @@ public class LectureDaoImpl implements LectureDao {
     }
 
     @Override
-    public List<Lecture> findAll() throws DaoException {
-        throw new UnsupportedOperationException();
+    public Optional<Lecture> findLectureByIdAndCourseId(Long lectureId, Long courseId) throws DaoException {
+        Optional<Lecture> lectureOptional = Optional.empty();
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_LECTURE_BY_ID_AND_COURSE_ID)) {
+            preparedStatement.setLong(1, lectureId);
+            preparedStatement.setLong(2, courseId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Lecture lecture = new Lecture();
+                lecture.setId(resultSet.getLong(1));
+                lecture.setLecture(resultSet.getString(2));
+                Course course = new Course();
+                course.setId(resultSet.getLong(3));
+                course.setName(resultSet.getString(4));
+                course.setEnrollmentActive(resultSet.getBoolean(5));
+                lectureOptional = Optional.of(lecture);
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DaoException(e);
+        }
+        return lectureOptional;
     }
 
     @Override
     public Optional<Lecture> findEntityById(Long id) throws DaoException {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public List<Lecture> findAll() throws DaoException {
+        throw new UnsupportedOperationException();
+    }
+
 }

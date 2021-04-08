@@ -1,9 +1,16 @@
 package edu.epam.course.validator;
 
+import java.util.regex.Pattern;
+
 /**
  * The type course validator.
  */
 public class CourseValidator {
+
+    /**
+     * The The constant string.
+     */
+    private static final Pattern STRING_PATTERN = Pattern.compile("^[\\p{L}]+$");
 
     private CourseValidator() {
     }
@@ -16,7 +23,7 @@ public class CourseValidator {
      */
     public static boolean isValidName(String courseName) {
         boolean isCorrect = true;
-        if (courseName == null || courseName.isBlank()) {
+        if (courseName == null || courseName.isBlank() || !STRING_PATTERN.matcher(courseName).matches()) {
             isCorrect = false;
         }
         return isCorrect;

@@ -73,7 +73,9 @@ public enum PageAccessType {
             CommandType.UPDATE_DESCRIPTION,
             CommandType.UPDATE_HOURS,
             CommandType.UPDATE_START_OF_CLASS,
-            CommandType.UPDATE_COST
+            CommandType.UPDATE_COST,
+            CommandType.COURSE_UPDATE,
+            CommandType.UPDATE_TEACHER
     ));
 
     private final Set<CommandType> commands;

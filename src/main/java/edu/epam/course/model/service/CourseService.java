@@ -53,4 +53,13 @@ public interface CourseService {
      * @throws ServiceException the service exception
      */
     List<Course> findUserEnrolledByCourse(Long userId) throws ServiceException;
+
+    /**
+     * Update course name boolean.
+     *
+     * @param course the course
+     * @return the boolean
+     * @throws ServiceException the service exception
+     */
+    boolean updateCourseName(Course course) throws ServiceException;
 }

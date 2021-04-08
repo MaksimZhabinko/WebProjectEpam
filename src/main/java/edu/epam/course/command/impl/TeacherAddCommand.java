@@ -7,6 +7,7 @@ import edu.epam.course.command.RequestParameter;
 import edu.epam.course.command.Router;
 import edu.epam.course.command.SessionAttribute;
 import edu.epam.course.exception.ServiceException;
+import edu.epam.course.model.entity.Teacher;
 import edu.epam.course.model.service.TeacherService;
 import edu.epam.course.validator.TeacherValidator;
 import org.apache.logging.log4j.LogManager;
@@ -14,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Optional;
 
 /**
  * The type Teacher add command.
@@ -36,15 +38,25 @@ public class TeacherAddCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) {
-        String name = request.getParameter(RequestParameter.NAME);
-        String surname = request.getParameter(RequestParameter.SURNAME);
+        String teacherName = request.getParameter(RequestParameter.TEACHER_NAME).trim();
+        String teacherSurname = request.getParameter(RequestParameter.TEACHER_SURNAME).trim();
         HttpSession session = request.getSession();
         Router router = new Router();
+        boolean dataCorrect = true;
         try {
-            if (TeacherValidator.isValidNameAndSurname(name, surname)) {
-                teacherService.addTeacher(name, surname);
-            } else {
+            if (!TeacherValidator.isValidNameAndSurname(teacherName, teacherSurname)) {
                 session.setAttribute(SessionAttribute.ERROR_TEACHER_ADD, true);
+                dataCorrect = false;
+            }
+            if (dataCorrect) {
+                Optional<Teacher> teacherOptional = teacherService.findTeacherByNameAndSurname(teacherName, teacherSurname);
+                if (teacherOptional.isPresent()) {
+                    session.setAttribute(SessionAttribute.ERROR_TEACHER_HAVE, true);
+                    dataCorrect = false;
+                }
+            }
+            if (dataCorrect) {
+                teacherService.addTeacher(teacherName, teacherSurname);
             }
             router.setType(Router.Type.REDIRECT);
             router.setPagePath(PagePath.PERSONAL_AREA.getServletPath()); // todo возможно на стр показать все учителей

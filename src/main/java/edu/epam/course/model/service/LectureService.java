@@ -4,6 +4,7 @@ import edu.epam.course.exception.ServiceException;
 import edu.epam.course.model.entity.Lecture;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The interface lecture service.
@@ -44,4 +45,13 @@ public interface LectureService {
      * @throws ServiceException the service exception
      */
     boolean updateLecture(Lecture lecture) throws ServiceException;
+
+    /**
+     * Find lecture by id optional.
+     *
+     * @param id the id
+     * @return the optional
+     * @throws ServiceException the service exception
+     */
+    Optional<Lecture> findLectureByIdAndCourseId(Long lectureId, Long courseId) throws ServiceException;
 }

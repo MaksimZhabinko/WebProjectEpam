@@ -14,13 +14,18 @@ public class UserValidator {
     private static final Pattern EMAIL_REGEX = Pattern
             .compile("^[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+\\.[a-zA-Z]{2,4}");
     /**
-     * The The constant password.
+     * The constant password.
      */
     private static final Pattern PASSWORD_PATTERN = Pattern
             .compile("^.*(?=.{8,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$");
     /* должен включать хотя бы одну букву в верхнем и нижнем регистре, хотя бы одину цифру,
      хотя бы один специальный символ ("@", "#". "$", "%", "^", "&", "( "или") ",
      без пробелов, табуляции и т. Д и не менее 8 символов*/
+
+    /**
+     * The The constant string.
+     */
+    private static final Pattern STRING_PATTERN = Pattern.compile("^[\\p{L}]+$");
 
     private UserValidator() {
     }
@@ -34,7 +39,8 @@ public class UserValidator {
      */
     public static boolean isValidNameAndSurname(String name, String surname) {
         boolean isCorrect = true;
-        if (name == null || name.isBlank() || surname == null || surname.isBlank()) {
+        if (name == null || name.isBlank() || surname == null || surname.isBlank()
+                || !STRING_PATTERN.matcher(name).matches() || !STRING_PATTERN.matcher(surname).matches()) {
             isCorrect = false;
         }
         return isCorrect;

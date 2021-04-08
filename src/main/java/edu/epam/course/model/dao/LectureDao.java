@@ -4,6 +4,7 @@ import edu.epam.course.exception.DaoException;
 import edu.epam.course.model.entity.Lecture;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The interface lecture dao.
@@ -26,4 +27,6 @@ public interface LectureDao extends BaseDao<Long, Lecture> {
      * @throws DaoException the dao exception
      */
     boolean updateLecture(Lecture lecture) throws DaoException;
+
+    Optional<Lecture> findLectureByIdAndCourseId(Long lectureId, Long courseId) throws DaoException;
 }

@@ -101,7 +101,7 @@ public enum CommandType {
     /**
      * The Lecture update.
      */
-    LECTURE_UPDATE(new LectureUpdateCommand(new LectureServiceImpl())),
+    LECTURE_UPDATE(new LectureUpdateCommand(new LectureServiceImpl(), new CourseServiceImpl())),
     /**
      * The Personal area page.
      */
@@ -170,7 +170,15 @@ public enum CommandType {
     /**
      * The Update cost.
      */
-    UPDATE_COST(new CourseDetailsCostUpdateCommand(new CourseDetailsServiceImpl()));
+    UPDATE_COST(new CourseDetailsCostUpdateCommand(new CourseDetailsServiceImpl())),
+    /**
+     * The Course update.
+     */
+    COURSE_UPDATE(new CourseUpdateCommand(new CourseServiceImpl())),
+    /**
+     * The Update teacher.
+     */
+    UPDATE_TEACHER(new CourseDetailsTeacherUpdateCommand(new TeacherServiceImpl(), new CourseDetailsServiceImpl()));
 
 
     private Command command;

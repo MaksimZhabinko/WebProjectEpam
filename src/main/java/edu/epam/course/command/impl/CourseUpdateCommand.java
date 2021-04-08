@@ -9,52 +9,63 @@ import edu.epam.course.command.SessionAttribute;
 import edu.epam.course.exception.ServiceException;
 import edu.epam.course.model.entity.Course;
 import edu.epam.course.model.service.CourseService;
+import edu.epam.course.util.IdUtil;
 import edu.epam.course.validator.CourseValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Optional;
 
 /**
- * The type Course add command.
+ * The type Course update command.
  */
-public class CourseAddCommand implements Command {
+public class CourseUpdateCommand implements Command {
     /**
      * The constant logger.
      */
-    private static final Logger logger = LogManager.getLogger(CourseAddCommand.class);
+    private static final Logger logger = LogManager.getLogger(CourseUpdateCommand.class);
     private CourseService courseService;
 
     /**
-     * Instantiates a new Course add command.
+     * Instantiates a new Course update command.
      *
      * @param courseService the course service
      */
-    public CourseAddCommand(CourseService courseService) {
+    public CourseUpdateCommand(CourseService courseService) {
         this.courseService = courseService;
     }
 
     @Override
     public Router execute(HttpServletRequest request) {
-        String courseName = request.getParameter(RequestParameter.COURSE_NAME).trim();
+        String courseIdString = request.getParameter(RequestParameter.COURSE_ID);
+        String courseName = request.getParameter(RequestParameter.COURSE_NAME);
         HttpSession session = request.getSession();
         Router router = new Router();
         boolean dataCorrect = true;
         try {
+            Long courseId = IdUtil.stringToLong(courseIdString);
             if (!CourseValidator.isValidName(courseName)) {
-             session.setAttribute(SessionAttribute.ERROR_IS_NOT_VALID_COURSE_NAME, true);
-             dataCorrect = false;
+                session.setAttribute(SessionAttribute.ERROR_IS_NOT_VALID_COURSE_NAME, true);
+                dataCorrect = false;
+            }
+            if (dataCorrect) {
+                Optional<Course> courseOptional = courseService.findCourseById(courseId);
+                if (!courseOptional.isPresent()) {
+                    session.setAttribute(SessionAttribute.ERROR_COURSE_NOT_FOUND, true);
+                    dataCorrect = false;
+                }
             }
             if (dataCorrect) {
                 Course course = new Course();
+                course.setId(courseId);
                 course.setName(courseName);
-                course.setEnrollmentActive(true);
-                courseService.addCourse(course);
+                courseService.updateCourseName(course);
             }
             router.setType(Router.Type.REDIRECT);
             router.setPagePath(PagePath.MAIN.getServletPath());
-        } catch (ServiceException e) {
+        }  catch (ServiceException | NumberFormatException e) {
             logger.error(e);
             router.setPagePath(PagePath.ERROR_500.getDirectUrl());
             request.setAttribute(RequestAttribute.EXCEPTION, e.getMessage());

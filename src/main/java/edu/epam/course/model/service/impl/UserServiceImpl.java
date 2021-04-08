@@ -125,7 +125,7 @@ public class UserServiceImpl implements UserService {
             start = 0;
         } else {
             start = (page - 1) * PaginationUtil.USER_LIMIT;// todo как назвать это число?(1) и как назвать метод
-            // что это все вынести в метод код
+            // чтоб это все вынести в метод код
         }
         List<User> users;
         try {

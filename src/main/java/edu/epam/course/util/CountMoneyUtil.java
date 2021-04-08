@@ -17,7 +17,7 @@ public class CountMoneyUtil {
      * @param userMoney  the userMoney
      * @return the big decimal
      */
-    public static BigDecimal transaction(BigDecimal courseCost, BigDecimal userMoney) {
+    public static BigDecimal transaction(BigDecimal courseCost, BigDecimal userMoney) { // todo как обозвать
         BigDecimal result = userMoney.subtract(courseCost);
         return result;
     }

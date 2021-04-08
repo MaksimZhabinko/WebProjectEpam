@@ -100,6 +100,14 @@ public class RequestParameter {
      * The constant COST.
      */
     public static final String COST = "cost";
+    /**
+     * The constant TEACHER_NAME.
+     */
+    public static final String TEACHER_NAME = "teacher_name";
+    /**
+     * The constant TEACHER_SURNAME.
+     */
+    public static final String TEACHER_SURNAME = "teacher_surname";
 
     private RequestParameter() {
     }

@@ -64,6 +64,34 @@ public class SessionAttribute {
      * The constant ERROR_COURSE_NOT_FOUND.
      */
     public static final String ERROR_COURSE_NOT_FOUND = "errorCourseNotFound";
+    /**
+     * The constant ERROR_COST.
+     */
+    public static final String ERROR_COST = "errorCost";
+    /**
+     * The constant ERROR_DESCRIPTION.
+     */
+    public static final String ERROR_DESCRIPTION = "errorDescription";
+    /**
+     * The constant ERROR_HOURS.
+     */
+    public static final String ERROR_HOURS = "errorHours";
+    /**
+     * The constant ERROR_START_OF_CLASS.
+     */
+    public static final String ERROR_START_OF_CLASS = "errorStartOfClass";
+    /**
+     * The constant ERROR_LECTURE_NOT_FOUND.
+     */
+    public static final String ERROR_LECTURE_NOT_FOUND = "errorLectureNotFound";
+    /**
+     * The constant ERROR_TEACHER_NOT_FOUND.
+     */
+    public static final String ERROR_TEACHER_NOT_FOUND = "errorTeacherNotFound";
+    /**
+     * The constant ERROR_TEACHER_HAVE.
+     */
+    public static final String ERROR_TEACHER_HAVE = "errorTeacherHave";
 
     private SessionAttribute() {
     }

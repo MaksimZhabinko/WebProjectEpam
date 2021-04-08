@@ -43,6 +43,8 @@ public class CourseDaoImpl implements CourseDao {
      */
     private static final String FIND_USER_ENROLLED_BY_COURSE = "SELECT course_id, course_name, enrollment_active FROM course.users INNER JOIN course.users_x_courses ON fk_user_id = user_id INNER JOIN course.courses ON fk_course_id = course_id WHERE fk_user_id = ?";
 
+    private static final String UPDATE_COURSE_NAME = "UPDATE course.courses SET course_name = ? WHERE course_id = ?";
+
     @Override
     public List<Course> findAll() throws DaoException {
         List<Course> courses = new ArrayList<>();
@@ -137,8 +139,26 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
+    public boolean updateCourseName(Course course) throws DaoException {
+        boolean isUpdate;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_COURSE_NAME)) {
+            preparedStatement.setString(1, course.getName());
+            preparedStatement.setLong(2, course.getId());
+
+            isUpdate = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DaoException(e);
+        }
+        return isUpdate;
+    }
+
+    @Override
+    // todo должен ли он тут находится?
     public void example(Course course, CourseDetails courseDetails, List<Lecture> lectures) {
         Connection connection = null;
+        // todo или использовать только один? или для каждого нужно создавать
         PreparedStatement preparedStatementCourse = null;
         PreparedStatement preparedStatementCurseDetails = null;
         PreparedStatement preparedStatementLecture = null;
@@ -171,6 +191,7 @@ public class CourseDaoImpl implements CourseDao {
                 preparedStatementLecture.executeUpdate();
             }
 
+            // todo исп тот же prepare
             preparedStatementCourse = connection.prepareStatement("UPDATE course.courses SET enrollment_active = false WHERE course_id = ?");
             preparedStatementCourse.setLong(1, course.getId());
             preparedStatementCourse.executeUpdate();

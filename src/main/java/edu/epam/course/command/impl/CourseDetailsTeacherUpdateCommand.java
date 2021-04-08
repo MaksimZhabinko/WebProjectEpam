@@ -8,9 +8,11 @@ import edu.epam.course.command.Router;
 import edu.epam.course.command.SessionAttribute;
 import edu.epam.course.exception.ServiceException;
 import edu.epam.course.model.entity.CourseDetails;
+import edu.epam.course.model.entity.Teacher;
 import edu.epam.course.model.service.CourseDetailsService;
+import edu.epam.course.model.service.TeacherService;
 import edu.epam.course.util.IdUtil;
-import edu.epam.course.validator.CourseDetailsValidator;
+import edu.epam.course.validator.TeacherValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,44 +21,56 @@ import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 /**
- * The type Course details description update command.
+ * The type Course details teacher update command.
  */
-public class CourseDetailsDescriptionUpdateCommand implements Command {
+public class CourseDetailsTeacherUpdateCommand implements Command {
     /**
      * The constant logger.
      */
-    private static final Logger logger = LogManager.getLogger(CourseDetailsDescriptionUpdateCommand.class);
+    private static final Logger logger = LogManager.getLogger(CourseDetailsTeacherUpdateCommand.class);
+    private TeacherService teacherService;
     private CourseDetailsService courseDetailsService;
 
     /**
-     * Instantiates a new Course details description update command.
+     * Instantiates a new Course details teacher update command.
      *
+     * @param teacherService       the teacher service
      * @param courseDetailsService the course details service
      */
-    public CourseDetailsDescriptionUpdateCommand(CourseDetailsService courseDetailsService) {
+    public CourseDetailsTeacherUpdateCommand(TeacherService teacherService, CourseDetailsService courseDetailsService) {
+        this.teacherService = teacherService;
         this.courseDetailsService = courseDetailsService;
     }
 
     @Override
     public Router execute(HttpServletRequest request) {
         String courseIdString = request.getParameter(RequestParameter.COURSE_ID);
-        String description = request.getParameter(RequestParameter.DESCRIPTION);
+        String teacherName = request.getParameter(RequestParameter.TEACHER_NAME).trim();
+        String teacherSurname = request.getParameter(RequestParameter.TEACHER_SURNAME).trim();
         HttpSession session = request.getSession();
         Router router = new Router();
         boolean dataCorrect = true;
         try {
             Long courseId = IdUtil.stringToLong(courseIdString);
             Optional<CourseDetails> courseDetailsOptional = courseDetailsService.findCourseDetailsByCourseId(courseId);
+            Optional<Teacher> teacherOptional = Optional.empty();
             if (courseDetailsOptional.isPresent()) {
-                if (!CourseDetailsValidator.isValidDescription(description)) {
-                    session.setAttribute(SessionAttribute.ERROR_DESCRIPTION, true);
+                if (!TeacherValidator.isValidNameAndSurname(teacherName, teacherSurname)) {
+                    session.setAttribute("errorTeacherUpdate", true); // todo session and front
                     dataCorrect = false;
+                }
+                if (dataCorrect) {
+                    teacherOptional = teacherService.findTeacherByNameAndSurname(teacherName, teacherSurname);
+                    if (!teacherOptional.isPresent()) {
+                        session.setAttribute(SessionAttribute.ERROR_TEACHER_NOT_FOUND, true);
+                        dataCorrect = false;
+                    }
                 }
                 if (dataCorrect) {
                     CourseDetails courseDetails = new CourseDetails();
                     courseDetails.setId(courseDetailsOptional.get().getId());
-                    courseDetails.setDescription(description);
-                    courseDetailsService.updateDescription(courseDetails);
+                    courseDetails.setTeacher(teacherOptional.get());
+                    courseDetailsService.updateTeacher(courseDetails);
                 }
                 router.setType(Router.Type.REDIRECT);
                 router.setPagePath(PagePath.LECTURE.getServletPath() + courseId);

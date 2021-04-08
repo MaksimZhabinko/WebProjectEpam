@@ -30,8 +30,8 @@
                     <fmt:message key="error.signUp.emailIsExist"/>
                 </div>
             </c:if>
-            <input type="text" id="name" class="fadeIn second" name="name" value="${name}" placeholder="<fmt:message key="placeholder.name"/>" required>
-            <input type="text" id="surname" class="fadeIn second" name="surname" value="${surname}" placeholder="<fmt:message key="placeholder.surname"/>" required>
+            <input type="text" id="name" class="fadeIn second" name="name" value="${name}" placeholder="<fmt:message key="placeholder.name"/>" required pattern="^[\p{L}]+$">
+            <input type="text" id="surname" class="fadeIn second" name="surname" value="${surname}" placeholder="<fmt:message key="placeholder.surname"/>" required pattern="^[\p{L}]+$">
             <c:if test="${errorNameAndSurnameMessage}">
                 <div class="alert alert-danger" role="alert">
                     <fmt:message key="error.signUp.nameAndSurname"/>

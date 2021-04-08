@@ -1,9 +1,16 @@
 package edu.epam.course.validator;
 
+import java.util.regex.Pattern;
+
 /**
  * The type teacher validator.
  */
 public class TeacherValidator {
+
+    /**
+     * The constant string.
+     */
+    private static final Pattern STRING_PATTERN = Pattern.compile("^[\\p{L}]+$");
 
     private TeacherValidator() {
     }
@@ -17,7 +24,8 @@ public class TeacherValidator {
      */
     public static boolean isValidNameAndSurname(String name, String surname) {
         boolean isCorrect = true;
-        if (name == null || name.isBlank() || surname == null || surname.isBlank()) {
+        if (name == null || name.isBlank() || surname == null || surname.isBlank()
+                || !STRING_PATTERN.matcher(name).matches() || !STRING_PATTERN.matcher(surname).matches()) {
             isCorrect = false;
         }
         return isCorrect;

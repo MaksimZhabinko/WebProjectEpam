@@ -81,4 +81,16 @@ public class CourseServiceImpl implements CourseService {
         }
         return courses;
     }
+
+    @Override
+    public boolean updateCourseName(Course course) throws ServiceException {
+        boolean isUpdate;
+        try {
+            isUpdate = courseDao.updateCourseName(course);
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return isUpdate;
+    }
 }

@@ -48,6 +48,7 @@ public class ShowAllUsersCommand implements Command {
             List<Integer> pages = PaginationUtil.paginationUserPages(maxUserId);
             session.setAttribute(SessionAttribute.PAGES, pages);
             if (pageInt > pages.get(pages.size() - 1)) {
+                // todo посмотреть, может улучшить, а то если захочет 4 стр из 3, то булет 404
                 router.setPagePath(PagePath.ERROR_404.getDirectUrl());
                 dataCorrect = false;
             }

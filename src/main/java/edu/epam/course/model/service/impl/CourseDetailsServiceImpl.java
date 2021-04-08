@@ -132,4 +132,16 @@ public class CourseDetailsServiceImpl implements CourseDetailsService {
         }
         return isUpdate;
     }
+
+    @Override
+    public boolean updateTeacher(CourseDetails courseDetails) throws ServiceException {
+        boolean isUpdate;
+        try {
+            isUpdate = courseDetailsDao.updateTeacher(courseDetails);
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return isUpdate;
+    }
 }

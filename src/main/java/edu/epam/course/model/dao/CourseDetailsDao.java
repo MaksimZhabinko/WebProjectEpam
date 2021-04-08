@@ -62,4 +62,13 @@ public interface CourseDetailsDao extends BaseDao<Long, CourseDetails> {
      * @throws DaoException the dao exception
      */
     boolean updateCost(CourseDetails courseDetails) throws DaoException;
+
+    /**
+     * Update teacher boolean.
+     *
+     * @param courseDetails the course details
+     * @return the boolean
+     * @throws DaoException the dao exception
+     */
+    boolean updateTeacher(CourseDetails courseDetails) throws DaoException;
 }

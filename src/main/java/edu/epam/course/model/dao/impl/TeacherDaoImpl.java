@@ -3,6 +3,7 @@ package edu.epam.course.model.dao.impl;
 import edu.epam.course.exception.DaoException;
 import edu.epam.course.model.connection.ConnectionPool;
 import edu.epam.course.model.dao.TeacherDao;
+import edu.epam.course.model.entity.Lecture;
 import edu.epam.course.model.entity.Teacher;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

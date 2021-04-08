@@ -49,8 +49,8 @@ public class ReviewDeleteCommand implements Command {
                 router.setPagePath(PagePath.REVIEW.getServletPath());
                 router.setType(Router.Type.REDIRECT);
             } else {
-                boolean isHave = reviewService.isHaveReviewUserById(reviewId, user.getId());
-                if (isHave) {
+                boolean isHaveReview = reviewService.isHaveReviewUserById(reviewId, user.getId());
+                if (isHaveReview) {
                     reviewService.deleteReview(reviewId);
                     router.setPagePath(PagePath.REVIEW.getServletPath());
                     router.setType(Router.Type.REDIRECT);

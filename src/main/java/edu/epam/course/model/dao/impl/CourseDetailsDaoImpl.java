@@ -58,6 +58,10 @@ public class CourseDetailsDaoImpl implements CourseDetailsDao {
      * The constant course details start of class update.
      */
     private static final String COURSE_DETAILS_START_OF_CLASS_UPDATE = "UPDATE course.course_details SET start_of_class = ? WHERE course_detail_id = ?";
+    /**
+     * The constant course details teacher update.
+     */
+    private static final String COURSE_DETAILS_TEACHER_UPDATE = "UPDATE course.course_details SET fk_teacher_name_id = ? WHERE course_detail_id = ?";
 
     @Override
     public Optional<CourseDetails> findEntityById(Long id) throws DaoException {
@@ -224,6 +228,22 @@ public class CourseDetailsDaoImpl implements CourseDetailsDao {
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(COURSE_DETAILS_COST_UPDATE)) {
             preparedStatement.setBigDecimal(1, courseDetails.getCost());
+            preparedStatement.setLong(2, courseDetails.getId());
+
+            isUpdate = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DaoException(e);
+        }
+        return isUpdate;
+    }
+
+    @Override
+    public boolean updateTeacher(CourseDetails courseDetails) throws DaoException {
+        boolean isUpdate;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(COURSE_DETAILS_TEACHER_UPDATE)) {
+            preparedStatement.setLong(1, courseDetails.getTeacher().getId());
             preparedStatement.setLong(2, courseDetails.getId());
 
             isUpdate = preparedStatement.executeUpdate() > 0;

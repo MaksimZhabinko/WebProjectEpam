@@ -39,7 +39,7 @@ public class AboutUsUpdateCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {
         String aboutUsIdString = request.getParameter(RequestParameter.ABOUT_US_ID);
-        String message = request.getParameter(RequestParameter.MESSAGE);
+        String message = request.getParameter(RequestParameter.MESSAGE).trim();
         HttpSession session = request.getSession();
         Router router = new Router();
         boolean dataCorrect = true;

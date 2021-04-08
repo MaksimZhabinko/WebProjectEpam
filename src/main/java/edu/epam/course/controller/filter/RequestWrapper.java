@@ -19,9 +19,10 @@ public class RequestWrapper extends HttpServletRequestWrapper {
     public RequestWrapper(HttpServletRequest request) {
         super(request);
     }
+
     @Override
     public String getParameter(String name){
-        if(params.get(name)!=null){
+        if(params.get(name) != null) {
             return params.get(name);
         }
         return super.getParameter(name);
@@ -34,7 +35,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
      * @param parameter the parameter
      */
     public void setParameter(String name, String parameter){
-        if(super.getParameter(name)==null||!super.getParameter(name).equals(parameter)) {
+        if(super.getParameter(name) == null || !super.getParameter(name).equals(parameter)) {
             params.put(name, parameter);
         }
     }

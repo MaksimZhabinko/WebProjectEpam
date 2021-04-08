@@ -38,7 +38,7 @@ public class ForgotPasswordCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) {
-        String email = request.getParameter(RequestParameter.EMAIL);
+        String email = request.getParameter(RequestParameter.EMAIL).trim();
         Router router = new Router();
         HttpSession session = request.getSession();
         boolean dataCorrect = true;

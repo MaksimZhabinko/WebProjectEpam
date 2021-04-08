@@ -34,7 +34,7 @@ public class SignInCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) {
-        String email = request.getParameter(RequestParameter.EMAIL);
+        String email = request.getParameter(RequestParameter.EMAIL).trim();
         String password = request.getParameter(RequestParameter.PASSWORD);
         HttpSession session = request.getSession();
         Router router = new Router();

@@ -13,7 +13,7 @@
 <c:import url="fragment/header.jsp"/>
 <c:import url="fragment/sidebar.jsp"/>
 
-<%--        todo required, localization--%>
+<%--        todo required, localization ко всем относится--%>
 <c:if test="${courseDetails != null}">
     <h1>${courseDetails.getCourse().getName()}</h1>
     <p><fmt:message key="lecture.description"/>: ${courseDetails.getDescription()}</p>
@@ -34,6 +34,7 @@
             <input type="submit" value="Update hours">
         </form>
     </c:if>
+<%--    todo сделать--%>
     <p><fmt:message key="lecture.start_course"/>: ${courseDetails.getStartCourse()}</p>
     <p><fmt:message key="lecture.end_course"/>: ${courseDetails.getEndCourse()}</p>
 
@@ -49,10 +50,21 @@
     <p><img width="200" height="200"
             src="${pageContext.request.contextPath}/upload?url=/Users/dasik/Desktop/photoUsersCourses/${courseDetails.getTeacher().getPhoto()}"/>
     </p>
-    <p><fmt:message
-            key="lecture.teacher"/>: ${courseDetails.getTeacher().getName()} ${courseDetails.getTeacher().getSurname()}</p>
-    <p><fmt:message key="lecture.cost"/>: ${courseDetails.getCost()}</p>
+    <p>
+        <fmt:message key="lecture.teacher"/>: ${courseDetails.getTeacher().getName()} ${courseDetails.getTeacher().getSurname()}
+    </p>
+<%--    todo ^[\p{L}]+$ --%>
+    <c:if test="${user.getRole().toString() eq 'ADMIN'}">
+        <form action="${pageContext.request.contextPath}/controller" method="post">
+            <input type="hidden" name="command" value="update_teacher">
+            <input type="hidden" name="course_id" value="${courseId}">
+            <input type="text" name="teacher_name" value="${courseDetails.getTeacher().getName()}">
+            <input type="text" name="teacher_surname" value="${courseDetails.getTeacher().getSurname()}">
+            <input type="submit" value="Update TEACHER">
+        </form>
+    </c:if>
 
+    <p><fmt:message key="lecture.cost"/>: ${courseDetails.getCost()}</p>
     <c:if test="${user.getRole().toString() eq 'ADMIN'}">
         <form action="${pageContext.request.contextPath}/controller" method="post">
             <input type="hidden" name="command" value="update_cost">
@@ -206,6 +218,41 @@
         });
     </script>
 </c:if>
+<c:if test="${errorCost}">
+    <script>
+        $(document).ready(function () {
+            $("#myModalBox").modal('show');
+        });
+    </script>
+</c:if>
+<c:if test="${errorDescription}">
+    <script>
+        $(document).ready(function () {
+            $("#myModalBox").modal('show');
+        });
+    </script>
+</c:if>
+<c:if test="${errorHours}">
+    <script>
+        $(document).ready(function () {
+            $("#myModalBox").modal('show');
+        });
+    </script>
+</c:if>
+<c:if test="${errorStartOfClass}">
+    <script>
+        $(document).ready(function () {
+            $("#myModalBox").modal('show');
+        });
+    </script>
+</c:if>
+<c:if test="${errorTeacherNotFound}">
+    <script>
+        $(document).ready(function () {
+            $("#myModalBox").modal('show');
+        });
+    </script>
+</c:if>
 <div id="myModalBox" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -231,6 +278,31 @@
                         <fmt:message key="error.message"/>
                     </div>
                 </c:if>
+                <c:if test="${errorCost}">
+                    <div class="alert alert-danger" role="alert">
+                        <fmt:message key="error.lecture.update_cost"/>
+                    </div>
+                </c:if>
+                <c:if test="${errorDescription}">
+                    <div class="alert alert-danger" role="alert">
+                        <fmt:message key="error.lecture.update_description"/>
+                    </div>
+                </c:if>
+                <c:if test="${errorHours}">
+                    <div class="alert alert-danger" role="alert">
+                        <fmt:message key="error.lecture.update_hours"/>
+                    </div>
+                </c:if>
+                <c:if test="${errorStartOfClass}">
+                    <div class="alert alert-danger" role="alert">
+                        <fmt:message key="error.lecture.update_start_of_class"/>
+                    </div>
+                </c:if>
+                <c:if test="${errorTeacherNotFound}">
+                    <div class="alert alert-danger" role="alert">
+                        <fmt:message key="error.lecture.teacher_not_found"/>
+                    </div>
+                </c:if>
             </div>
             <!-- Футер модального окна -->
             <div class="modal-footer">
@@ -247,6 +319,31 @@
                 <c:if test="${errorMessage}">
                     <button type="button" class="btn btn-default" data-dismiss="modal"
                             onclick="<c:remove var="errorMessage" scope="session"/>">Ок
+                    </button>
+                </c:if>
+                <c:if test="${errorCost}">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                            onclick="<c:remove var="errorCost" scope="session"/>">Ок
+                    </button>
+                </c:if>
+                <c:if test="${errorDescription}">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                            onclick="<c:remove var="errorDescription" scope="session"/>">Ок
+                    </button>
+                </c:if>
+                <c:if test="${errorHours}">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                            onclick="<c:remove var="errorHours" scope="session"/>">Ок
+                    </button>
+                </c:if>
+                <c:if test="${errorStartOfClass}">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                            onclick="<c:remove var="errorStartOfClass" scope="session"/>">Ок
+                    </button>
+                </c:if>
+                <c:if test="${errorTeacherNotFound}">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                            onclick="<c:remove var="errorTeacherNotFound" scope="session"/>">Ок
                     </button>
                 </c:if>
             </div>

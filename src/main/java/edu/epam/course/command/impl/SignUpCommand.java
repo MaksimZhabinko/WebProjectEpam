@@ -39,9 +39,9 @@ public class SignUpCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) {
-        String email = request.getParameter(RequestParameter.EMAIL);
-        String name = request.getParameter(RequestParameter.NAME);
-        String surname = request.getParameter(RequestParameter.SURNAME);
+        String email = request.getParameter(RequestParameter.EMAIL).trim();
+        String name = request.getParameter(RequestParameter.NAME).trim();
+        String surname = request.getParameter(RequestParameter.SURNAME).trim();
         String password = request.getParameter(RequestParameter.PASSWORD);
         String repeatPassword = request.getParameter(RequestParameter.REPEAT_PASSWORD);
         Router router = new Router();

@@ -27,6 +27,14 @@
         <c:if test="${course.getEnrollmentActive() == true}">
             <c:if test="${user.getRole().toString() eq 'ADMIN'}">
                 <form action="${pageContext.request.contextPath}/controller" method="post">
+                    <input type="hidden" name="command" value="course_update">
+                    <input type="hidden" name="course_id" value="${course.getId()}">
+                    <input type="text" name="course_name" value="${course.getName()}" required>
+                    <input type="submit" value="<fmt:message key="button.main.update_course"/>">
+                </form>
+            </c:if>
+            <c:if test="${user.getRole().toString() eq 'ADMIN'}">
+                <form action="${pageContext.request.contextPath}/controller" method="post">
                     <input type="hidden" name="command" value="course_delete">
                     <input type="hidden" name="course_id" value="${course.getId()}">
                     <input type="submit" value="<fmt:message key="button.delete_course"/>">
@@ -38,7 +46,7 @@
 <c:if test="${user.getRole().toString() eq 'ADMIN'}">
     <form action="${pageContext.request.contextPath}/controller" method="post">
         <input type="hidden" name="command" value="course_add">
-        <input type="text" name="course_name" required>
+        <input type="text" name="course_name" required pattern="^[\p{L}]+$">
         <input type="submit" value="<fmt:message key="button.add_course"/>">
     </form>
 </c:if>
@@ -69,6 +77,13 @@
         });
     </script>
 </c:if>
+<c:if test="${errorLectureNotFound}">
+    <script>
+        $(document).ready(function () {
+            $("#myModalBox").modal('show');
+        });
+    </script>
+</c:if>
 <div id="myModalBox" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -89,6 +104,11 @@
                         <fmt:message key="error.main.course_not_found"/>
                     </div>
                 </c:if>
+                <c:if test="${errorLectureNotFound}">
+                    <div class="alert alert-danger" role="alert">
+                        <fmt:message key="error.lecture.lecture_not_found"/>
+                    </div>
+                </c:if>
             </div>
             <!-- Футер модального окна -->
             <div class="modal-footer">
@@ -100,6 +120,11 @@
                 <c:if test="${errorCourseNotFound}">
                     <button type="button" class="btn btn-default" data-dismiss="modal"
                             onclick="<c:remove var="errorCourseNotFound" scope="session"/>">Ок
+                    </button>
+                </c:if>
+                <c:if test="${errorLectureNotFound}">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                            onclick="<c:remove var="errorLectureNotFound" scope="session"/>">Ок
                     </button>
                 </c:if>
             </div>

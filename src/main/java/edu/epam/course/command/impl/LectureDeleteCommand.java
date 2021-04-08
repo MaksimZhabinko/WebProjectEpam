@@ -37,7 +37,7 @@ public class LectureDeleteCommand implements Command {
         String lectureIdString = request.getParameter(RequestParameter.LECTURE_ID);
         String courseIdString = request.getParameter(RequestParameter.COURSE_ID);
         Router router = new Router();
-        try {
+        try { // todo нет проверки сущ данный курс или нет
             Long lectureId = IdUtil.stringToLong(lectureIdString);
             Long courseId = IdUtil.stringToLong(courseIdString);
             lectureService.deleteLecture(lectureId);

@@ -40,7 +40,7 @@ public class CourseDetailsHoursUpdateCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {
         String courseIdString = request.getParameter(RequestParameter.COURSE_ID);
-        String hours = request.getParameter("hours");// todo
+        String hours = request.getParameter(RequestParameter.HOURS);
         HttpSession session = request.getSession();
         Router router = new Router();
         boolean dataCorrect = true;
@@ -49,7 +49,7 @@ public class CourseDetailsHoursUpdateCommand implements Command {
             Optional<CourseDetails> courseDetailsOptional = courseDetailsService.findCourseDetailsByCourseId(courseId);
             if (courseDetailsOptional.isPresent()) {
                 if (!CourseDetailsValidator.isValidHours(hours)) {
-                    session.setAttribute("errorHours", true); // todo session and front
+                    session.setAttribute(SessionAttribute.ERROR_HOURS, true);
                     dataCorrect = false;
                 }
                 if (dataCorrect) {

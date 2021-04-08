@@ -4,25 +4,24 @@ import edu.epam.course.exception.DaoException;
 import edu.epam.course.model.dao.*;
 import edu.epam.course.model.dao.impl.*;
 import edu.epam.course.model.entity.*;
+import edu.epam.course.validator.TeacherValidator;
+import edu.epam.course.validator.UserValidator;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 
 public class Main {
     public static void main(String[] args) throws DaoException {
 
-        CourseDao courseDao = new CourseDaoImpl();
-        Optional<Course> course = courseDao.findEntityById(1L);
-        CourseDetailsDao courseDetailsDao = new CourseDetailsDaoImpl();
-        Optional<CourseDetails> courseDetails = courseDetailsDao.findCourseDetailsByCourseId(course.get().getId());
-        LectureDao lectureDao = new LectureDaoImpl();
-        List<Lecture> lectures = lectureDao.findAllByCourseId(course.get().getId());
-        courseDao.example(course.get(), courseDetails.get(), lectures);
+
+
     }
 
     private void deleteRepeatNumber() {

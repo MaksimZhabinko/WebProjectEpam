@@ -19,6 +19,17 @@ public interface CourseDao extends BaseDao<Long, Course> {
      * @throws DaoException the dao exception
      */
     List<Course> findUserEnrolledByCourse(Long userId) throws DaoException;
-    // todo example
+
+    /**
+     * Update course name boolean.
+     *
+     * @param course the course
+     * @return the boolean
+     * @throws DaoException the dao exception
+     */
+    boolean updateCourseName(Course course) throws DaoException;
+
+
+// todo example
     void example(Course course, CourseDetails courseDetails, List<Lecture> lectures);
 }

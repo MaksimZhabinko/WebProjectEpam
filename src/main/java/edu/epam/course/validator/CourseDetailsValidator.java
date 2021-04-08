@@ -28,6 +28,11 @@ public class CourseDetailsValidator {
                     + "|^(((19|2[0-9])[0-9]{2})-(0[13578]|10|12)-(0[1-9]|[12][0-9]|3[01]))$"
                     + "|^(((19|2[0-9])[0-9]{2})-(0[469]|11)-(0[1-9]|[12][0-9]|30))$");
 
+    /**
+     * The constant string.
+     */
+    private static final Pattern STRING_PATTERN = Pattern.compile("^[\\p{L}]+$");
+
     private CourseDetailsValidator() {
     }
 
@@ -68,7 +73,8 @@ public class CourseDetailsValidator {
      */
     public static boolean isValidNameAndSurname(String name, String surname) {
         boolean isCorrect = true;
-        if (name == null || name.isBlank() || surname == null || surname.isBlank()) {
+        if (name == null || name.isBlank() || surname == null || surname.isBlank()
+                || !STRING_PATTERN.matcher(name).matches() || !STRING_PATTERN.matcher(surname).matches()) {
             isCorrect = false;
         }
         return isCorrect;

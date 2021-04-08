@@ -55,8 +55,8 @@ public class OpenLectureCommand implements Command {
         Router router = new Router();
         try {
             Long courseId = IdUtil.stringToLong(courseIdString);
-            Optional<Course> courseById = courseService.findCourseById(courseId);
-            if (courseById.isPresent()) {
+            Optional<Course> courseOptional = courseService.findCourseById(courseId);
+            if (courseOptional.isPresent()) {
                 List<Lecture> lectures = lectureService.findAllLectureByCourseId(courseId);
                 Optional<CourseDetails> courseDetails = courseDetailsService.findCourseDetailsById(courseId);
                 if (!lectures.isEmpty()) {
@@ -65,11 +65,12 @@ public class OpenLectureCommand implements Command {
                 if (courseDetails.isPresent()) {
                     request.setAttribute(RequestAttribute.COURSE_DETAILS, courseDetails.get());
                 }
-                request.setAttribute(RequestAttribute.COURSE_ID, courseById.get().getId());
+                request.setAttribute(RequestAttribute.COURSE_ID, courseOptional.get().getId());
                 router.setPagePath(PagePath.LECTURE.getDirectUrl());
                 session.setAttribute(SessionAttribute.CURRENT_PAGE, PagePath.LECTURE.getServletPath() + courseId);
             } else {
                 router.setPagePath(PagePath.ERROR_404.getDirectUrl());
+                // todo можно заменить на собственный error course not found
             }
         } catch (ServiceException | NumberFormatException e) {
             logger.error(e);

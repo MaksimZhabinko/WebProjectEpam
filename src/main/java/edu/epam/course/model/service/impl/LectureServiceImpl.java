@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The type Lecture service.
@@ -67,5 +68,17 @@ public class LectureServiceImpl implements LectureService {
             throw new ServiceException(e);
         }
         return isUpdate;
+    }
+
+    @Override
+    public Optional<Lecture> findLectureByIdAndCourseId(Long lectureId, Long courseId) throws ServiceException {
+        Optional<Lecture> lectureOptional;
+        try {
+            lectureOptional = lectureDao.findLectureByIdAndCourseId(lectureId, courseId);
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return lectureOptional;
     }
 }

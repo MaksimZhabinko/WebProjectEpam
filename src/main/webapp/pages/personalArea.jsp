@@ -103,6 +103,7 @@
 
 <c:if test="${user.getRole().toString() eq 'ADMIN'}">
     <c:if test="${allTeachers != null}">
+<%--        todo localization--%>
         <h1>DELETE TEACHER</h1>
         <form action="${pageContext.request.contextPath}/controller" method="post">
             <input type="hidden" name="command" value="teacher_delete">
@@ -118,8 +119,8 @@
     <h1><fmt:message key="h1.personal_area.add_teacher"/></h1>
     <form action="${pageContext.request.contextPath}/controller" method="post">
         <input type="hidden" name="command" value="teacher_add">
-        <input type="text" name="name" required>
-        <input type="text" name="surname" required>
+        <input type="text" name="teacher_name" required pattern="^[\p{L}]+$">
+        <input type="text" name="teacher_surname" required pattern="^[\p{L}]+$">
         <input type="submit" value="<fmt:message key="button.personal_area.add_teacher"/>">
     </form>
 </c:if>
@@ -229,6 +230,13 @@
         });
     </script>
 </c:if>
+<c:if test="${errorTeacherHave}">
+    <script>
+        $(document).ready(function () {
+            $("#myModalBox").modal('show');
+        });
+    </script>
+</c:if>
 <div id="myModalBox" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -249,10 +257,14 @@
                         <fmt:message key="error.personal_area.block_yourself"/>
                     </div>
                 </c:if>
-
                 <c:if test="${errorTeacherAdd}">
                     <div class="alert alert-danger" role="alert">
                         <fmt:message key="error.personal_area.add_teacher"/>
+                    </div>
+                </c:if>
+                <c:if test="${errorTeacherHave}">
+                    <div class="alert alert-danger" role="alert">
+                        <fmt:message key="error.personal_area.teacher_have"/>
                     </div>
                 </c:if>
             </div>
@@ -268,10 +280,14 @@
                             onclick="<c:remove var="errorBLockYourself" scope="session"/>">Ок
                     </button>
                 </c:if>
-
                 <c:if test="${errorTeacherAdd}">
                     <button type="button" class="btn btn-default" data-dismiss="modal"
                             onclick="<c:remove var="errorTeacherAdd" scope="session"/>">Ок
+                    </button>
+                </c:if>
+                <c:if test="${errorTeacherHave}">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                            onclick="<c:remove var="errorTeacherHave" scope="session"/>">Ок
                     </button>
                 </c:if>
             </div>

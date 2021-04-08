@@ -41,7 +41,7 @@ public class CourseDetailsCostUpdateCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {
         String courseIdString = request.getParameter(RequestParameter.COURSE_ID);
-        String cost = request.getParameter("cost");// todo
+        String cost = request.getParameter(RequestParameter.COST);
         HttpSession session = request.getSession();
         Router router = new Router();
         boolean dataCorrect = true;
@@ -50,7 +50,7 @@ public class CourseDetailsCostUpdateCommand implements Command {
             Optional<CourseDetails> courseDetailsOptional = courseDetailsService.findCourseDetailsByCourseId(courseId);
             if (courseDetailsOptional.isPresent()) {
                 if (!CourseDetailsValidator.isValidCost(cost)) {
-                    session.setAttribute("errorCost", true); // todo session and front
+                    session.setAttribute(SessionAttribute.ERROR_COST, true);
                     dataCorrect = false;
                 }
                 if (dataCorrect) {

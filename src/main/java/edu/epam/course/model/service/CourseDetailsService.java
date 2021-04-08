@@ -92,4 +92,13 @@ public interface CourseDetailsService {
      * @throws ServiceException the service exception
      */
     boolean updateCost(CourseDetails courseDetails) throws ServiceException;
+
+    /**
+     * Update teacher boolean.
+     *
+     * @param courseDetails the course details
+     * @return the boolean
+     * @throws ServiceException the service exception
+     */
+    boolean updateTeacher(CourseDetails courseDetails) throws ServiceException;
 }

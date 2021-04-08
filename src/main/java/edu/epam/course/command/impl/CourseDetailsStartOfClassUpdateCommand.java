@@ -41,7 +41,7 @@ public class CourseDetailsStartOfClassUpdateCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {
         String courseIdString = request.getParameter(RequestParameter.COURSE_ID);
-        String startOfClass = request.getParameter("start_of_class");// todo
+        String startOfClass = request.getParameter(RequestParameter.START_OF_CLASS);
         HttpSession session = request.getSession();
         Router router = new Router();
         boolean dataCorrect = true;
@@ -50,7 +50,7 @@ public class CourseDetailsStartOfClassUpdateCommand implements Command {
             Optional<CourseDetails> courseDetailsOptional = courseDetailsService.findCourseDetailsByCourseId(courseId);
             if (courseDetailsOptional.isPresent()) {
                 if (!CourseDetailsValidator.isValidStartOfClass(startOfClass)) {
-                    session.setAttribute("errorHours", true); // todo session and front
+                    session.setAttribute(SessionAttribute.ERROR_START_OF_CLASS, true);
                     dataCorrect = false;
                 }
                 if (dataCorrect) {
