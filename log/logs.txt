@@ -1,4 +1,0 @@
-12:03:56.845 [main] ERROR epam.course.model.dao.BaseDao - rollback error
-12:03:56.850 [main] ERROR course.model.dao.impl.TeacherDaoImpl - java.sql.SQLException: Can't call commit when autocommit=true
-19:59:45.525 [main] ERROR course.model.dao.impl.CourseDetailsDaoImpl - java.sql.SQLException: No value specified for parameter 1
-13:11:25.742 [main] ERROR course.model.dao.impl.CourseDaoImpl - java.sql.SQLIntegrityConstraintViolationException: Column 'course_name' cannot be null
