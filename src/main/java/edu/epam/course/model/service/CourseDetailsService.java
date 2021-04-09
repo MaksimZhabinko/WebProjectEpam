@@ -36,7 +36,7 @@ public interface CourseDetailsService {
      * @return the boolean
      * @throws ServiceException the service exception
      */
-    boolean courseHaveDetails(Long courseId) throws ServiceException;
+    boolean isCourseHaveDetails(Long courseId) throws ServiceException;
 
     /**
      * Create course details.
@@ -52,10 +52,9 @@ public interface CourseDetailsService {
      * @return the boolean
      * @throws ServiceException the service exception
      */
-//    todo он выделяет из всех, может тога его как и все делать?
-    boolean addCourseDetails(String hours, String description,
-                             String startCourse, String endCourse, String startOfClass,
-                             String cost, Course course, Teacher teacher) throws ServiceException;
+    boolean add(String hours, String description,
+                String startCourse, String endCourse, String startOfClass,
+                String cost, Course course, Teacher teacher) throws ServiceException;
 
     /**
      * Update description.

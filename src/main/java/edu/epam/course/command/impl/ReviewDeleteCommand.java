@@ -45,13 +45,13 @@ public class ReviewDeleteCommand implements Command {
         try {
             Long reviewId = IdUtil.stringToLong(reviewIdString);
             if (user.getRole() == RoleType.ADMIN) {
-                reviewService.deleteReview(reviewId);
+                reviewService.delete(reviewId);
                 router.setPagePath(PagePath.REVIEW.getServletPath());
                 router.setType(Router.Type.REDIRECT);
             } else {
-                boolean isHaveReview = reviewService.isHaveReviewUserById(reviewId, user.getId());
+                boolean isHaveReview = reviewService.isHaveReviewByUserId(reviewId, user.getId());
                 if (isHaveReview) {
-                    reviewService.deleteReview(reviewId);
+                    reviewService.delete(reviewId);
                     router.setPagePath(PagePath.REVIEW.getServletPath());
                     router.setType(Router.Type.REDIRECT);
                 } else {

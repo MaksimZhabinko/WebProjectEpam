@@ -23,7 +23,7 @@ public class TeacherServiceImpl implements TeacherService {
     private TeacherDao teacherDao = new TeacherDaoImpl();
 
     @Override
-    public boolean addTeacher(String name, String surname) throws ServiceException {
+    public boolean add(String name, String surname) throws ServiceException {
         boolean isAdd;
         try {
             Teacher teacher = new Teacher();
@@ -38,7 +38,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public List<Teacher> findAllTeachers() throws ServiceException {
+    public List<Teacher> findAll() throws ServiceException {
         List<Teacher> teachers;
         try {
             teachers = teacherDao.findAll();
@@ -50,7 +50,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public boolean deleteTeacher(List<Long> teachersId) throws ServiceException {
+    public boolean deleteTeachers(List<Long> teachersId) throws ServiceException {
         boolean isDelete;
         try {
             isDelete = teacherDao.deleteTeachers(teachersId);
@@ -62,10 +62,10 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public boolean updateTeacherPhoto(Teacher teacher) throws ServiceException {
+    public boolean updatePhoto(Teacher teacher) throws ServiceException {
         boolean isUpdate;
         try {
-            isUpdate = teacherDao.updateTeacherPhoto(teacher);
+            isUpdate = teacherDao.updatePhoto(teacher);
         } catch (DaoException e) {
             logger.error(e);
             throw new ServiceException(e);
@@ -74,10 +74,10 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Optional<Teacher> findTeacherByNameAndSurname(String name, String surname) throws ServiceException {
+    public Optional<Teacher> findByNameAndSurname(String name, String surname) throws ServiceException {
         Optional<Teacher> teacherOptional;
         try {
-            teacherOptional = teacherDao.findTeacherByNameAndSurname(name.trim(), surname.trim());
+            teacherOptional = teacherDao.findByNameAndSurname(name.trim(), surname.trim());
         } catch (DaoException e) {
             logger.error(e);
             throw new ServiceException(e);

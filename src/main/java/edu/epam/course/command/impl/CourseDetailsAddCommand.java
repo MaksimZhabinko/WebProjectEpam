@@ -48,11 +48,11 @@ public class CourseDetailsAddCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {
         String courseIdString = request.getParameter(RequestParameter.COURSE_ID);
-        String description = request.getParameter(RequestParameter.DESCRIPTION).trim();
+        String description = request.getParameter(RequestParameter.DESCRIPTION).strip();
         String hours = request.getParameter(RequestParameter.HOURS);
         String startOfClass = request.getParameter(RequestParameter.START_OF_CLASS);
-        String name = request.getParameter(RequestParameter.NAME).trim();
-        String surname = request.getParameter(RequestParameter.SURNAME).trim();
+        String name = request.getParameter(RequestParameter.NAME).strip();
+        String surname = request.getParameter(RequestParameter.SURNAME).strip();
         String startCourse = request.getParameter(RequestParameter.START_COURSE);
         String endCourse = request.getParameter(RequestParameter.END_COURSE);
         String cost = request.getParameter(RequestParameter.COST);
@@ -84,9 +84,9 @@ public class CourseDetailsAddCommand implements Command {
                 dataCorrect = false;
             }
             Long courseId = IdUtil.stringToLong(courseIdString);
-            Optional<Course> courseOptional = courseService.findCourseById(courseId);
-            Optional<Teacher> teacherOptional = teacherService.findTeacherByNameAndSurname(name, surname);
-            boolean isHaveDetails = courseDetailsService.courseHaveDetails(courseId);
+            Optional<Course> courseOptional = courseService.findById(courseId);
+            Optional<Teacher> teacherOptional = teacherService.findByNameAndSurname(name, surname);
+            boolean isHaveDetails = courseDetailsService.isCourseHaveDetails(courseId);
             if (!courseOptional.isPresent()) {
                 request.setAttribute(RequestAttribute.ERROR_COURSE_NOT_FOUND, true);
                 dataCorrect = false;
@@ -100,7 +100,7 @@ public class CourseDetailsAddCommand implements Command {
                 dataCorrect = false;
             }
             if (dataCorrect) {
-                courseDetailsService.addCourseDetails(hours, description, startCourse, endCourse, startOfClass,
+                courseDetailsService.add(hours, description, startCourse, endCourse, startOfClass,
                         cost, courseOptional.get(), teacherOptional.get());
                 router.setType(Router.Type.REDIRECT);
                 router.setPagePath(PagePath.LECTURE.getServletPath() + courseId);

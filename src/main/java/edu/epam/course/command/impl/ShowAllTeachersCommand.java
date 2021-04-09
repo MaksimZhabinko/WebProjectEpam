@@ -39,7 +39,7 @@ public class ShowAllTeachersCommand implements Command {
         HttpSession session = request.getSession();
         Router router = new Router();
         try {
-            List<Teacher> allTeachers = teacherService.findAllTeachers();
+            List<Teacher> allTeachers = teacherService.findAll();
             session.setAttribute(SessionAttribute.ALL_TEACHERS, allTeachers);
             router.setType(Router.Type.REDIRECT);
             router.setPagePath(PagePath.PERSONAL_AREA.getServletPath());

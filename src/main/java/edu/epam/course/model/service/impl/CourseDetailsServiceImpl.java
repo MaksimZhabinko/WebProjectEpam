@@ -30,7 +30,7 @@ public class CourseDetailsServiceImpl implements CourseDetailsService {
     public Optional<CourseDetails> findCourseDetailsById(Long courseDetailsId) throws ServiceException {
         Optional<CourseDetails> courseDetailsOptional;
         try {
-            courseDetailsOptional = courseDetailsDao.findEntityById(courseDetailsId);
+            courseDetailsOptional = courseDetailsDao.findById(courseDetailsId);
         } catch (DaoException e) {
             logger.error(e);
             throw new ServiceException(e);
@@ -51,10 +51,10 @@ public class CourseDetailsServiceImpl implements CourseDetailsService {
     }
 
     @Override
-    public boolean courseHaveDetails(Long courseId) throws ServiceException {
+    public boolean isCourseHaveDetails(Long courseId) throws ServiceException {
         boolean isHave;
         try {
-            isHave = courseDetailsDao.courseHaveDetails(courseId);
+            isHave = courseDetailsDao.isCourseHaveDetails(courseId);
         } catch (DaoException e) {
             logger.error(e);
             throw new ServiceException(e);
@@ -63,9 +63,9 @@ public class CourseDetailsServiceImpl implements CourseDetailsService {
     }
 
     @Override
-    public boolean addCourseDetails(String hours, String description, String startCourse, String endCourse,
-                                    String startOfClass, String cost, Course course,
-                                    Teacher teacher) throws ServiceException {
+    public boolean add(String hours, String description, String startCourse, String endCourse,
+                       String startOfClass, String cost, Course course,
+                       Teacher teacher) throws ServiceException {
         boolean isAdd;
         CourseDetails courseDetails = new CourseDetails();
         courseDetails.setHours(Integer.valueOf(hours));

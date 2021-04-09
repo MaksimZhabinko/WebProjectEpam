@@ -47,6 +47,7 @@
                 <c:if test="${user != null}">
                     <ctg:headerUserTag role="${user.getEmail()}"/>
                 </c:if>
+
                 <c:if test="${user != null}">
                     <c:if test="${user.getRole().toString() eq 'USER'}">
                         <form class="form-inline my-2 my-lg-0" action="${pageContext.request.contextPath}/controller" method="get">

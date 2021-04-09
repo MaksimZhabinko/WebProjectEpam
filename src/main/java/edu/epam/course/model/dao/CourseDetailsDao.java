@@ -12,11 +12,11 @@ public interface CourseDetailsDao extends BaseDao<Long, CourseDetails> {
     /**
      * Find course details by course id.
      *
-     * @param id the id
+     * @param courseId the course id
      * @return the optional
      * @throws DaoException the dao exception
      */
-    Optional<CourseDetails> findCourseDetailsByCourseId(Long id) throws DaoException;
+    Optional<CourseDetails> findCourseDetailsByCourseId(Long courseId) throws DaoException;
 
     /**
      * Find out if there are course details in the course.
@@ -25,7 +25,7 @@ public interface CourseDetailsDao extends BaseDao<Long, CourseDetails> {
      * @return the boolean
      * @throws DaoException the dao exception
      */
-    boolean courseHaveDetails(Long courseId) throws DaoException;
+    boolean isCourseHaveDetails(Long courseId) throws DaoException;
 
     /**
      * Update description.

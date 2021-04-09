@@ -66,7 +66,7 @@ public interface UserDao extends BaseDao<Long, User> {
      * @return the boolean
      * @throws DaoException the dao exception
      */
-    boolean updateUserPassword(String password, Long userId) throws DaoException;
+    boolean updatePassword(String password, Long userId) throws DaoException;
 
     /**
      * Update user balance.
@@ -76,7 +76,7 @@ public interface UserDao extends BaseDao<Long, User> {
      * @return the boolean
      * @throws DaoException the dao exception
      */
-    boolean updateUserBalance(BigDecimal money, Long userId) throws DaoException;
+    boolean updateBalance(BigDecimal money, Long userId) throws DaoException;
 
     /**
      * Enroll course.
@@ -96,7 +96,7 @@ public interface UserDao extends BaseDao<Long, User> {
      * @return the boolean
      * @throws DaoException the dao exception
      */
-    boolean userHaveCourse(Long userId, Long courseId) throws DaoException;
+    boolean isHaveCourse(Long userId, Long courseId) throws DaoException;
 
     /**
      * Update user photo.
@@ -105,7 +105,7 @@ public interface UserDao extends BaseDao<Long, User> {
      * @return the boolean
      * @throws DaoException the dao exception
      */
-    boolean updateUserPhoto(User user) throws DaoException;
+    boolean updatePhoto(User user) throws DaoException;
 
     /**
      * Block user.

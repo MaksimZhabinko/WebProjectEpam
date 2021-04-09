@@ -17,7 +17,7 @@ public interface LectureDao extends BaseDao<Long, Lecture> {
      * @return the list
      * @throws DaoException the dao exception
      */
-    List<Lecture> findAllByCourseId(Long id) throws DaoException;
+    List<Lecture> findAllLectureByCourseId(Long id) throws DaoException;
 
     /**
      * Update lecture.
@@ -26,7 +26,15 @@ public interface LectureDao extends BaseDao<Long, Lecture> {
      * @return the boolean
      * @throws DaoException the dao exception
      */
-    boolean updateLecture(Lecture lecture) throws DaoException;
+    boolean update(Lecture lecture) throws DaoException;
 
+    /**
+     * Find lecture by id and course id optional.
+     *
+     * @param lectureId the lecture id
+     * @param courseId  the course id
+     * @return the optional
+     * @throws DaoException the dao exception
+     */
     Optional<Lecture> findLectureByIdAndCourseId(Long lectureId, Long courseId) throws DaoException;
 }

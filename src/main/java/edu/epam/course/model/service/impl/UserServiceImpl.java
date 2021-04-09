@@ -41,9 +41,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findUserById(long id) throws ServiceException {
+    public Optional<User> findById(long userId) throws ServiceException {
         try {
-            Optional<User> user = userDao.findEntityById(id);
+            Optional<User> user = userDao.findById(userId);
             return user;
         } catch (DaoException e) {
             logger.error(e);
@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findUserByEmail(String email) throws ServiceException {
+    public Optional<User> findByEmail(String email) throws ServiceException {
         try {
             Optional<User> user = userDao.findByEmail(email);
             return user;
@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findUserByEmailAndPassword(String email, String password) throws ServiceException {
+    public Optional<User> findByEmailAndPassword(String email, String password) throws ServiceException {
         try {
             String encoderPassword = PasswordEncryptionUtil.getEncoder(password);
             Optional<User> user = userDao.findByEmailAndPassword(email, encoderPassword);
@@ -88,12 +88,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean forgotUserPassword(User user) throws ServiceException {
+    public boolean forgotPassword(User user) throws ServiceException {
         String password = UUID.randomUUID().toString();
         String encoderPassword = PasswordEncryptionUtil.getEncoder(password);
         boolean isChange;
         try {
-            isChange = userDao.updateUserPassword(encoderPassword, user.getId());
+            isChange = userDao.updatePassword(encoderPassword, user.getId());
             MailSenderUtil.sendPassword(user.getEmail(), password);
         } catch (DaoException | EmailException e) {
             logger.error(e);
@@ -103,13 +103,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean updateUserBalance(String money, User user) throws ServiceException {
+    public boolean updateBalance(String money, User user) throws ServiceException {
         boolean isUpdate;
         try {
             BigDecimal moneyBigDecimal = new BigDecimal(money);
             BigDecimal userMoney = user.getMoney();
             BigDecimal result = moneyBigDecimal.add(userMoney);
-            isUpdate = userDao.updateUserBalance(result , user.getId());
+            isUpdate = userDao.updateBalance(result , user.getId());
             user.setMoney(result);
         } catch (DaoException e) {
             logger.error(e);
@@ -119,7 +119,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAllUsersLimit(int page) throws ServiceException {
+    public List<User> findAllLimit(int page) throws ServiceException {
         int start;
         if (page == 1) {
             start = 0;
@@ -141,7 +141,7 @@ public class UserServiceImpl implements UserService {
     public boolean enrollCourse(User user, Long courseId, BigDecimal transaction) throws ServiceException {
         boolean isUpdate;
         try {
-            userDao.updateUserBalance(transaction, user.getId());
+            userDao.updateBalance(transaction, user.getId());
             user.setMoney(transaction);
             isUpdate = userDao.enrollCourse(user, courseId);
         } catch (DaoException e) {
@@ -152,10 +152,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean userHaveCourse(Long userId, Long courseId) throws ServiceException {
+    public boolean isHaveCourse(Long userId, Long courseId) throws ServiceException {
         boolean isHave;
         try {
-            isHave = userDao.userHaveCourse(userId, courseId);
+            isHave = userDao.isHaveCourse(userId, courseId);
         } catch (DaoException e) {
             logger.error(e);
             throw new ServiceException(e);
@@ -164,10 +164,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean updateUserPhoto(User user) throws ServiceException {
+    public boolean updatePhoto(User user) throws ServiceException {
         boolean isUpdate;
         try {
-            isUpdate = userDao.updateUserPhoto(user);
+            isUpdate = userDao.updatePhoto(user);
         } catch (DaoException e) {
             logger.error(e);
             throw new ServiceException(e);

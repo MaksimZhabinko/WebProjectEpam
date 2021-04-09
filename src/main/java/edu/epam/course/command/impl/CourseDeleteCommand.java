@@ -38,7 +38,7 @@ public class CourseDeleteCommand implements Command {
         Router router = new Router();
         try {
             Long courseId = IdUtil.stringToLong(courseIdString);
-            courseService.deleteCourse(courseId);
+            courseService.delete(courseId);
             router.setType(Router.Type.REDIRECT);
             router.setPagePath(PagePath.MAIN.getServletPath());
         } catch (ServiceException | NumberFormatException e) {

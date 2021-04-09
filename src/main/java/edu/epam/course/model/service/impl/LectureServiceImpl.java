@@ -23,10 +23,10 @@ public class LectureServiceImpl implements LectureService {
     private LectureDao lectureDao = new LectureDaoImpl();
 
     @Override
-    public List<Lecture> findAllLectureByCourseId(Long id) throws ServiceException {
+    public List<Lecture> findAllLectureByCourseId(Long courseId) throws ServiceException {
         List<Lecture> lectures;
         try {
-            lectures = lectureDao.findAllByCourseId(id);
+            lectures = lectureDao.findAllLectureByCourseId(courseId);
         } catch (DaoException e) {
             logger.error(e);
             throw new ServiceException(e);
@@ -35,7 +35,7 @@ public class LectureServiceImpl implements LectureService {
     }
 
     @Override
-    public boolean addLecture(Lecture lecture) throws ServiceException {
+    public boolean add(Lecture lecture) throws ServiceException {
         boolean idAdd;
         try {
             idAdd = lectureDao.add(lecture);
@@ -47,10 +47,10 @@ public class LectureServiceImpl implements LectureService {
     }
 
     @Override
-    public boolean deleteLecture(Long id) throws ServiceException {
+    public boolean delete(Long lectureId) throws ServiceException {
         boolean isDelete;
         try {
-            isDelete = lectureDao.deleteById(id);
+            isDelete = lectureDao.deleteById(lectureId);
         } catch (DaoException e) {
             logger.error(e);
             throw new ServiceException(e);
@@ -59,10 +59,10 @@ public class LectureServiceImpl implements LectureService {
     }
 
     @Override
-    public boolean updateLecture(Lecture lecture) throws ServiceException {
+    public boolean update(Lecture lecture) throws ServiceException {
         boolean isUpdate;
         try {
-            isUpdate = lectureDao.updateLecture(lecture);
+            isUpdate = lectureDao.update(lecture);
         } catch (DaoException e) {
             logger.error(e);
             throw new ServiceException(e);

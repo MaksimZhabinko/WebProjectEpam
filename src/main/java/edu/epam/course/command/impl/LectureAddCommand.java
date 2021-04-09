@@ -44,7 +44,7 @@ public class LectureAddCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) {
-        String message = request.getParameter(RequestParameter.MESSAGE).trim();
+        String message = request.getParameter(RequestParameter.MESSAGE).strip();
         String courseIdString = request.getParameter(RequestParameter.COURSE_ID);
         HttpSession session = request.getSession();
         Router router = new Router();
@@ -56,7 +56,7 @@ public class LectureAddCommand implements Command {
                 dataCorrect = false;
             }
             if (dataCorrect) {
-                Optional<Course> courseOptional = courseService.findCourseById(courseId);
+                Optional<Course> courseOptional = courseService.findById(courseId);
                 if (!courseOptional.isPresent()) {
                     session.setAttribute(SessionAttribute.ERROR_COURSE_NOT_FOUND, true);
                     router.setType(Router.Type.REDIRECT);
@@ -70,7 +70,7 @@ public class LectureAddCommand implements Command {
                 Lecture lecture = new Lecture();
                 lecture.setLecture(message);
                 lecture.setCourse(course);
-                lectureService.addLecture(lecture);
+                lectureService.add(lecture);
             }
             router.setType(Router.Type.REDIRECT);
             router.setPagePath(PagePath.LECTURE.getServletPath() + courseId);

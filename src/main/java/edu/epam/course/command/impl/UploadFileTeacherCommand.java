@@ -67,7 +67,7 @@ public class UploadFileTeacherCommand implements Command {
         try {
             if (isCorrect) {
                 teacher.setId(Long.valueOf(teacherId));
-                teacherService.updateTeacherPhoto(teacher);
+                teacherService.updatePhoto(teacher);
                 router.setPagePath(PagePath.SHOW_ALL_TEACHERS.getServletPath());
                 FileUtil.deleteImage(PATH + oldTeacherPhoto);
             } else {

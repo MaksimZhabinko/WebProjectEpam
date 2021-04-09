@@ -39,7 +39,7 @@ public class ReviewAddCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) {
-        String message = request.getParameter(RequestParameter.MESSAGE).trim();
+        String message = request.getParameter(RequestParameter.MESSAGE).strip();
         HttpSession session = request.getSession();
         User userSession = (User) session.getAttribute(RequestAttribute.USER);
         Router router = new Router();
@@ -56,7 +56,7 @@ public class ReviewAddCommand implements Command {
                 review.setUser(user);
                 review.setMessage(message);
                 review.setDateMessage(LocalDate.now());
-                reviewService.addReview(review);
+                reviewService.add(review);
             }
             router.setType(Router.Type.REDIRECT);
             router.setPagePath(PagePath.REVIEW.getServletPath());

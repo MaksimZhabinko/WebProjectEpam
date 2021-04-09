@@ -35,7 +35,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public boolean addCourse(Course course) throws ServiceException {
+    public boolean add(Course course) throws ServiceException {
         boolean idAdd;
         try {
             idAdd = courseDao.add(course);
@@ -47,10 +47,10 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public boolean deleteCourse(Long id) throws ServiceException {
+    public boolean delete(Long courseId) throws ServiceException {
         boolean isDelete;
         try {
-            isDelete = courseDao.deleteById(id);
+            isDelete = courseDao.deleteById(courseId);
         } catch (DaoException e) {
             logger.error(e);
             throw new ServiceException(e);
@@ -59,10 +59,10 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Optional<Course> findCourseById(Long id) throws ServiceException {
+    public Optional<Course> findById(Long courseId) throws ServiceException {
         Optional<Course> courseOptional;
         try {
-            courseOptional = courseDao.findEntityById(id);
+            courseOptional = courseDao.findById(courseId);
         } catch (DaoException e) {
             logger.error(e);
             throw new ServiceException(e);

@@ -18,7 +18,7 @@ public interface TeacherService {
      * @return the boolean
      * @throws ServiceException the service exception
      */
-    boolean addTeacher(String name, String surname) throws ServiceException;
+    boolean add(String name, String surname) throws ServiceException;
 
     /**
      * Find all teachers.
@@ -26,8 +26,7 @@ public interface TeacherService {
      * @return teh list
      * @throws ServiceException the service exception
      */
-// todo как правильно если так правильно, то должно быть на конце s?
-    List<Teacher> findAllTeachers() throws ServiceException;
+    List<Teacher> findAll() throws ServiceException;
 
     /**
      * Delete teacher.
@@ -36,7 +35,7 @@ public interface TeacherService {
      * @return the boolean
      * @throws ServiceException the service exception
      */
-    boolean deleteTeacher(List<Long> teachersId) throws ServiceException;
+    boolean deleteTeachers(List<Long> teachersId) throws ServiceException;
 
     /**
      * Update teacher photo.
@@ -45,7 +44,7 @@ public interface TeacherService {
      * @return the boolean
      * @throws ServiceException the service exception
      */
-    boolean updateTeacherPhoto(Teacher teacher) throws ServiceException;
+    boolean updatePhoto(Teacher teacher) throws ServiceException;
 
     /**
      * Find teacher by name and surname.
@@ -55,5 +54,5 @@ public interface TeacherService {
      * @return the optional
      * @throws ServiceException the service exception
      */
-    Optional<Teacher> findTeacherByNameAndSurname(String name, String surname) throws ServiceException;
+    Optional<Teacher> findByNameAndSurname(String name, String surname) throws ServiceException;
 }

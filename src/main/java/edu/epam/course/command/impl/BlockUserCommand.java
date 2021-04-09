@@ -46,6 +46,7 @@ public class BlockUserCommand implements Command {
         User user = (User) session.getAttribute(SessionAttribute.USER);
         Router router = new Router();
         try {
+            Integer pageInt = Math.abs(Integer.parseInt(page));
             for (int i = 0; i < usersIdString.length; i++) {
                 Long userId = IdUtil.stringToLong(usersIdString[i]);
                 if (user.getId().equals(userId)) {
@@ -55,7 +56,7 @@ public class BlockUserCommand implements Command {
                 }
             }
             userService.blockUser(usersId);
-            router.setPagePath(PagePath.SHOW_ALL_USERS.getServletPath() + page);
+            router.setPagePath(PagePath.SHOW_ALL_USERS.getServletPath() + pageInt);
         } catch (ServiceException | NumberFormatException e) {
             logger.error(e);
             router.setPagePath(PagePath.ERROR_500.getDirectUrl());

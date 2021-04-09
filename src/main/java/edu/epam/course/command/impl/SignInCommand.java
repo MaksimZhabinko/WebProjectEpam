@@ -34,7 +34,7 @@ public class SignInCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) {
-        String email = request.getParameter(RequestParameter.EMAIL).trim();
+        String email = request.getParameter(RequestParameter.EMAIL).strip();
         String password = request.getParameter(RequestParameter.PASSWORD);
         HttpSession session = request.getSession();
         Router router = new Router();
@@ -46,7 +46,7 @@ public class SignInCommand implements Command {
                 dataCorrect = false;
             }
             if (dataCorrect) {
-                Optional<User> user = service.findUserByEmailAndPassword(email, password);
+                Optional<User> user = service.findByEmailAndPassword(email, password);
                 if (user.isPresent()) {
                     if (user.get().isEnabled()) {
                         router.setPagePath(PagePath.MAIN.getServletPath());

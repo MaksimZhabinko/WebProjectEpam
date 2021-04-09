@@ -64,7 +64,7 @@ public class CourseDetailsDaoImpl implements CourseDetailsDao {
     private static final String COURSE_DETAILS_TEACHER_UPDATE = "UPDATE course.course_details SET fk_teacher_name_id = ? WHERE course_detail_id = ?";
 
     @Override
-    public Optional<CourseDetails> findEntityById(Long id) throws DaoException {
+    public Optional<CourseDetails> findById(Long id) throws DaoException {
         Optional<CourseDetails> courseDetailsOptional = Optional.empty();
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_COURSE_DETAILS_BY_ID)) {
@@ -100,11 +100,11 @@ public class CourseDetailsDaoImpl implements CourseDetailsDao {
     }
 
     @Override
-    public Optional<CourseDetails> findCourseDetailsByCourseId(Long id) throws DaoException {
+    public Optional<CourseDetails> findCourseDetailsByCourseId(Long courseId) throws DaoException {
         Optional<CourseDetails> courseDetailsOptional = Optional.empty();
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_COURSE_DETAILS_BY_COURSE_ID)) {
-            preparedStatement.setLong(1, id);
+            preparedStatement.setLong(1, courseId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 CourseDetails courseDetails = new CourseDetails();
@@ -136,7 +136,7 @@ public class CourseDetailsDaoImpl implements CourseDetailsDao {
     }
 
     @Override
-    public boolean courseHaveDetails(Long courseId) throws DaoException {
+    public boolean isCourseHaveDetails(Long courseId) throws DaoException {
         boolean isHave = false;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(COURSE_HAVE_DETAILS)) {

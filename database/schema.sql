@@ -25,14 +25,14 @@ CREATE TABLE `teachers` (
 
 CREATE TABLE `courses` (
 	`course_id` INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    `course_name` VARCHAR(255) NOT NULL UNIQUE
+    `course_name` VARCHAR(255) NOT NULL,
+    `enrollment_active` BOOLEAN NOT NULL
 );
 
 CREATE TABLE `course_details` (
 	`course_detail_id` INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `number_of_hours` INTEGER NOT NULL,
     `description` TEXT NOT NULL,
-    `is_test` BOOLEAN DEFAULT FALSE,
     `start_course` DATE NOT NULL,
     `end_course` DATE NOT NULL,
     `start_of_class` TIME NOT NULL,
@@ -99,15 +99,16 @@ INSERT INTO `teachers` (`name`, `surname`) VALUES ('Никита', 'Решала
 INSERT INTO `teachers`  (`name`, `surname`) VALUES ('Артем', 'Шевчюк');
 INSERT INTO `teachers`  (`name`, `surname`) VALUES ('Гена', 'Мабик');
 
-INSERT INTO `courses`  (`course_name`) VALUES ('Java SE');
-INSERT INTO `courses`  (`course_name`) VALUES ('Java EE');
-INSERT INTO `courses`  (`course_name`) VALUES ('Java lab');
-INSERT INTO `courses` (`course_name`) VALUES ('Основы программирования на Python');
-INSERT INTO `courses` (`course_name`) VALUES ('Основы программирования на C#');
+INSERT INTO `courses`  (`course_name`, `enrollment_active`) VALUES ('Java SE', true);
+INSERT INTO `courses`  (`course_name`, `enrollment_active`) VALUES ('Java EE', true);
+INSERT INTO `courses`  (`course_name`, `enrollment_active`) VALUES ('Java lab', true);
+INSERT INTO `courses` (`course_name`, `enrollment_active`) VALUES ('Основы программирования на Python', true);
+INSERT INTO `courses` (`course_name`, `enrollment_active`) VALUES ('Основы программирования на C#', true);
+INSERT INTO `courses` (`course_name`, `enrollment_active`) VALUES ('Test', false);
 
 INSERT INTO `course_details` (`number_of_hours`, `description`, `start_course`, `end_course`, `start_of_class`, `cost`, `fk_course_id`, `fk_teacher_name_id`) VALUES (72, 'Java SE description', '2021-03-15', '2021-06-15', '19:00', 499, 1, 1);
-INSERT INTO `course_details` (`number_of_hours`, `description`, `is_test`, `start_course`, `end_course`, `start_of_class`, `cost`, `fk_course_id`, `fk_teacher_name_id`) VALUES (72, 'Java EE description', true, '2021-03-20', '2021-06-20', '19:00', 999, 2, 1);
-INSERT INTO `course_details` (`number_of_hours`, `description`, `is_test`, `start_course`, `end_course`, `start_of_class`, `cost`, `fk_course_id`, `fk_teacher_name_id`) VALUES (60, 'Java lab description', true, '2021-03-25', '2021-06-25', '19:00', 1499, 3, 1);
+INSERT INTO `course_details` (`number_of_hours`, `description`, `start_course`, `end_course`, `start_of_class`, `cost`, `fk_course_id`, `fk_teacher_name_id`) VALUES (72, 'Java EE description', '2021-03-20', '2021-06-20', '19:00', 999, 2, 1);
+INSERT INTO `course_details` (`number_of_hours`, `description`, `start_course`, `end_course`, `start_of_class`, `cost`, `fk_course_id`, `fk_teacher_name_id`) VALUES (60, 'Java lab description', '2021-03-25', '2021-06-25', '19:00', 1499, 3, 1);
 INSERT INTO `course_details` (`number_of_hours`, `description`, `start_course`, `end_course`, `start_of_class`, `cost`,  `fk_course_id`, `fk_teacher_name_id`) VALUES (60, 'Основы программирования на Python description', '2021-04-01', '2021-07-01', '19:00', 499, 4, 2);
 INSERT INTO `course_details` (`number_of_hours`, `description`, `start_course`, `end_course`, `start_of_class`, `cost`,  `fk_course_id`, `fk_teacher_name_id`) VALUES (68, 'Основы программирования на C# description', '2021-04-20', '2021-07-20', '19:00', 499, 5, 3);
 
@@ -151,6 +152,6 @@ INSERT INTO `lectures` (`lecture`, `fk_lecture_x_course_id`) VALUES ('Занят
 INSERT INTO `users_x_courses` (`fk_user_id`, `fk_course_id`) VALUES (3, 1);
 INSERT INTO `users_x_courses` (`fk_user_id`, `fk_course_id`) VALUES (3, 2);
 
-INSERT INTO `reviews` (`message`, `date_message`, `fk_reviews_x_user_id`) VALUES ('прошел java SE все поравилось!', '2008-11-11', 2);
-INSERT INTO `reviews` (`message`, `date_message`, `fk_reviews_x_user_id`) VALUES ('прошел java SE все поравилось! НО пздц сложно', '2008-11-11', 2);
-INSERT INTO `reviews` (`message`, `date_message`, `fk_reviews_x_user_id`) VALUES ('прошел java EE все поравилось!', '2008-11-11', 3);
+INSERT INTO `reviews` (`message`, `date_message`, `fk_reviews_x_user_id`) VALUES ('прошел java SE все поравилось!', '2008-11-11', 3);
+INSERT INTO `reviews` (`message`, `date_message`, `fk_reviews_x_user_id`) VALUES ('прошел java SE все поравилось! НО ужасно сложно', '2008-11-11', 4);
+INSERT INTO `reviews` (`message`, `date_message`, `fk_reviews_x_user_id`) VALUES ('прошел java EE все поравилось!', '2008-11-11', 4);

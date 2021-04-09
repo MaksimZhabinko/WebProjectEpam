@@ -45,8 +45,8 @@ public class CourseDetailsTeacherUpdateCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {
         String courseIdString = request.getParameter(RequestParameter.COURSE_ID);
-        String teacherName = request.getParameter(RequestParameter.TEACHER_NAME).trim();
-        String teacherSurname = request.getParameter(RequestParameter.TEACHER_SURNAME).trim();
+        String teacherName = request.getParameter(RequestParameter.TEACHER_NAME).strip();
+        String teacherSurname = request.getParameter(RequestParameter.TEACHER_SURNAME).strip();
         HttpSession session = request.getSession();
         Router router = new Router();
         boolean dataCorrect = true;
@@ -60,7 +60,7 @@ public class CourseDetailsTeacherUpdateCommand implements Command {
                     dataCorrect = false;
                 }
                 if (dataCorrect) {
-                    teacherOptional = teacherService.findTeacherByNameAndSurname(teacherName, teacherSurname);
+                    teacherOptional = teacherService.findByNameAndSurname(teacherName, teacherSurname);
                     if (!teacherOptional.isPresent()) {
                         session.setAttribute(SessionAttribute.ERROR_TEACHER_NOT_FOUND, true);
                         dataCorrect = false;

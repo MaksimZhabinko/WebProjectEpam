@@ -22,11 +22,11 @@ public interface UserService {
     /**
      * Fina user by id.
      *
-     * @param id the user id
+     * @param userId the user id
      * @return the optional
      * @throws ServiceException the service exception
      */
-    Optional<User> findUserById(long id) throws ServiceException;
+    Optional<User> findById(long userId) throws ServiceException;
 
     /**
      * Find user by email.
@@ -35,7 +35,7 @@ public interface UserService {
      * @return the optional
      * @throws ServiceException the service exception
      */
-    Optional<User> findUserByEmail(String email) throws ServiceException;
+    Optional<User> findByEmail(String email) throws ServiceException;
 
     /**
      * Find user by email and password.
@@ -45,7 +45,7 @@ public interface UserService {
      * @return the optional
      * @throws ServiceException the service exception
      */
-    Optional<User> findUserByEmailAndPassword(String email, String password) throws ServiceException;
+    Optional<User> findByEmailAndPassword(String email, String password) throws ServiceException;
 
     /**
      * Create user.
@@ -64,7 +64,7 @@ public interface UserService {
      * @return the boolean
      * @throws ServiceException the service exception
      */
-    boolean forgotUserPassword(User user) throws ServiceException;
+    boolean forgotPassword(User user) throws ServiceException;
 
     /**
      * Update user balance.
@@ -74,7 +74,7 @@ public interface UserService {
      * @return the boolean
      * @throws ServiceException the service exception
      */
-    boolean updateUserBalance(String money, User user) throws ServiceException;
+    boolean updateBalance(String money, User user) throws ServiceException;
 
     /**
      * Find all users limit.
@@ -83,7 +83,7 @@ public interface UserService {
      * @return the list
      * @throws ServiceException the service exception
      */
-    List<User> findAllUsersLimit(int page) throws ServiceException;
+    List<User> findAllLimit(int page) throws ServiceException;
 
     /**
      * User enroll course.
@@ -104,7 +104,7 @@ public interface UserService {
      * @return the boolean
      * @throws ServiceException the service exception
      */
-    boolean userHaveCourse(Long userId, Long courseId) throws ServiceException;
+    boolean isHaveCourse(Long userId, Long courseId) throws ServiceException;
 
     /**
      * Update user photo.
@@ -113,7 +113,7 @@ public interface UserService {
      * @return the boolean
      * @throws ServiceException the service exception
      */
-    boolean updateUserPhoto(User user) throws ServiceException;
+    boolean updatePhoto(User user) throws ServiceException;
 
     /**
      * Block user.

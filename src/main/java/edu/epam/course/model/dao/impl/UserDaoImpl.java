@@ -173,7 +173,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> findEntityById(Long id) throws DaoException {
+    public Optional<User> findById(Long id) throws DaoException {
         Optional<User> userOptional = Optional.empty();
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_BY_ID)) {
@@ -218,7 +218,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean updateUserPassword(String password, Long userId) throws DaoException {
+    public boolean updatePassword(String password, Long userId) throws DaoException {
         boolean isUpdate;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_PASSWORD)) {
@@ -234,7 +234,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean updateUserBalance(BigDecimal money, Long userId) throws DaoException {
+    public boolean updateBalance(BigDecimal money, Long userId) throws DaoException {
         boolean isUpdate;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_BALANCE)) {
@@ -266,7 +266,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean userHaveCourse(Long userId, Long courseId) throws DaoException {
+    public boolean isHaveCourse(Long userId, Long courseId) throws DaoException {
         boolean isHave = false;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(USER_ENROLL_COURSE)) {
@@ -285,7 +285,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean updateUserPhoto(User user) throws DaoException {
+    public boolean updatePhoto(User user) throws DaoException {
         boolean isUpdate;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_PHOTO)) {

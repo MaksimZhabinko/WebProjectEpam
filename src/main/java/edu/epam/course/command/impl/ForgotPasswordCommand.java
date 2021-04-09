@@ -38,7 +38,7 @@ public class ForgotPasswordCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) {
-        String email = request.getParameter(RequestParameter.EMAIL).trim();
+        String email = request.getParameter(RequestParameter.EMAIL).strip();
         Router router = new Router();
         HttpSession session = request.getSession();
         boolean dataCorrect = true;
@@ -49,9 +49,9 @@ public class ForgotPasswordCommand implements Command {
                 dataCorrect = false;
             }
             if (dataCorrect) {
-                Optional<User> user = userService.findUserByEmail(email);
+                Optional<User> user = userService.findByEmail(email);
                 if (user.isPresent()) {
-                    userService.forgotUserPassword(user.get());
+                    userService.forgotPassword(user.get());
                     router.setPagePath(PagePath.SIGN_IN.getDirectUrl());
                     router.setType(Router.Type.REDIRECT);
                     session.setAttribute(SessionAttribute.CURRENT_PAGE, PagePath.SIGN_IN.getDirectUrl());

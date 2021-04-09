@@ -68,7 +68,7 @@ public class AboutUsDaoImpl implements AboutUsDao {
     }
 
     @Override
-    public Optional<AboutUs> findEntityById(Long id) throws DaoException {
+    public Optional<AboutUs> findById(Long id) throws DaoException {
         throw new UnsupportedOperationException();
     }
 

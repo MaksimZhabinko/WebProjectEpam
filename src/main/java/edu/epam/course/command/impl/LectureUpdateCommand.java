@@ -46,7 +46,7 @@ public class LectureUpdateCommand implements Command {
     public Router execute(HttpServletRequest request) {
         String courseIdString = request.getParameter(RequestParameter.COURSE_ID);
         String lectureIdString = request.getParameter(RequestParameter.LECTURE_ID);
-        String message = request.getParameter(RequestParameter.MESSAGE).trim();
+        String message = request.getParameter(RequestParameter.MESSAGE).strip();
         HttpSession session = request.getSession();
         Router router = new Router();
         boolean dataCorrect = true;
@@ -58,7 +58,7 @@ public class LectureUpdateCommand implements Command {
                 dataCorrect = false;
             }
             if (dataCorrect) {
-                Optional<Course> course = courseService.findCourseById(courseId);
+                Optional<Course> course = courseService.findById(courseId);
                 Optional<Lecture> lectureOptional = lectureService.findLectureByIdAndCourseId(lectureId, courseId);
                 if (!course.isPresent()) {
                     session.setAttribute(SessionAttribute.ERROR_COURSE_NOT_FOUND, true);
@@ -77,7 +77,7 @@ public class LectureUpdateCommand implements Command {
                 Lecture lecture = new Lecture();
                 lecture.setLecture(message);
                 lecture.setId(lectureId);
-                lectureService.updateLecture(lecture);
+                lectureService.update(lecture);
             }
             router.setType(Router.Type.REDIRECT);
             router.setPagePath(PagePath.LECTURE.getServletPath() + courseId);

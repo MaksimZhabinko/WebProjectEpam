@@ -31,5 +31,5 @@ public interface CourseDao extends BaseDao<Long, Course> {
 
 
 // todo example
-    void example(Course course, CourseDetails courseDetails, List<Lecture> lectures);
+    void updateStartAndEndNewCourse(Course course, CourseDetails courseDetails, List<Lecture> lectures);
 }

@@ -1,5 +1,7 @@
 package edu.epam.course.controller.filter;
 
+import edu.epam.course.command.RequestWrapper;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

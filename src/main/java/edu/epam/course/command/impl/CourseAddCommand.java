@@ -37,7 +37,7 @@ public class CourseAddCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) {
-        String courseName = request.getParameter(RequestParameter.COURSE_NAME).trim();
+        String courseName = request.getParameter(RequestParameter.COURSE_NAME).strip();
         HttpSession session = request.getSession();
         Router router = new Router();
         boolean dataCorrect = true;
@@ -50,7 +50,7 @@ public class CourseAddCommand implements Command {
                 Course course = new Course();
                 course.setName(courseName);
                 course.setEnrollmentActive(true);
-                courseService.addCourse(course);
+                courseService.add(course);
             }
             router.setType(Router.Type.REDIRECT);
             router.setPagePath(PagePath.MAIN.getServletPath());

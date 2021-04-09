@@ -58,7 +58,7 @@ public class BalanceReplenishmentCommand implements Command {
                 dataCorrect = false;
             }
             if (dataCorrect) {
-                userService.updateUserBalance(money, user);
+                userService.updateBalance(money, user);
                 session.setAttribute(RequestAttribute.USER, user);
                 router.setPagePath(PagePath.PERSONAL_AREA.getServletPath());
                 router.setType(Router.Type.REDIRECT);

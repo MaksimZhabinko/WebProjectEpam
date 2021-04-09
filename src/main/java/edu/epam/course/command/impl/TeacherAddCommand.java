@@ -38,8 +38,8 @@ public class TeacherAddCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) {
-        String teacherName = request.getParameter(RequestParameter.TEACHER_NAME).trim();
-        String teacherSurname = request.getParameter(RequestParameter.TEACHER_SURNAME).trim();
+        String teacherName = request.getParameter(RequestParameter.TEACHER_NAME).strip();
+        String teacherSurname = request.getParameter(RequestParameter.TEACHER_SURNAME).strip();
         HttpSession session = request.getSession();
         Router router = new Router();
         boolean dataCorrect = true;
@@ -49,14 +49,14 @@ public class TeacherAddCommand implements Command {
                 dataCorrect = false;
             }
             if (dataCorrect) {
-                Optional<Teacher> teacherOptional = teacherService.findTeacherByNameAndSurname(teacherName, teacherSurname);
+                Optional<Teacher> teacherOptional = teacherService.findByNameAndSurname(teacherName, teacherSurname);
                 if (teacherOptional.isPresent()) {
                     session.setAttribute(SessionAttribute.ERROR_TEACHER_HAVE, true);
                     dataCorrect = false;
                 }
             }
             if (dataCorrect) {
-                teacherService.addTeacher(teacherName, teacherSurname);
+                teacherService.add(teacherName, teacherSurname);
             }
             router.setType(Router.Type.REDIRECT);
             router.setPagePath(PagePath.PERSONAL_AREA.getServletPath()); // todo возможно на стр показать все учителей

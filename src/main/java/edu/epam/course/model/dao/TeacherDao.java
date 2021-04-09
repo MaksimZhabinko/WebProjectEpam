@@ -27,7 +27,7 @@ public interface TeacherDao extends BaseDao<Long, Teacher> {
      * @return the boolean
      * @throws DaoException the dao exception
      */
-    boolean updateTeacherPhoto(Teacher teacher) throws DaoException;
+    boolean updatePhoto(Teacher teacher) throws DaoException;
 
     /**
      * Find teacher by name and surname.
@@ -37,5 +37,5 @@ public interface TeacherDao extends BaseDao<Long, Teacher> {
      * @return the optional
      * @throws DaoException the dao exception
      */
-    Optional<Teacher> findTeacherByNameAndSurname(String name, String surname) throws DaoException;
+    Optional<Teacher> findByNameAndSurname(String name, String surname) throws DaoException;
 }

@@ -15,7 +15,7 @@ public interface ReviewService {
      * @return the list
      * @throws ServiceException the service exception
      */
-    List<Review> findAllReview() throws ServiceException;
+    List<Review> findAll() throws ServiceException;
 
     /**
      * Create review.
@@ -24,16 +24,16 @@ public interface ReviewService {
      * @return the boolean
      * @throws ServiceException the service exception
      */
-    boolean addReview(Review review) throws ServiceException;
+    boolean add(Review review) throws ServiceException;
 
     /**
      * Delete review.
      *
-     * @param id the review id
+     * @param reviewId the review id
      * @return the boolean
      * @throws ServiceException the service exception
      */
-    boolean deleteReview(Long id) throws ServiceException;
+    boolean delete(Long reviewId) throws ServiceException;
 
     /**
      * The user has reviews by user id.
@@ -43,5 +43,5 @@ public interface ReviewService {
      * @return the boolean
      * @throws ServiceException the service exception
      */
-    boolean isHaveReviewUserById(Long reviewId, Long userId) throws ServiceException;
+    boolean isHaveReviewByUserId(Long reviewId, Long userId) throws ServiceException;
 }

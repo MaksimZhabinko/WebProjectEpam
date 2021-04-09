@@ -37,10 +37,10 @@ public class LectureDeleteCommand implements Command {
         String lectureIdString = request.getParameter(RequestParameter.LECTURE_ID);
         String courseIdString = request.getParameter(RequestParameter.COURSE_ID);
         Router router = new Router();
-        try { // todo нет проверки сущ данный курс или нет
+        try { // todo нет проверки сущ данный курс или нет а также лекция, хотя лекция пофиг так как просто ничего не произойдет
             Long lectureId = IdUtil.stringToLong(lectureIdString);
             Long courseId = IdUtil.stringToLong(courseIdString);
-            lectureService.deleteLecture(lectureId);
+            lectureService.delete(lectureId);
             router.setPagePath(PagePath.LECTURE.getServletPath() + courseId);
             router.setType(Router.Type.REDIRECT);
         } catch (ServiceException | NumberFormatException e) {

@@ -53,7 +53,7 @@ public class ShowAllUsersCommand implements Command {
                 dataCorrect = false;
             }
             if (dataCorrect) {
-                List<User> allUsers = userService.findAllUsersLimit(pageInt);
+                List<User> allUsers = userService.findAllLimit(pageInt);
                 session.setAttribute(SessionAttribute.PAGE, page);
                 session.setAttribute(SessionAttribute.ALL_USERS, allUsers);
                 router.setType(Router.Type.REDIRECT);

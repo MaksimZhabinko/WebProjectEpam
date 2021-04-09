@@ -25,25 +25,25 @@ public interface CourseService {
      * @return the boolean
      * @throws ServiceException the service exception
      */
-    boolean addCourse(Course course) throws ServiceException;
+    boolean add(Course course) throws ServiceException;
 
     /**
      * Delete course.
      *
-     * @param id the course id
+     * @param courseId the course id
      * @return the boolean
      * @throws ServiceException the service exception
      */
-    boolean deleteCourse(Long id) throws ServiceException;
+    boolean delete(Long courseId) throws ServiceException;
 
     /**
      * Find course by id
      *
-     * @param id the course id
+     * @param courseId the course id
      * @return the optional
      * @throws ServiceException the service exception
      */
-    Optional<Course> findCourseById(Long id) throws ServiceException;
+    Optional<Course> findById(Long courseId) throws ServiceException;
 
     /**
      * Find user enrolled by course.

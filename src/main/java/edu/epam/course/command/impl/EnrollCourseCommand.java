@@ -54,7 +54,7 @@ public class EnrollCourseCommand implements Command {
             Long courseId = IdUtil.stringToLong(courseIdString);
             Optional<CourseDetails> courseDetails = courseDetailsService.findCourseDetailsByCourseId(courseId);
             if (courseDetails.isPresent() && courseDetails.get().getCourse().getEnrollmentActive() == true) {
-                boolean isUserHaveCourse = userService.userHaveCourse(userSession.getId(), courseId);
+                boolean isUserHaveCourse = userService.isHaveCourse(userSession.getId(), courseId);
                 if (!isUserHaveCourse) {
                     BigDecimal transaction = CountMoneyUtil.transaction(courseDetails.get().getCost(), userSession.getMoney());
                     if (transaction.compareTo(BigDecimal.ZERO) > 0) {

@@ -1,4 +1,4 @@
-package edu.epam.course.controller.filter;
+package edu.epam.course.command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;

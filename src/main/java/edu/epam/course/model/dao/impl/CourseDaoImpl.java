@@ -66,7 +66,7 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    public Optional<Course> findEntityById(Long id) throws DaoException {
+    public Optional<Course> findById(Long id) throws DaoException {
         Optional<Course> courseOptional = Optional.empty();
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_COURSE_BY_ID)) {
@@ -155,10 +155,10 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    // todo должен ли он тут находится?
-    public void example(Course course, CourseDetails courseDetails, List<Lecture> lectures) {
+    // todo должен ли он тут находится? ДА
+    public void updateStartAndEndNewCourse(Course course, CourseDetails courseDetails, List<Lecture> lectures) {
         Connection connection = null;
-        // todo или использовать только один? или для каждого нужно создавать
+        // todo или использовать только один? или для каждого нужно создавать И ТАК И ТАК
         PreparedStatement preparedStatementCourse = null;
         PreparedStatement preparedStatementCurseDetails = null;
         PreparedStatement preparedStatementLecture = null;
@@ -172,7 +172,7 @@ public class CourseDaoImpl implements CourseDao {
             ResultSet resultSet = preparedStatementCourse.getGeneratedKeys();
             resultSet.next();
             long newCourseId = resultSet.getLong(1);
-            // todo куда деть это sql запрос
+            // todo куда деть это sql запрос В свои классы
             preparedStatementCurseDetails = connection.prepareStatement("INSERT INTO `course_details` (`number_of_hours`, `description`, `start_course`, `end_course`, `start_of_class`, `cost`, `fk_course_id`, `fk_teacher_name_id`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             preparedStatementCurseDetails.setInt(1, courseDetails.getHours());
             preparedStatementCurseDetails.setString(2, courseDetails.getDescription());
@@ -191,7 +191,6 @@ public class CourseDaoImpl implements CourseDao {
                 preparedStatementLecture.executeUpdate();
             }
 
-            // todo исп тот же prepare
             preparedStatementCourse = connection.prepareStatement("UPDATE course.courses SET enrollment_active = false WHERE course_id = ?");
             preparedStatementCourse.setLong(1, course.getId());
             preparedStatementCourse.executeUpdate();
@@ -200,10 +199,10 @@ public class CourseDaoImpl implements CourseDao {
         } catch (SQLException e) {
             rollback(connection);
             logger.error(e);
-
         } finally {
             close(preparedStatementCourse);
             close(preparedStatementCurseDetails);
+            close(preparedStatementLecture);
             close(connection);
         }
     }

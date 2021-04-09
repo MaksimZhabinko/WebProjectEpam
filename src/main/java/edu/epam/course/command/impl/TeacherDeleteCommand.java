@@ -44,7 +44,7 @@ public class TeacherDeleteCommand implements Command {
                 Long teacherId = IdUtil.stringToLong(teachersIdString[i]);
                 teachersId.add(teacherId);
             }
-            teacherService.deleteTeacher(teachersId);
+            teacherService.deleteTeachers(teachersId);
             router.setPagePath(PagePath.SHOW_ALL_TEACHERS.getServletPath());
         } catch (ServiceException | NumberFormatException e) {
             logger.error(e);

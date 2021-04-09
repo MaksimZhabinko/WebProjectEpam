@@ -39,7 +39,7 @@ public class OpenReviewsCommand implements Command {
         Router router = new Router();
         HttpSession session = request.getSession();
         try {
-            List<Review> reviews = reviewService.findAllReview();
+            List<Review> reviews = reviewService.findAll();
             request.setAttribute(RequestAttribute.REVIEWS, reviews);
             router.setPagePath(PagePath.REVIEW.getDirectUrl());
             session.setAttribute(SessionAttribute.CURRENT_PAGE, PagePath.REVIEW.getServletPath());

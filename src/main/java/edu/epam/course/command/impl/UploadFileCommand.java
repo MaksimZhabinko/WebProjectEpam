@@ -64,7 +64,7 @@ public class UploadFileCommand implements Command {
         }
         try {
             if (isCorrect) {
-                userService.updateUserPhoto(user);
+                userService.updatePhoto(user);
                 router.setType(Router.Type.REDIRECT);
                 router.setPagePath(PagePath.PERSONAL_AREA.getServletPath());
                 session.setAttribute(RequestAttribute.USER, user);

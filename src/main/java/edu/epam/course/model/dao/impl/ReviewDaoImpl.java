@@ -104,7 +104,7 @@ public class ReviewDaoImpl implements ReviewDao {
     }
 
     @Override
-    public boolean isHaveReviewUserById(Long reviewId, Long userId) throws DaoException {
+    public boolean isHaveReviewByUserId(Long reviewId, Long userId) throws DaoException {
         boolean isHave = false;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(USER_HAVE_REVIEW)) {
@@ -122,7 +122,7 @@ public class ReviewDaoImpl implements ReviewDao {
     }
 
     @Override
-    public Optional<Review> findEntityById(Long id) {
+    public Optional<Review> findById(Long id) {
         throw new UnsupportedOperationException();
     }
 }

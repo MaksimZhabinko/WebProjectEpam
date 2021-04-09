@@ -77,7 +77,7 @@ public class LectureDaoImpl implements LectureDao {
     }
 
     @Override
-    public List<Lecture> findAllByCourseId(Long id) throws DaoException {
+    public List<Lecture> findAllLectureByCourseId(Long id) throws DaoException {
         List<Lecture> lectures = new ArrayList<>();
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_LECTURE_BY_ID)) {
@@ -101,7 +101,7 @@ public class LectureDaoImpl implements LectureDao {
     }
 
     @Override
-    public boolean updateLecture(Lecture lecture) throws DaoException {
+    public boolean update(Lecture lecture) throws DaoException {
         boolean isUpdate;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_LECTURE)) {
@@ -142,7 +142,7 @@ public class LectureDaoImpl implements LectureDao {
     }
 
     @Override
-    public Optional<Lecture> findEntityById(Long id) throws DaoException {
+    public Optional<Lecture> findById(Long id) throws DaoException {
         throw new UnsupportedOperationException();
     }
 

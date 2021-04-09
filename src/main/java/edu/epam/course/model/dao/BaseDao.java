@@ -40,7 +40,7 @@ public interface BaseDao <K, T extends Entity>{
      * @return the optional
      * @throws DaoException the dao exception
      */
-    Optional<T> findEntityById(K id) throws DaoException;
+    Optional<T> findById(K id) throws DaoException;
 
 
     /**

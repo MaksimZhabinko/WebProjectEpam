@@ -22,7 +22,7 @@ public class ReviewServiceImpl implements ReviewService {
     private ReviewDao reviewDao = new ReviewDaoImpl();
 
     @Override
-    public List<Review> findAllReview() throws ServiceException {
+    public List<Review> findAll() throws ServiceException {
         List<Review> reviews;
         try {
             reviews = reviewDao.findAll();
@@ -34,7 +34,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public boolean addReview(Review review) throws ServiceException {
+    public boolean add(Review review) throws ServiceException {
         boolean isAdd;
         try {
             isAdd = reviewDao.add(review);
@@ -46,10 +46,10 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public boolean deleteReview(Long id) throws ServiceException {
+    public boolean delete(Long reviewId) throws ServiceException {
         boolean isDelete;
         try {
-            isDelete = reviewDao.deleteById(id);
+            isDelete = reviewDao.deleteById(reviewId);
         } catch (DaoException e) {
             logger.error(e);
             throw new ServiceException(e);
@@ -58,10 +58,10 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public boolean isHaveReviewUserById(Long reviewId, Long userId) throws ServiceException {
+    public boolean isHaveReviewByUserId(Long reviewId, Long userId) throws ServiceException {
         boolean isHave;
         try {
-            isHave = reviewDao.isHaveReviewUserById(reviewId, userId);
+            isHave = reviewDao.isHaveReviewByUserId(reviewId, userId);
         } catch (DaoException e) {
             logger.error(e);
             throw new ServiceException(e);

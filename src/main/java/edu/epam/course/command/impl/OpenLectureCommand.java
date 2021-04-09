@@ -55,7 +55,7 @@ public class OpenLectureCommand implements Command {
         Router router = new Router();
         try {
             Long courseId = IdUtil.stringToLong(courseIdString);
-            Optional<Course> courseOptional = courseService.findCourseById(courseId);
+            Optional<Course> courseOptional = courseService.findById(courseId);
             if (courseOptional.isPresent()) {
                 List<Lecture> lectures = lectureService.findAllLectureByCourseId(courseId);
                 Optional<CourseDetails> courseDetails = courseDetailsService.findCourseDetailsById(courseId);

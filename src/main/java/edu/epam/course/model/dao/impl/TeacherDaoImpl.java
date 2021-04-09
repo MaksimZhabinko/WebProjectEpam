@@ -109,7 +109,7 @@ public class TeacherDaoImpl implements TeacherDao {
     }
 
     @Override
-    public boolean updateTeacherPhoto(Teacher teacher) throws DaoException {
+    public boolean updatePhoto(Teacher teacher) throws DaoException {
         boolean isUpdate;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_TEACHER_PHOTO)) {
@@ -125,7 +125,7 @@ public class TeacherDaoImpl implements TeacherDao {
     }
 
     @Override
-    public Optional<Teacher> findTeacherByNameAndSurname(String name, String surname) throws DaoException {
+    public Optional<Teacher> findByNameAndSurname(String name, String surname) throws DaoException {
         Optional<Teacher> teacherOptional = Optional.empty();
         try (Connection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(FIND_TEACHER_BY_NAME_AND_SURNAME)) {
@@ -154,7 +154,7 @@ public class TeacherDaoImpl implements TeacherDao {
 
 
     @Override
-    public Optional<Teacher> findEntityById(Long id) throws DaoException {
+    public Optional<Teacher> findById(Long id) throws DaoException {
         throw new UnsupportedOperationException();
     }
 }

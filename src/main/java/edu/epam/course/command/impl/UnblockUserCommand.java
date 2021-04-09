@@ -41,12 +41,13 @@ public class UnblockUserCommand implements Command {
         List<Long> usersId = new ArrayList<>();
         Router router = new Router();
         try {
+            Integer pageInt = Math.abs(Integer.parseInt(page));
             for (int i = 0; i < usersIdString.length; i++) {
                 Long userId = IdUtil.stringToLong(usersIdString[i]);
                 usersId.add(userId);
             }
             userService.unblockUser(usersId);
-            router.setPagePath(PagePath.SHOW_ALL_USERS.getServletPath() + page);
+            router.setPagePath(PagePath.SHOW_ALL_USERS.getServletPath() + pageInt);
         } catch (ServiceException | NumberFormatException e) {
             logger.error(e);
             router.setPagePath(PagePath.ERROR_500.getDirectUrl());
