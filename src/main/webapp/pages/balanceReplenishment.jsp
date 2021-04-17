@@ -20,7 +20,6 @@
 <c:if test="${user != null}">
     <div class="wrapper fadeInDown">
         <div id="formContent">
-<%--            todo сообщение что можно до определенной скммы--%>
             <form action="${pageContext.request.contextPath}/controller" method="post">
                 <input type="hidden" name="command" value="balance_replenishment">
                 <input type="text" id="money" class="fadeIn second" name="money" title="<fmt:message key="input.title.balance_replenishment"/>" required pattern="\d+(\.\d{0,2})?">

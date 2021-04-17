@@ -1,9 +1,11 @@
 package edu.epam.course.model.dao;
 
+import edu.epam.course.model.entity.Entity;
 import edu.epam.course.model.entity.User;
 import edu.epam.course.exception.DaoException;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -124,4 +126,30 @@ public interface UserDao extends BaseDao<Long, User> {
      * @throws DaoException the dao exception
      */
     boolean unblockUser(List<Long> usersId) throws DaoException;
+
+    /**
+     * Update user to admin boolean.
+     *
+     * @param user the user
+     * @return the boolean
+     * @throws DaoException the dao exception
+     */
+    boolean updateUserToAdmin(User user) throws DaoException;
+
+    /**
+     * Update name and surname boolean.
+     *
+     * @param user the user
+     * @return the boolean
+     * @throws DaoException the dao exception
+     */
+    boolean updateNameAndSurname(User user) throws DaoException;
+
+    /**
+     * Find all enrolled course limit list.
+     *
+     * @return the list
+     * @throws DaoException the dao exception
+     */
+    List<User> findAllEnrolledCourse() throws DaoException;
 }

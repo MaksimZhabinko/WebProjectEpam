@@ -53,6 +53,14 @@ public class MailSenderUtil {
      */
     private static final String MESSAGE_SUBJECT_FORGOT_PASSWORD = "Forgot password ";
     /**
+     * The constant message subject password.
+     */
+    private static final String MESSAGE_SUBJECT_PASSWORD = "Your new password ";
+    /**
+     * The constant message text forgot password.
+     */
+    private static final String MESSAGE_TEXT_PASSWORD = "Your password - ";
+    /**
      * The user name.
      */
     private static String username;
@@ -119,7 +127,7 @@ public class MailSenderUtil {
      * @param userPassword the password
      * @throws EmailException the email exception
      */
-    public static void sendPassword(String email, String userPassword) throws EmailException {
+    public static void sendNewPassword(String email, String userPassword) throws EmailException {
         Authenticator authenticator = new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -134,6 +142,35 @@ public class MailSenderUtil {
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
             message.setSubject(MESSAGE_SUBJECT_FORGOT_PASSWORD);
             message.setText(MESSAGE_TEXT_FORGOT_PASSWORD + userPassword);
+            Transport.send(message);
+        } catch (MessagingException e) {
+            logger.error("Error generating or sending message: " + e);
+            throw new EmailException(e);
+        }
+    }
+
+    /**
+     * Send password.
+     *
+     * @param email        the email
+     * @param userPassword the user password
+     * @throws EmailException the email exception
+     */
+    public static void sendPassword(String email, String userPassword) throws EmailException {
+        Authenticator authenticator = new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+            }
+        };
+        Session session = Session.getDefaultInstance(properties, authenticator);
+
+        try{
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(username));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
+            message.setSubject(MESSAGE_SUBJECT_PASSWORD);
+            message.setText(MESSAGE_TEXT_PASSWORD + userPassword);
             Transport.send(message);
         } catch (MessagingException e) {
             logger.error("Error generating or sending message: " + e);

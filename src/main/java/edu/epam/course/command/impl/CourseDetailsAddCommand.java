@@ -1,10 +1,6 @@
 package edu.epam.course.command.impl;
 
-import edu.epam.course.command.Command;
-import edu.epam.course.command.PagePath;
-import edu.epam.course.command.RequestAttribute;
-import edu.epam.course.command.RequestParameter;
-import edu.epam.course.command.Router;
+import edu.epam.course.command.*;
 import edu.epam.course.exception.ServiceException;
 import edu.epam.course.model.entity.Course;
 import edu.epam.course.model.entity.Teacher;
@@ -17,6 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 /**
@@ -56,6 +53,7 @@ public class CourseDetailsAddCommand implements Command {
         String startCourse = request.getParameter(RequestParameter.START_COURSE);
         String endCourse = request.getParameter(RequestParameter.END_COURSE);
         String cost = request.getParameter(RequestParameter.COST);
+        HttpSession session = request.getSession();
         Router router = new Router();
         boolean dataCorrect = true;
         try {
@@ -85,16 +83,18 @@ public class CourseDetailsAddCommand implements Command {
             }
             Long courseId = IdUtil.stringToLong(courseIdString);
             Optional<Course> courseOptional = courseService.findById(courseId);
-            Optional<Teacher> teacherOptional = teacherService.findByNameAndSurname(name, surname);
-            boolean isHaveDetails = courseDetailsService.isCourseHaveDetails(courseId);
             if (!courseOptional.isPresent()) {
-                request.setAttribute(RequestAttribute.ERROR_COURSE_NOT_FOUND, true);
-                dataCorrect = false;
+                session.setAttribute(SessionAttribute.ERROR_COURSE_NOT_FOUND, true);
+                router.setType(Router.Type.REDIRECT);
+                router.setPagePath(PagePath.MAIN.getServletPath());
+                return router;
             }
+            Optional<Teacher> teacherOptional = teacherService.findByNameAndSurname(name, surname);
             if (!teacherOptional.isPresent()) {
                 request.setAttribute(RequestAttribute.ERROR_TEACHER_NOT_FOUND, true);
                 dataCorrect = false;
             }
+            boolean isHaveDetails = courseDetailsService.isCourseHaveDetails(courseId);
             if (isHaveDetails) {
                 request.setAttribute(RequestAttribute.ERROR_IS_HAVE_DETAILS, true);
                 dataCorrect = false;

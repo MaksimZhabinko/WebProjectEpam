@@ -8,72 +8,72 @@ import edu.epam.course.command.Router;
 import edu.epam.course.command.SessionAttribute;
 import edu.epam.course.exception.ServiceException;
 import edu.epam.course.model.entity.CourseDetails;
-import edu.epam.course.model.entity.Teacher;
+import edu.epam.course.model.entity.Lecture;
 import edu.epam.course.model.service.CourseDetailsService;
-import edu.epam.course.model.service.TeacherService;
+import edu.epam.course.model.service.CourseService;
+import edu.epam.course.model.service.LectureService;
 import edu.epam.course.util.IdUtil;
-import edu.epam.course.validator.TeacherValidator;
+import edu.epam.course.validator.CourseDetailsValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 /**
- * The type Course details teacher update command.
+ * The type Course details update new course command.
  */
-public class CourseDetailsTeacherUpdateCommand implements Command {
+public class CourseDetailsUpdateNewCourseCommand implements Command {
     /**
      * The constant logger.
      */
-    private static final Logger logger = LogManager.getLogger(CourseDetailsTeacherUpdateCommand.class);
-    private TeacherService teacherService;
+    private static final Logger logger = LogManager.getLogger(CourseDetailsUpdateNewCourseCommand.class);
     private CourseDetailsService courseDetailsService;
+    private LectureService lectureService;
+    private CourseService courseService;
 
     /**
-     * Instantiates a new Course details teacher update command.
+     * Instantiates a new Course details update new course command.
      *
-     * @param teacherService       the teacher service
      * @param courseDetailsService the course details service
+     * @param lectureService       the lecture service
+     * @param courseService        the course service
      */
-    public CourseDetailsTeacherUpdateCommand(TeacherService teacherService, CourseDetailsService courseDetailsService) {
-        this.teacherService = teacherService;
+    public CourseDetailsUpdateNewCourseCommand(CourseDetailsService courseDetailsService,
+                                               LectureService lectureService, CourseService courseService) {
         this.courseDetailsService = courseDetailsService;
+        this.lectureService = lectureService;
+        this.courseService = courseService;
     }
 
     @Override
     public Router execute(HttpServletRequest request) {
         String courseIdString = request.getParameter(RequestParameter.COURSE_ID);
-        String teacherName = request.getParameter(RequestParameter.TEACHER_NAME).strip();
-        String teacherSurname = request.getParameter(RequestParameter.TEACHER_SURNAME).strip();
+        String start = request.getParameter(RequestParameter.START);
+        String end = request.getParameter(RequestParameter.END);
         HttpSession session = request.getSession();
         Router router = new Router();
         boolean dataCorrect = true;
         try {
             Long courseId = IdUtil.stringToLong(courseIdString);
             Optional<CourseDetails> courseDetailsOptional = courseDetailsService.findCourseDetailsByCourseId(courseId);
-            Optional<Teacher> teacherOptional = Optional.empty();
             if (courseDetailsOptional.isPresent()) {
-                if (!TeacherValidator.isValidNameAndSurname(teacherName, teacherSurname)) {
-                    session.setAttribute(SessionAttribute.ERROR_TEACHER_UPDATE, true);
-                    dataCorrect = false;
+                if (!CourseDetailsValidator.isValidDate(start, end)) {
+                    session.setAttribute(SessionAttribute.ERROR_START_END_UPDATE, true);
+                    router.setType(Router.Type.REDIRECT);
+                    router.setPagePath(PagePath.LECTURE.getServletPath() + courseId);
                 }
                 if (dataCorrect) {
-                    teacherOptional = teacherService.findByNameAndSurname(teacherName, teacherSurname);
-                    if (!teacherOptional.isPresent()) {
-                        session.setAttribute(SessionAttribute.ERROR_TEACHER_NOT_FOUND, true);
-                        dataCorrect = false;
-                    }
+                    List<Lecture> lectures = lectureService.findAllLectureByCourseId(courseDetailsOptional.get().getCourse().getId());
+                    courseDetailsOptional.get().setStartCourse(LocalDate.parse(start));
+                    courseDetailsOptional.get().setEndCourse(LocalDate.parse(end));
+                    Long newCourseId = courseService.updateStartAndEndNewCourse(courseDetailsOptional.get(), lectures);
+                    router.setType(Router.Type.REDIRECT);
+                    router.setPagePath(PagePath.LECTURE.getServletPath() + newCourseId);
                 }
-                if (dataCorrect) {
-                    CourseDetails courseDetails = new CourseDetails();
-                    courseDetails.setId(courseDetailsOptional.get().getId());
-                    courseDetails.setTeacher(teacherOptional.get());
-                    courseDetailsService.updateTeacher(courseDetails);
-                }
-                router.setType(Router.Type.REDIRECT);
-                router.setPagePath(PagePath.LECTURE.getServletPath() + courseId);
             } else {
                 session.setAttribute(SessionAttribute.ERROR_COURSE_NOT_FOUND, true);
                 router.setType(Router.Type.REDIRECT);

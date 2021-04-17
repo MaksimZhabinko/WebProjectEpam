@@ -39,7 +39,9 @@ public enum PageAccessType {
             CommandType.ABOUT_US_PAGE,
             CommandType.PERSONAL_AREA_PAGE,
             CommandType.UPLOAD_FILE,
-            CommandType.ENROLL_COURSE
+            CommandType.ENROLL_COURSE,
+            CommandType.UPDATE_USER_NAME_SURNAME,
+            CommandType.UPDATE_PASSWORD
     )),
     /**
      * Admin page access type.
@@ -75,7 +77,12 @@ public enum PageAccessType {
             CommandType.UPDATE_START_OF_CLASS,
             CommandType.UPDATE_COST,
             CommandType.COURSE_UPDATE,
-            CommandType.UPDATE_TEACHER
+            CommandType.UPDATE_TEACHER,
+            CommandType.UPDATE_START_END,
+            CommandType.UPDATE_NEW_COURSE,
+            CommandType.CREATE_ADMIN,
+            CommandType.SHOW_ALL_USERS_ENROLLED_COURSE,
+            CommandType.HIDE_ALL_USERS_ENROLLED_COURSE
     ));
 
     private final Set<CommandType> commands;

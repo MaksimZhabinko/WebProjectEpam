@@ -2,6 +2,8 @@ package edu.epam.course.model.dao.impl;
 
 import edu.epam.course.model.connection.ConnectionPool;
 import edu.epam.course.model.dao.UserDao;
+import edu.epam.course.model.entity.Course;
+import edu.epam.course.model.entity.Entity;
 import edu.epam.course.model.entity.RoleType;
 import edu.epam.course.model.entity.User;
 import edu.epam.course.exception.DaoException;
@@ -14,6 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,6 +80,18 @@ public class UserDaoImpl implements UserDao {
      * The constant find max user id.
      */
     private static final String FIND_MAX_USER_ID = "SELECT MAX(user_id) FROM users";
+    /**
+     * The constant update user role.
+     */
+    private static final String UPDATE_USER_ROLE = "UPDATE course.users SET role = ? WHERE user_id = ?";
+    /**
+     * The constant update user name and surname.
+     */
+    private static final String UPDATE_USER_NAME_AND_SURNAME = "UPDATE course.users SET name = ?, surname = ? WHERE user_id = ?";
+    /**
+     * The constant find all users enrolled course limit.
+     */
+    private static final String FIND_ALL_USERS_ENROLLED_COURSE = "SELECT user_id, email, name, surname, course_id, course_name FROM course.users_x_courses INNER JOIN course.users ON fk_user_id = user_id INNER JOIN course.courses ON fk_course_id = course_id";
 
     @Override
     public Optional<User> findByEmailAndPassword(String email, String password) throws DaoException {
@@ -350,6 +365,64 @@ public class UserDaoImpl implements UserDao {
             close(connection);
         }
         return isUpdate;
+    }
+
+    @Override
+    public boolean updateUserToAdmin(User user) throws DaoException {
+        boolean isUpdate;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_ROLE)) {
+            preparedStatement.setString(1, String.valueOf(user.getRole()));
+            preparedStatement.setLong(2, user.getId());
+
+            isUpdate = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DaoException(e);
+        }
+        return isUpdate;
+    }
+
+    @Override
+    public boolean updateNameAndSurname(User user) throws DaoException {
+        boolean isUpdate;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_NAME_AND_SURNAME)) {
+            preparedStatement.setString(1, user.getName());
+            preparedStatement.setString(2, user.getSurname());
+            preparedStatement.setLong(3, user.getId());
+
+            isUpdate = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DaoException(e);
+        }
+        return isUpdate;
+    }
+
+    @Override
+    public List<User> findAllEnrolledCourse() throws DaoException {
+        List<User> users = new ArrayList<>();
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_USERS_ENROLLED_COURSE)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                User user = new User();
+                user.setId(resultSet.getLong(1));
+                user.setEmail(resultSet.getString(2));
+                user.setName(resultSet.getString(3));
+                user.setSurname(resultSet.getString(4));
+                Course course = new Course();
+                course.setId(resultSet.getLong(5));
+                course.setName(resultSet.getString(6));
+                user.setCourse(course);
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DaoException(e);
+        }
+        return users;
     }
 
     @Override

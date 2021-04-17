@@ -100,4 +100,13 @@ public interface CourseDetailsService {
      * @throws ServiceException the service exception
      */
     boolean updateTeacher(CourseDetails courseDetails) throws ServiceException;
+
+    /**
+     * Update start end boolean.
+     *
+     * @param courseDetails the course details
+     * @return the boolean
+     * @throws ServiceException the service exception
+     */
+    boolean updateStartEnd(CourseDetails courseDetails) throws ServiceException;
 }

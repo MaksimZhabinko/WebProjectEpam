@@ -41,7 +41,7 @@ public class CourseDetailsDaoImpl implements CourseDetailsDao {
     /**
      * The constant course details add.
      */
-    private static final String COURSE_DETAILS_ADD = "INSERT INTO course.course_details (`number_of_hours`, `description`, `start_course`, `end_course`, `start_of_class`, `cost`, `fk_course_id`, `fk_teacher_name_id`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    static final String COURSE_DETAILS_ADD = "INSERT INTO course.course_details (`number_of_hours`, `description`, `start_course`, `end_course`, `start_of_class`, `cost`, `fk_course_id`, `fk_teacher_name_id`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     /**
      * The constant course details description update.
      */
@@ -62,6 +62,12 @@ public class CourseDetailsDaoImpl implements CourseDetailsDao {
      * The constant course details teacher update.
      */
     private static final String COURSE_DETAILS_TEACHER_UPDATE = "UPDATE course.course_details SET fk_teacher_name_id = ? WHERE course_detail_id = ?";
+    /**
+     * The constant course details start and end update.
+     */
+    private static final String COURSE_DETAILS_START_END_UPDATE = "UPDATE course.course_details SET start_course = ?, end_course = ? WHERE course_detail_id = ?";
+
+
 
     @Override
     public Optional<CourseDetails> findById(Long id) throws DaoException {
@@ -245,6 +251,23 @@ public class CourseDetailsDaoImpl implements CourseDetailsDao {
              PreparedStatement preparedStatement = connection.prepareStatement(COURSE_DETAILS_TEACHER_UPDATE)) {
             preparedStatement.setLong(1, courseDetails.getTeacher().getId());
             preparedStatement.setLong(2, courseDetails.getId());
+
+            isUpdate = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DaoException(e);
+        }
+        return isUpdate;
+    }
+
+    @Override
+    public boolean updateStartEnd(CourseDetails courseDetails) throws DaoException {
+        boolean isUpdate;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(COURSE_DETAILS_START_END_UPDATE)) {
+            preparedStatement.setDate(1, Date.valueOf(courseDetails.getStartCourse()));
+            preparedStatement.setDate(2, Date.valueOf(courseDetails.getEndCourse()));
+            preparedStatement.setLong(3, courseDetails.getId());
 
             isUpdate = preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {

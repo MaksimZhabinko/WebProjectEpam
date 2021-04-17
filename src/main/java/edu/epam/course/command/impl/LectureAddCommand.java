@@ -51,48 +51,27 @@ public class LectureAddCommand implements Command {
         boolean dataCorrect = true;
         try {
             Long courseId = IdUtil.stringToLong(courseIdString);
-            if (!MessageValidator.isValidMessage(message)) {
-                session.setAttribute(SessionAttribute.ERROR_MESSAGE, true);
-                dataCorrect = false;
-            }
-            if (dataCorrect) {
-                Optional<Course> courseOptional = courseService.findById(courseId);
-                if (!courseOptional.isPresent()) {
-                    session.setAttribute(SessionAttribute.ERROR_COURSE_NOT_FOUND, true);
-                    router.setType(Router.Type.REDIRECT);
-                    router.setPagePath(PagePath.MAIN.getServletPath());
-                    return router;
+            Optional<Course> courseOptional = courseService.findById(courseId);
+            if (courseOptional.isPresent()) {
+                if (!MessageValidator.isValidMessage(message)) {
+                    session.setAttribute(SessionAttribute.ERROR_MESSAGE, true);
+                    dataCorrect = false;
                 }
+                if (dataCorrect) {
+                    Course course = new Course();
+                    course.setId(courseId);
+                    Lecture lecture = new Lecture();
+                    lecture.setLecture(message);
+                    lecture.setCourse(course);
+                    lectureService.add(lecture);
+                }
+                router.setType(Router.Type.REDIRECT);
+                router.setPagePath(PagePath.LECTURE.getServletPath() + courseId);
+            } else {
+                session.setAttribute(SessionAttribute.ERROR_COURSE_NOT_FOUND, true);
+                router.setType(Router.Type.REDIRECT);
+                router.setPagePath(PagePath.MAIN.getServletPath());
             }
-            if (dataCorrect) {
-                Course course = new Course();
-                course.setId(courseId);
-                Lecture lecture = new Lecture();
-                lecture.setLecture(message);
-                lecture.setCourse(course);
-                lectureService.add(lecture);
-            }
-            router.setType(Router.Type.REDIRECT);
-            router.setPagePath(PagePath.LECTURE.getServletPath() + courseId);
-            // todo протестировать что лучше
-//
-//            Optional<Course> courseOptional = courseService.findCourseById(courseId);
-//            if (courseOptional.isPresent()) {
-//                if (dataCorrect) {
-//                    Course course = new Course();
-//                    course.setId(courseId);
-//                    Lecture lecture = new Lecture();
-//                    lecture.setLecture(message);
-//                    lecture.setCourse(course);
-//                    lectureService.addLecture(lecture);
-//                }
-//                router.setType(Router.Type.REDIRECT);
-//                router.setPagePath(PagePath.LECTURE.getServletPath() + courseId);
-//            } else {
-//                session.setAttribute(SessionAttribute.ERROR_COURSE_NOT_FOUND, true);
-//                router.setType(Router.Type.REDIRECT);
-//                router.setPagePath(PagePath.MAIN.getServletPath());
-//            }
         } catch (ServiceException | NumberFormatException e) {
             logger.error(e);
             router.setPagePath(PagePath.ERROR_500.getDirectUrl());

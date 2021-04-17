@@ -59,7 +59,7 @@ public class TeacherAddCommand implements Command {
                 teacherService.add(teacherName, teacherSurname);
             }
             router.setType(Router.Type.REDIRECT);
-            router.setPagePath(PagePath.PERSONAL_AREA.getServletPath()); // todo возможно на стр показать все учителей
+            router.setPagePath(PagePath.SHOW_ALL_TEACHERS.getServletPath());
         } catch (ServiceException e) {
             logger.error(e);
             router.setPagePath(PagePath.ERROR_500.getDirectUrl());

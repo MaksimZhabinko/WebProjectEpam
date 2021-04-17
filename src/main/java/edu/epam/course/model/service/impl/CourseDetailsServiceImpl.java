@@ -144,4 +144,16 @@ public class CourseDetailsServiceImpl implements CourseDetailsService {
         }
         return isUpdate;
     }
+
+    @Override
+    public boolean updateStartEnd(CourseDetails courseDetails) throws ServiceException {
+        boolean isUpdate;
+        try {
+            isUpdate = courseDetailsDao.updateStartEnd(courseDetails);
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return isUpdate;
+    }
 }

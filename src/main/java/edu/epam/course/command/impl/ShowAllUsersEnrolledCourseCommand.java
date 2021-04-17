@@ -18,40 +18,39 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
- * The type Show all users command.
+ * The type Show all users enrolled course command.
  */
-public class ShowAllUsersCommand implements Command {
+public class ShowAllUsersEnrolledCourseCommand implements Command {
     /**
      * The constant logger.
      */
-    private static final Logger logger = LogManager.getLogger(ShowAllUsersCommand.class);
+    private static final Logger logger = LogManager.getLogger(ShowAllUsersEnrolledCourseCommand.class);
     private UserService userService;
 
     /**
-     * Instantiates a new Show all users command.
+     * Instantiates a new Show all users enrolled course command.
      *
      * @param userService the user service
      */
-    public ShowAllUsersCommand(UserService userService) {
+    public ShowAllUsersEnrolledCourseCommand(UserService userService) {
         this.userService = userService;
     }
 
     @Override
     public Router execute(HttpServletRequest request) {
-        String page = request.getParameter(RequestParameter.PAGE);
+        String page = request.getParameter(RequestParameter.PAGE_ENROLLED);
         HttpSession session = request.getSession();
         Router router = new Router();
         try {
             Integer pageInt = Math.abs(Integer.parseInt(page));
-            Long maxUserId = userService.findMaxUserId();
-            List<Integer> pages = PaginationUtil.paginationUserPages(maxUserId);
-            session.setAttribute(SessionAttribute.PAGES, pages);
+            List<User> allUsersEnrolledCourse = userService.findAllEnrolledCourse();
+            List<Integer> pages = PaginationUtil.paginationUserPages(Long.valueOf(allUsersEnrolledCourse.size()));
+            session.setAttribute(SessionAttribute.PAGES_ENROLLED, pages);
             if (pageInt > pages.get(pages.size() - 1)) {
                 pageInt = pages.get(pages.size() - 1);
             }
-            List<User> allUsers = userService.findAllLimit(pageInt);
-            session.setAttribute(SessionAttribute.PAGE, page);
-            session.setAttribute(SessionAttribute.ALL_USERS, allUsers);
+            List<User> usersEnrolledCourseLimit = PaginationUtil.usersEnrolledCourseLimit(allUsersEnrolledCourse, pageInt);
+            session.setAttribute(SessionAttribute.USERS_ENROLLED_COURSE_LIMIT, usersEnrolledCourseLimit);
             router.setType(Router.Type.REDIRECT);
             router.setPagePath(PagePath.PERSONAL_AREA.getServletPath());
         } catch (ServiceException | NumberFormatException e) {

@@ -94,7 +94,7 @@ public class UserServiceImpl implements UserService {
         boolean isChange;
         try {
             isChange = userDao.updatePassword(encoderPassword, user.getId());
-            MailSenderUtil.sendPassword(user.getEmail(), password);
+            MailSenderUtil.sendNewPassword(user.getEmail(), password);
         } catch (DaoException | EmailException e) {
             logger.error(e);
             throw new ServiceException(e);
@@ -121,11 +121,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAllLimit(int page) throws ServiceException {
         int start;
-        if (page == 1) {
+        final int position = 1;
+        if (page == position) {
             start = 0;
         } else {
-            start = (page - 1) * PaginationUtil.USER_LIMIT;// todo как назвать это число?(1) и как назвать метод
-            // чтоб это все вынести в метод код
+            start = (page - position) * PaginationUtil.USER_LIMIT;
         }
         List<User> users;
         try {
@@ -197,5 +197,59 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException(e);
         }
         return isUpdate;
+    }
+
+    @Override
+    public boolean updateUserToAdmin(User user) throws ServiceException {
+        boolean isUpdate;
+        try {
+            isUpdate = userDao.updateUserToAdmin(user);
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return isUpdate;
+    }
+
+    @Override
+    public boolean updateNameAndSurname(String name, String surname, Long userId) throws ServiceException {
+        boolean isUpdate;
+        try {
+            User user = new User();
+            user.setId(userId);
+            user.setName(name);
+            user.setSurname(surname);
+            isUpdate = userDao.updateNameAndSurname(user);
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return isUpdate;
+    }
+
+    @Override
+    public boolean updatePassword(String password, User user) throws ServiceException {
+        boolean isUpdate;
+        try {
+            String encoderPassword = PasswordEncryptionUtil.getEncoder(password);
+            isUpdate = userDao.updatePassword(encoderPassword, user.getId());
+            MailSenderUtil.sendPassword(user.getEmail(), password);
+        } catch (DaoException | EmailException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return isUpdate;
+    }
+
+    @Override
+    public List<User> findAllEnrolledCourse() throws ServiceException {
+        List<User> users;
+        try {
+            users = userDao.findAllEnrolledCourse();
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return users;
     }
 }

@@ -93,6 +93,31 @@ public class SessionAttribute {
      */
     public static final String ERROR_TEACHER_HAVE = "errorTeacherHave";
 
+    /**
+     * The constant ERROR_TEACHER_UPDATE.
+     */
+    public static final String ERROR_TEACHER_UPDATE = "errorTeacherUpdate";
+    /**
+     * The constant ERROR_START_END_UPDATE.
+     */
+    public static final String ERROR_START_END_UPDATE = "errorStartEndUpdate";
+    /**
+     * The constant SUCCESS.
+     */
+    public static final String SUCCESS = "success";
+    /**
+     * The constant ERROR_CANNOT_UPDATE_PASSWORD.
+     */
+    public static final String ERROR_CANNOT_UPDATE_PASSWORD = "errorCannotUpdatePassword";
+    /**
+     * The constant PAGES_ENROLLED.
+     */
+    public static final String PAGES_ENROLLED = "pagesEnrolled";
+    /**
+     * The constant USERS_ENROLLED_COURSE_LIMIT.
+     */
+    public static final String USERS_ENROLLED_COURSE_LIMIT = "usersEnrolledCourseLimit";
+
     private SessionAttribute() {
     }
 }

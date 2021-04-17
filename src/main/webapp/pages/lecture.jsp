@@ -22,7 +22,7 @@
             <input type="hidden" name="command" value="update_description">
             <input type="hidden" name="course_id" value="${courseId}">
             <input type="text" name="description" value="${courseDetails.getDescription()}">
-            <input type="submit" value="Update description">
+            <input type="submit" value="<fmt:message key="button.lecture.update_description"/>">
         </form>
     </c:if>
     <p><fmt:message key="lecture.hours"/>: ${courseDetails.getHours()}</p>
@@ -31,20 +31,37 @@
             <input type="hidden" name="command" value="update_hours">
             <input type="hidden" name="course_id" value="${courseId}">
             <input type="text" name="hours" value="${courseDetails.getHours()}">
-            <input type="submit" value="Update hours">
+            <input type="submit" value="<fmt:message key="button.lecture.update_hours"/>">
         </form>
     </c:if>
 <%--    todo сделать--%>
     <p><fmt:message key="lecture.start_course"/>: ${courseDetails.getStartCourse()}</p>
     <p><fmt:message key="lecture.end_course"/>: ${courseDetails.getEndCourse()}</p>
-
+    <c:if test="${user.getRole().toString() eq 'ADMIN'}">
+        <form action="${pageContext.request.contextPath}/controller" method="post">
+            <input type="hidden" name="command" value="update_start_end">
+            <input type="hidden" name="course_id" value="${courseId}">
+            <input type="text" name="start" value="${courseDetails.getStartCourse()}">
+            <input type="text" name="end" value="${courseDetails.getEndCourse()}">
+            <input type="submit" value="<fmt:message key="button.lecture.update_start_end"/>">
+        </form>
+    </c:if>
+    <c:if test="${user.getRole().toString() eq 'ADMIN'}">
+        <form action="${pageContext.request.contextPath}/controller" method="post">
+            <input type="hidden" name="command" value="update_new_course">
+            <input type="hidden" name="course_id" value="${courseId}">
+            <input type="text" name="start">
+            <input type="text" name="end">
+            <input type="submit" value="<fmt:message key="button.lecture.change_data_course"/>">
+        </form>
+    </c:if>
     <p><fmt:message key="lecture.time_course"/>: ${courseDetails.getStartOfClass()}</p>
     <c:if test="${user.getRole().toString() eq 'ADMIN'}">
         <form action="${pageContext.request.contextPath}/controller" method="post">
             <input type="hidden" name="command" value="update_start_of_class">
             <input type="hidden" name="course_id" value="${courseId}">
             <input type="text" name="start_of_class" value="${courseDetails.getStartOfClass()}">
-            <input type="submit" value="Update start of class">
+            <input type="submit" value="<fmt:message key="button.lecture.update_start_of_class"/>">
         </form>
     </c:if>
     <p><img width="200" height="200"
@@ -60,7 +77,7 @@
             <input type="hidden" name="course_id" value="${courseId}">
             <input type="text" name="teacher_name" value="${courseDetails.getTeacher().getName()}">
             <input type="text" name="teacher_surname" value="${courseDetails.getTeacher().getSurname()}">
-            <input type="submit" value="Update TEACHER">
+            <input type="submit" value="<fmt:message key="button.lecture.update_teacher"/>">
         </form>
     </c:if>
 
@@ -70,7 +87,7 @@
             <input type="hidden" name="command" value="update_cost">
             <input type="hidden" name="course_id" value="${courseId}">
             <input type="text" name="cost" value="${courseDetails.getCost()}">
-            <input type="submit" value="Update cost">
+            <input type="submit" value="<fmt:message key="button.lecture.update_cost"/>">
         </form>
     </c:if>
 </c:if>
@@ -253,6 +270,20 @@
         });
     </script>
 </c:if>
+<c:if test="${errorTeacherUpdate}">
+    <script>
+        $(document).ready(function () {
+            $("#myModalBox").modal('show');
+        });
+    </script>
+</c:if>
+<c:if test="${errorStartEndUpdate}">
+    <script>
+        $(document).ready(function () {
+            $("#myModalBox").modal('show');
+        });
+    </script>
+</c:if>
 <div id="myModalBox" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -303,6 +334,16 @@
                         <fmt:message key="error.lecture.teacher_not_found"/>
                     </div>
                 </c:if>
+                <c:if test="${errorTeacherUpdate}">
+                    <div class="alert alert-danger" role="alert">
+                        <fmt:message key="error.lecture.teacher_update"/>
+                    </div>
+                </c:if>
+                <c:if test="${errorStartEndUpdate}">
+                    <div class="alert alert-danger" role="alert">
+                        <fmt:message key="error.lecture.start_end_update"/>
+                    </div>
+                </c:if>
             </div>
             <!-- Футер модального окна -->
             <div class="modal-footer">
@@ -344,6 +385,16 @@
                 <c:if test="${errorTeacherNotFound}">
                     <button type="button" class="btn btn-default" data-dismiss="modal"
                             onclick="<c:remove var="errorTeacherNotFound" scope="session"/>">Ок
+                    </button>
+                </c:if>
+                <c:if test="${errorTeacherUpdate}">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                            onclick="<c:remove var="errorTeacherUpdate" scope="session"/>">Ок
+                    </button>
+                </c:if>
+                <c:if test="${errorStartEndUpdate}">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                            onclick="<c:remove var="errorStartEndUpdate" scope="session"/>">Ок
                     </button>
                 </c:if>
             </div>

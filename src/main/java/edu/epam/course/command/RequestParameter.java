@@ -108,6 +108,18 @@ public class RequestParameter {
      * The constant TEACHER_SURNAME.
      */
     public static final String TEACHER_SURNAME = "teacher_surname";
+    /**
+     * The constant START.
+     */
+    public static final String START = "start";
+    /**
+     * The constant END.
+     */
+    public static final String END = "end";
+    /**
+     * The constant PAGE_ENROLLED.
+     */
+    public static final String PAGE_ENROLLED = "page_enrolled";
 
     private RequestParameter() {
     }

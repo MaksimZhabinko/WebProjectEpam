@@ -50,18 +50,18 @@
         <input type="submit" value="<fmt:message key="button.add_course"/>">
     </form>
 </c:if>
-<c:forEach var="course" items="${courses}">
-    <c:if test="${user.getRole().toString() eq 'ADMIN'}">
+<c:if test="${user.getRole().toString() eq 'ADMIN'}">
+    Набор на данные курсы окончен
+    <c:forEach var="course" items="${courses}">
         <c:if test="${course.getEnrollmentActive() == false}">
-            Набор на данные курсы окончен
             <a href="${pageContext.request.contextPath}/controller?command=lecture_page&course_id=${course.getId()}">
                 <p>
                     <button type="button">${course.getName()}</button>
                 </p>
             </a>
         </c:if>
-    </c:if>
-</c:forEach>
+    </c:forEach>
+</c:if>
 
 <c:if test="${errorIsNotValidCourseName}">
     <script>

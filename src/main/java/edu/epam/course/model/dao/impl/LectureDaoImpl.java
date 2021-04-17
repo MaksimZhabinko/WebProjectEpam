@@ -31,7 +31,7 @@ public class LectureDaoImpl implements LectureDao {
     /**
      * The constant add lecture.
      */
-    private static final String ADD_LECTURE = "INSERT INTO `lectures` (`lecture`, `fk_lecture_x_course_id`) VALUES (?, ?)";
+    static final String ADD_LECTURE = "INSERT INTO `lectures` (`lecture`, `fk_lecture_x_course_id`) VALUES (?, ?)";
     /**
      * The constant delete lecture.
      */

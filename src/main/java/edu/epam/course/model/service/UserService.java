@@ -132,4 +132,42 @@ public interface UserService {
      * @throws ServiceException the service exception
      */
     boolean unblockUser(List<Long> usersId) throws ServiceException;
+
+    /**
+     * Update user to admin boolean.
+     *
+     * @param user the user
+     * @return the boolean
+     * @throws ServiceException the service exception
+     */
+    boolean updateUserToAdmin(User user) throws ServiceException;
+
+    /**
+     * Update name and surname boolean.
+     *
+     * @param name    the name
+     * @param surname the surname
+     * @param userId  the user id
+     * @return the boolean
+     * @throws ServiceException the service exception
+     */
+    boolean updateNameAndSurname(String name, String surname, Long userId) throws ServiceException;
+
+    /**
+     * Update password boolean.
+     *
+     * @param password the password
+     * @param user     the user
+     * @return the boolean
+     * @throws ServiceException the service exception
+     */
+    boolean updatePassword(String password, User user) throws ServiceException;
+
+    /**
+     * Find all enrolled course limit list.
+     *
+     * @return the list
+     * @throws ServiceException the service exception
+     */
+    List<User> findAllEnrolledCourse() throws ServiceException;
 }

@@ -30,6 +30,13 @@ public interface CourseDao extends BaseDao<Long, Course> {
     boolean updateCourseName(Course course) throws DaoException;
 
 
-// todo example
-    void updateStartAndEndNewCourse(Course course, CourseDetails courseDetails, List<Lecture> lectures);
+    /**
+     * Update start and end new course.
+     *
+     * @param courseDetails the course details
+     * @param lectures      the lectures
+     * @return the boolean
+     * @throws DaoException the dao exception
+     */
+    Long updateStartAndEndNewCourse(CourseDetails courseDetails, List<Lecture> lectures) throws DaoException;
 }

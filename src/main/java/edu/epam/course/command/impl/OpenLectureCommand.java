@@ -58,7 +58,7 @@ public class OpenLectureCommand implements Command {
             Optional<Course> courseOptional = courseService.findById(courseId);
             if (courseOptional.isPresent()) {
                 List<Lecture> lectures = lectureService.findAllLectureByCourseId(courseId);
-                Optional<CourseDetails> courseDetails = courseDetailsService.findCourseDetailsById(courseId);
+                Optional<CourseDetails> courseDetails = courseDetailsService.findCourseDetailsByCourseId(courseId);
                 if (!lectures.isEmpty()) {
                     request.setAttribute(RequestAttribute.LECTURES, lectures);
                 }
@@ -69,8 +69,9 @@ public class OpenLectureCommand implements Command {
                 router.setPagePath(PagePath.LECTURE.getDirectUrl());
                 session.setAttribute(SessionAttribute.CURRENT_PAGE, PagePath.LECTURE.getServletPath() + courseId);
             } else {
-                router.setPagePath(PagePath.ERROR_404.getDirectUrl());
-                // todo можно заменить на собственный error course not found
+                session.setAttribute(SessionAttribute.ERROR_COURSE_NOT_FOUND, true);
+                router.setType(Router.Type.REDIRECT);
+                router.setPagePath(PagePath.MAIN.getServletPath());
             }
         } catch (ServiceException | NumberFormatException e) {
             logger.error(e);

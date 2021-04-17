@@ -2,6 +2,8 @@ package edu.epam.course.model.service;
 
 import edu.epam.course.exception.ServiceException;
 import edu.epam.course.model.entity.Course;
+import edu.epam.course.model.entity.CourseDetails;
+import edu.epam.course.model.entity.Lecture;
 
 import java.util.List;
 import java.util.Optional;
@@ -62,4 +64,14 @@ public interface CourseService {
      * @throws ServiceException the service exception
      */
     boolean updateCourseName(Course course) throws ServiceException;
+
+    /**
+     * Update start and end new course boolean.
+     *
+     * @param courseDetails the course details
+     * @param lectures      the lectures
+     * @return the boolean
+     * @throws ServiceException the service exception
+     */
+    Long updateStartAndEndNewCourse(CourseDetails courseDetails, List<Lecture> lectures) throws ServiceException;
 }

@@ -13,6 +13,7 @@ public class User extends Entity{
     private boolean enabled;
     private BigDecimal money;
     private String photo;
+    private Course course;
 
     /**
      * Instantiates a new User.
@@ -163,6 +164,24 @@ public class User extends Entity{
         this.photo = photo;
     }
 
+    /**
+     * Gets course.
+     *
+     * @return the course
+     */
+    public Course getCourse() {
+        return course;
+    }
+
+    /**
+     * Sets course.
+     *
+     * @param course the course
+     */
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -177,7 +196,8 @@ public class User extends Entity{
         if (surname != null ? !surname.equals(user.surname) : user.surname != null) return false;
         if (role != user.role) return false;
         if (money != null ? !money.equals(user.money) : user.money != null) return false;
-        return photo != null ? photo.equals(user.photo) : user.photo == null;
+        if (photo != null ? !photo.equals(user.photo) : user.photo != null) return false;
+        return course != null ? course.equals(user.course) : user.course == null;
     }
 
     @Override
@@ -190,6 +210,7 @@ public class User extends Entity{
         result = 31 * result + (enabled ? 1 : 0);
         result = 31 * result + (money != null ? money.hashCode() : 0);
         result = 31 * result + (photo != null ? photo.hashCode() : 0);
+        result = 31 * result + (course != null ? course.hashCode() : 0);
         return result;
     }
 
@@ -204,6 +225,7 @@ public class User extends Entity{
         sb.append(", enabled=").append(enabled);
         sb.append(", money=").append(money);
         sb.append(", photo='").append(photo).append('\'');
+        sb.append(", course=").append(course);
         sb.append('}');
         return sb.toString();
     }

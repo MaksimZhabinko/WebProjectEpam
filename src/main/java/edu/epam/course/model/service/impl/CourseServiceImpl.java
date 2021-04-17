@@ -5,6 +5,8 @@ import edu.epam.course.exception.ServiceException;
 import edu.epam.course.model.dao.CourseDao;
 import edu.epam.course.model.dao.impl.CourseDaoImpl;
 import edu.epam.course.model.entity.Course;
+import edu.epam.course.model.entity.CourseDetails;
+import edu.epam.course.model.entity.Lecture;
 import edu.epam.course.model.service.CourseService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -92,5 +94,17 @@ public class CourseServiceImpl implements CourseService {
             throw new ServiceException(e);
         }
         return isUpdate;
+    }
+
+    @Override
+    public Long updateStartAndEndNewCourse(CourseDetails courseDetails, List<Lecture> lectures) throws ServiceException {
+        Long newCourseId;
+        try {
+            newCourseId = courseDao.updateStartAndEndNewCourse(courseDetails, lectures);
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
+        return newCourseId;
     }
 }

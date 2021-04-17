@@ -9,10 +9,19 @@ import edu.epam.course.model.entity.Lecture;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static edu.epam.course.model.dao.impl.CourseDetailsDaoImpl.COURSE_DETAILS_ADD;
+import static edu.epam.course.model.dao.impl.LectureDaoImpl.ADD_LECTURE;
 
 /**
  * The type Course dao.
@@ -42,8 +51,14 @@ public class CourseDaoImpl implements CourseDao {
      * The constant find user enrolled by course.
      */
     private static final String FIND_USER_ENROLLED_BY_COURSE = "SELECT course_id, course_name, enrollment_active FROM course.users INNER JOIN course.users_x_courses ON fk_user_id = user_id INNER JOIN course.courses ON fk_course_id = course_id WHERE fk_user_id = ?";
-
+    /**
+     * The constant update course name.
+     */
     private static final String UPDATE_COURSE_NAME = "UPDATE course.courses SET course_name = ? WHERE course_id = ?";
+    /**
+     * The constant update course enrollment active.
+     */
+    private static final String UPDATE_COURSE_ENROLLMENT_ACTIVE = "UPDATE course.courses SET enrollment_active = false WHERE course_id = ?";
 
     @Override
     public List<Course> findAll() throws DaoException {
@@ -155,25 +170,24 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    // todo должен ли он тут находится? ДА
-    public void updateStartAndEndNewCourse(Course course, CourseDetails courseDetails, List<Lecture> lectures) {
+    public Long updateStartAndEndNewCourse(CourseDetails courseDetails, List<Lecture> lectures) throws DaoException{
         Connection connection = null;
-        // todo или использовать только один? или для каждого нужно создавать И ТАК И ТАК
         PreparedStatement preparedStatementCourse = null;
         PreparedStatement preparedStatementCurseDetails = null;
         PreparedStatement preparedStatementLecture = null;
+        Long newCourseId;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             connection.setAutoCommit(false);
             preparedStatementCourse = connection.prepareStatement(ADD_COURSE, Statement.RETURN_GENERATED_KEYS);
-            preparedStatementCourse.setString(1, course.getName());
-            preparedStatementCourse.setBoolean(2, course.getEnrollmentActive());
+            preparedStatementCourse.setString(1, courseDetails.getCourse().getName());
+            preparedStatementCourse.setBoolean(2, courseDetails.getCourse().getEnrollmentActive());
             preparedStatementCourse.executeUpdate();
             ResultSet resultSet = preparedStatementCourse.getGeneratedKeys();
             resultSet.next();
-            long newCourseId = resultSet.getLong(1);
-            // todo куда деть это sql запрос В свои классы
-            preparedStatementCurseDetails = connection.prepareStatement("INSERT INTO `course_details` (`number_of_hours`, `description`, `start_course`, `end_course`, `start_of_class`, `cost`, `fk_course_id`, `fk_teacher_name_id`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            newCourseId = resultSet.getLong(1);
+
+            preparedStatementCurseDetails = connection.prepareStatement(COURSE_DETAILS_ADD);
             preparedStatementCurseDetails.setInt(1, courseDetails.getHours());
             preparedStatementCurseDetails.setString(2, courseDetails.getDescription());
             preparedStatementCurseDetails.setDate(3, Date.valueOf(courseDetails.getStartCourse()));
@@ -184,26 +198,28 @@ public class CourseDaoImpl implements CourseDao {
             preparedStatementCurseDetails.setLong(8, courseDetails.getTeacher().getId());
             preparedStatementCurseDetails.executeUpdate();
 
-            preparedStatementLecture = connection.prepareStatement("INSERT INTO `lectures` (`lecture`, `fk_lecture_x_course_id`) VALUES (?, ?)");
+            preparedStatementLecture = connection.prepareStatement(ADD_LECTURE);
             for (Lecture lecture : lectures) {
                 preparedStatementLecture.setString(1, lecture.getLecture());
                 preparedStatementLecture.setLong(2, newCourseId);
                 preparedStatementLecture.executeUpdate();
             }
 
-            preparedStatementCourse = connection.prepareStatement("UPDATE course.courses SET enrollment_active = false WHERE course_id = ?");
-            preparedStatementCourse.setLong(1, course.getId());
+            preparedStatementCourse = connection.prepareStatement(UPDATE_COURSE_ENROLLMENT_ACTIVE);
+            preparedStatementCourse.setLong(1, courseDetails.getCourse().getId());
             preparedStatementCourse.executeUpdate();
 
             connection.commit();
         } catch (SQLException e) {
             rollback(connection);
             logger.error(e);
+            throw new DaoException();
         } finally {
             close(preparedStatementCourse);
             close(preparedStatementCurseDetails);
             close(preparedStatementLecture);
             close(connection);
         }
+        return newCourseId;
     }
 }

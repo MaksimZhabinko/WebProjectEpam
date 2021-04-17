@@ -28,6 +28,38 @@
     <h1><fmt:message key="h1.personal_area.money"/> - ${user.getMoney()}</h1>
 </c:if>
 
+<c:if test="${errorNameAndSurnameMessage}">
+    <div class="alert alert-danger" role="alert">
+        <fmt:message key="error.signUp.nameAndSurname"/>
+    </div>
+</c:if>
+
+<c:if test="${user.getRole().toString() eq 'USER'}">
+    <h1><fmt:message key="h1.personal_area.rename_name_surname"/></h1>
+    <form action="${pageContext.request.contextPath}/controller" method="post">
+        <input type="hidden" name="command" value="update_user_name_surname">
+        <input type="text" name="name" value="${user.getName()}" required pattern="^[\p{L}]+$">
+        <input type="text" name="surname" value="${user.getSurname()}" required pattern="^[\p{L}]+$">
+        <input type="submit" value="<fmt:message key="button.personal_area.update_name_surname"/>">
+    </form>
+</c:if>
+
+<c:if test="${errorPasswordMessage}">
+    <div class="alert alert-danger" role="alert">
+        <fmt:message key="error.signUp.password"/>
+    </div>
+</c:if>
+<%--todo localization required pattern--%>
+<c:if test="${user.getRole().toString() eq 'USER'}">
+    <h1>Update password</h1>
+    <form action="${pageContext.request.contextPath}/controller" method="post">
+        <input type="hidden" name="command" value="update_password">
+        <input type="password" name="password">
+        <input type="password" name="repeat_password">
+        <input type="submit" value="Update password">
+    </form>
+</c:if>
+
 <c:if test="${user == null}">
     <h1><fmt:message key="h1.personal_area"/></h1>
 </c:if>
@@ -68,6 +100,54 @@
         </form>
     </c:if>
 </c:if>
+<%-- todo localization required pattern--%>
+<c:if test="${user.getRole().toString() eq 'ADMIN'}">
+    <c:if test="${usersEnrolledCourseLimit == null}">
+        <form action="${pageContext.request.contextPath}/controller" method="post">
+            <input type="hidden" name="command" value="show_all_users_enrolled_course">
+            <input type="hidden" name="page_enrolled" value="1">
+            <input type="submit" value="Show all user enrolled course">
+        </form>
+    </c:if>
+</c:if>
+<c:if test="${user.getRole().toString() eq 'ADMIN'}">
+    <c:if test="${usersEnrolledCourseLimit != null}">
+        <form action="${pageContext.request.contextPath}/controller" method="post">
+            <input type="hidden" name="command" value="hide_all_users_enrolled_course">
+            <input type="submit" value="Hide all users enrolled course">
+        </form>
+    </c:if>
+</c:if>
+<%-- todo localization--%>
+<c:if test="${user.getRole().toString() eq 'ADMIN'}">
+    <c:if test="${usersEnrolledCourseLimit != null}">
+        <table border="1">
+            <tr>
+                <th><fmt:message key="table.personal_area.th_id"/></th>
+                <th><fmt:message key="table.personal_area.th_email"/></th>
+                <th><fmt:message key="table.personal_area.th_name"/></th>
+                <th><fmt:message key="table.personal_area.th_surname"/></th>
+                <th>COURSE_ID</th>
+                <th>COURSE_NAME</th>
+            </tr>
+            <c:forEach items="${usersEnrolledCourseLimit}" var="userEnrolledCourse">
+                <tr>
+                    <td>${userEnrolledCourse.getId()}</td>
+                    <td>${userEnrolledCourse.getEmail()}</td>
+                    <td>${userEnrolledCourse.getName()}</td>
+                    <td>${userEnrolledCourse.getSurname()}</td>
+                    <td>${userEnrolledCourse.getCourse().getId()}</td>
+                    <td>${userEnrolledCourse.getCourse().getName()}</td>
+                </tr>
+            </c:forEach>
+        </table>
+        <c:if test="${pagesEnrolled != null}">
+            <c:forEach items="${pagesEnrolled}" var="page">
+                <a href='${pageContext.request.contextPath}/controller?command=show_all_users_enrolled_course&page_enrolled=${page}'>${page}</a>
+            </c:forEach>
+        </c:if>
+    </c:if>
+</c:if>
 
 <c:if test="${user.getRole().toString() eq 'ADMIN'}">
     <c:if test="${allTeachers != null}">
@@ -103,8 +183,7 @@
 
 <c:if test="${user.getRole().toString() eq 'ADMIN'}">
     <c:if test="${allTeachers != null}">
-<%--        todo localization--%>
-        <h1>DELETE TEACHER</h1>
+        <h1><fmt:message key="h1.personal_area.delete_teacher"/></h1>
         <form action="${pageContext.request.contextPath}/controller" method="post">
             <input type="hidden" name="command" value="teacher_delete">
             <c:forEach var="teacher" items="${allTeachers}">
@@ -116,13 +195,15 @@
 </c:if>
 
 <c:if test="${user.getRole().toString() eq 'ADMIN'}">
-    <h1><fmt:message key="h1.personal_area.add_teacher"/></h1>
-    <form action="${pageContext.request.contextPath}/controller" method="post">
-        <input type="hidden" name="command" value="teacher_add">
-        <input type="text" name="teacher_name" required pattern="^[\p{L}]+$">
-        <input type="text" name="teacher_surname" required pattern="^[\p{L}]+$">
-        <input type="submit" value="<fmt:message key="button.personal_area.add_teacher"/>">
-    </form>
+    <c:if test="${allTeachers != null}">
+        <h1><fmt:message key="h1.personal_area.add_teacher"/></h1>
+        <form action="${pageContext.request.contextPath}/controller" method="post">
+            <input type="hidden" name="command" value="teacher_add">
+            <input type="text" name="teacher_name" required pattern="^[\p{L}]+$">
+            <input type="text" name="teacher_surname" required pattern="^[\p{L}]+$">
+            <input type="submit" value="<fmt:message key="button.personal_area.add_teacher"/>">
+        </form>
+    </c:if>
 </c:if>
 
 <c:if test="${user.getRole().toString() eq 'ADMIN'}">
@@ -137,6 +218,7 @@
                 <th><fmt:message key="table.personal_area.th_role"/></th>
                 <th><fmt:message key="table.personal_area.th_status"/></th>
                 <th><fmt:message key="table.personal_area.th_money"/></th>
+                <th><fmt:message key="table.personal_area.th_create_admin"/></th>
             </tr>
             <c:forEach var="user" items="${allUsers}">
             <tr>
@@ -158,6 +240,16 @@
                     </c:if>
                 </td>
                 <td>${user.getMoney()}</td>
+                <td>
+                    <c:if test="${user.getRole().toString() eq 'USER'}">
+                        <form action="${pageContext.request.contextPath}/controller" method="post">
+                            <input type="hidden" name="command" value="create_admin">
+                            <input type="hidden" name="user_id" value="${user.getId()}">
+                            <input type="hidden" name="page" value="${page}">
+                            <input type="submit" value="<fmt:message key="button.personal_area.create_admin"/>">
+                        </form>
+                    </c:if>
+                </td>
                 </c:forEach>
             </tr>
         </table>
@@ -237,6 +329,20 @@
         });
     </script>
 </c:if>
+<c:if test="${success}">
+    <script>
+        $(document).ready(function () {
+            $("#myModalBox").modal('show');
+        });
+    </script>
+</c:if>
+<c:if test="${errorCannotUpdatePassword}">
+    <script>
+        $(document).ready(function () {
+            $("#myModalBox").modal('show');
+        });
+    </script>
+</c:if>
 <div id="myModalBox" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -267,6 +373,16 @@
                         <fmt:message key="error.personal_area.teacher_have"/>
                     </div>
                 </c:if>
+                <c:if test="${success}">
+                    <div class="alert alert-danger" role="alert">
+                        <fmt:message key="success"/>
+                    </div>
+                </c:if>
+                <c:if test="${errorCannotUpdatePassword}">
+                    <div class="alert alert-danger" role="alert">
+                        <fmt:message key="error.personal_area.cannot_update_password"/>
+                    </div>
+                </c:if>
             </div>
             <!-- Футер модального окна -->
             <div class="modal-footer">
@@ -288,6 +404,16 @@
                 <c:if test="${errorTeacherHave}">
                     <button type="button" class="btn btn-default" data-dismiss="modal"
                             onclick="<c:remove var="errorTeacherHave" scope="session"/>">Ок
+                    </button>
+                </c:if>
+                <c:if test="${success}">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                            onclick="<c:remove var="success" scope="session"/>">Ок
+                    </button>
+                </c:if>
+                <c:if test="${errorCannotUpdatePassword}">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                            onclick="<c:remove var="errorCannotUpdatePassword" scope="session"/>">Ок
                     </button>
                 </c:if>
             </div>

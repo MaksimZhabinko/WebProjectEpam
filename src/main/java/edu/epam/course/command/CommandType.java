@@ -97,7 +97,7 @@ public enum CommandType {
     /**
      * The Lecture delete.
      */
-    LECTURE_DELETE(new LectureDeleteCommand(new LectureServiceImpl())),
+    LECTURE_DELETE(new LectureDeleteCommand(new LectureServiceImpl(), new CourseServiceImpl())),
     /**
      * The Lecture update.
      */
@@ -178,7 +178,36 @@ public enum CommandType {
     /**
      * The Update teacher.
      */
-    UPDATE_TEACHER(new CourseDetailsTeacherUpdateCommand(new TeacherServiceImpl(), new CourseDetailsServiceImpl()));
+    UPDATE_TEACHER(new CourseDetailsTeacherUpdateCommand(new TeacherServiceImpl(), new CourseDetailsServiceImpl())),
+    /**
+     * The Update start end.
+     */
+    UPDATE_START_END(new CourseDetailsUpdateStartEndCommand(new CourseDetailsServiceImpl())),
+    /**
+     * The Update new course.
+     */
+    UPDATE_NEW_COURSE(new CourseDetailsUpdateNewCourseCommand(new CourseDetailsServiceImpl(), new LectureServiceImpl(),
+            new CourseServiceImpl())),
+    /**
+     * The Update user name surname.
+     */
+    UPDATE_USER_NAME_SURNAME(new UpdateUserNameAndSurnameCommand(new UserServiceImpl())),
+    /**
+     * The Create admin.
+     */
+    CREATE_ADMIN(new CreateAdminCommand(new UserServiceImpl())),
+    /**
+     * The Update password.
+     */
+    UPDATE_PASSWORD(new UpdateUserPasswordCommand(new UserServiceImpl())),
+    /**
+     * The Show all users enrolled course.
+     */
+    SHOW_ALL_USERS_ENROLLED_COURSE(new ShowAllUsersEnrolledCourseCommand(new UserServiceImpl())),
+    /**
+     * The Hide all users enrolled course.
+     */
+    HIDE_ALL_USERS_ENROLLED_COURSE(new HideAllUsersEnrolledCourseCommand());
 
 
     private Command command;
