@@ -13,7 +13,6 @@
 <c:import url="fragment/header.jsp"/>
 <c:import url="fragment/sidebar.jsp"/>
 
-<%--        todo required, localization ко всем относится--%>
 <c:if test="${courseDetails != null}">
     <h1>${courseDetails.getCourse().getName()}</h1>
     <p><fmt:message key="lecture.description"/>: ${courseDetails.getDescription()}</p>
@@ -21,7 +20,7 @@
         <form action="${pageContext.request.contextPath}/controller" method="post">
             <input type="hidden" name="command" value="update_description">
             <input type="hidden" name="course_id" value="${courseId}">
-            <input type="text" name="description" value="${courseDetails.getDescription()}">
+            <input type="text" name="description" value="${courseDetails.getDescription()}" required>
             <input type="submit" value="<fmt:message key="button.lecture.update_description"/>">
         </form>
     </c:if>
@@ -30,19 +29,18 @@
         <form action="${pageContext.request.contextPath}/controller" method="post">
             <input type="hidden" name="command" value="update_hours">
             <input type="hidden" name="course_id" value="${courseId}">
-            <input type="text" name="hours" value="${courseDetails.getHours()}">
+            <input type="text" name="hours" value="${courseDetails.getHours()}" required pattern="\d+">
             <input type="submit" value="<fmt:message key="button.lecture.update_hours"/>">
         </form>
     </c:if>
-<%--    todo сделать--%>
     <p><fmt:message key="lecture.start_course"/>: ${courseDetails.getStartCourse()}</p>
     <p><fmt:message key="lecture.end_course"/>: ${courseDetails.getEndCourse()}</p>
     <c:if test="${user.getRole().toString() eq 'ADMIN'}">
         <form action="${pageContext.request.contextPath}/controller" method="post">
             <input type="hidden" name="command" value="update_start_end">
             <input type="hidden" name="course_id" value="${courseId}">
-            <input type="text" name="start" value="${courseDetails.getStartCourse()}">
-            <input type="text" name="end" value="${courseDetails.getEndCourse()}">
+            <input type="text" name="start" value="${courseDetails.getStartCourse()}" required pattern="^((2000|2400|2800|(19|2[0-9](0[48]|[2468][048]|[13579][26])))-02-29)$|^(((19|2[0-9])[0-9]{2})-02-(0[1-9]|1[0-9]|2[0-8]))$|^(((19|2[0-9])[0-9]{2})-(0[13578]|10|12)-(0[1-9]|[12][0-9]|3[01]))$|^(((19|2[0-9])[0-9]{2})-(0[469]|11)-(0[1-9]|[12][0-9]|30))$">
+            <input type="text" name="end" value="${courseDetails.getEndCourse()}" required pattern="^((2000|2400|2800|(19|2[0-9](0[48]|[2468][048]|[13579][26])))-02-29)$|^(((19|2[0-9])[0-9]{2})-02-(0[1-9]|1[0-9]|2[0-8]))$|^(((19|2[0-9])[0-9]{2})-(0[13578]|10|12)-(0[1-9]|[12][0-9]|3[01]))$|^(((19|2[0-9])[0-9]{2})-(0[469]|11)-(0[1-9]|[12][0-9]|30))$">
             <input type="submit" value="<fmt:message key="button.lecture.update_start_end"/>">
         </form>
     </c:if>
@@ -50,8 +48,8 @@
         <form action="${pageContext.request.contextPath}/controller" method="post">
             <input type="hidden" name="command" value="update_new_course">
             <input type="hidden" name="course_id" value="${courseId}">
-            <input type="text" name="start">
-            <input type="text" name="end">
+            <input type="text" name="start" required pattern="^((2000|2400|2800|(19|2[0-9](0[48]|[2468][048]|[13579][26])))-02-29)$|^(((19|2[0-9])[0-9]{2})-02-(0[1-9]|1[0-9]|2[0-8]))$|^(((19|2[0-9])[0-9]{2})-(0[13578]|10|12)-(0[1-9]|[12][0-9]|3[01]))$|^(((19|2[0-9])[0-9]{2})-(0[469]|11)-(0[1-9]|[12][0-9]|30))$">
+            <input type="text" name="end" required pattern="^((2000|2400|2800|(19|2[0-9](0[48]|[2468][048]|[13579][26])))-02-29)$|^(((19|2[0-9])[0-9]{2})-02-(0[1-9]|1[0-9]|2[0-8]))$|^(((19|2[0-9])[0-9]{2})-(0[13578]|10|12)-(0[1-9]|[12][0-9]|3[01]))$|^(((19|2[0-9])[0-9]{2})-(0[469]|11)-(0[1-9]|[12][0-9]|30))$">
             <input type="submit" value="<fmt:message key="button.lecture.change_data_course"/>">
         </form>
     </c:if>
@@ -60,7 +58,7 @@
         <form action="${pageContext.request.contextPath}/controller" method="post">
             <input type="hidden" name="command" value="update_start_of_class">
             <input type="hidden" name="course_id" value="${courseId}">
-            <input type="text" name="start_of_class" value="${courseDetails.getStartOfClass()}">
+            <input type="text" name="start_of_class" value="${courseDetails.getStartOfClass()}" required pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]">
             <input type="submit" value="<fmt:message key="button.lecture.update_start_of_class"/>">
         </form>
     </c:if>
@@ -70,13 +68,13 @@
     <p>
         <fmt:message key="lecture.teacher"/>: ${courseDetails.getTeacher().getName()} ${courseDetails.getTeacher().getSurname()}
     </p>
-<%--    todo ^[\p{L}]+$ --%>
+
     <c:if test="${user.getRole().toString() eq 'ADMIN'}">
         <form action="${pageContext.request.contextPath}/controller" method="post">
             <input type="hidden" name="command" value="update_teacher">
             <input type="hidden" name="course_id" value="${courseId}">
-            <input type="text" name="teacher_name" value="${courseDetails.getTeacher().getName()}">
-            <input type="text" name="teacher_surname" value="${courseDetails.getTeacher().getSurname()}">
+            <input type="text" name="teacher_name" value="${courseDetails.getTeacher().getName()}" required pattern="^[\p{L}]+$">
+            <input type="text" name="teacher_surname" value="${courseDetails.getTeacher().getSurname()}" required pattern="^[\p{L}]+$">
             <input type="submit" value="<fmt:message key="button.lecture.update_teacher"/>">
         </form>
     </c:if>
@@ -86,7 +84,7 @@
         <form action="${pageContext.request.contextPath}/controller" method="post">
             <input type="hidden" name="command" value="update_cost">
             <input type="hidden" name="course_id" value="${courseId}">
-            <input type="text" name="cost" value="${courseDetails.getCost()}">
+            <input type="text" name="cost" value="${courseDetails.getCost()}" required pattern="\d+">
             <input type="submit" value="<fmt:message key="button.lecture.update_cost"/>">
         </form>
     </c:if>
@@ -100,35 +98,35 @@
             <input type="hidden" name="course_id" value="${courseId}">
             <p><fmt:message key="p.lecture.description"/></p>
             <input type="text" name="description" value="${description}" required>
-            <c:if test="${errorDescription}">
+            <c:if test="${errorDescriptionAdd}">
                 <div class="alert alert-danger" role="alert">
                     <fmt:message key="error.lecture.description"/>
                 </div>
             </c:if>
             <p><fmt:message key="p.lecture.number_of_hours"/></p>
             <input type="text" name="hours" value="${hours}" required pattern="\d+">
-            <c:if test="${errorHours}">
+            <c:if test="${errorHoursAdd}">
                 <div class="alert alert-danger" role="alert">
                     <fmt:message key="error.lecture.hours"/>
                 </div>
             </c:if>
             <p><fmt:message key="p.lecture.start_of_class"/></p>
             <input type="text" name="start_of_class" value="${startOfClass}" placeholder="19:00" required pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]">
-            <c:if test="${errorStartOfClass}">
+            <c:if test="${errorStartOfClassAdd}">
                 <div class="alert alert-danger" role="alert">
                     <fmt:message key="error.lecture.start_of_class"/>
                 </div>
             </c:if>
             <p><fmt:message key="p.lecture.teacher_name"/></p>
-            <input type="text" name="name" value="${name}" required>
+            <input type="text" name="name" value="${name}" required pattern="^[\p{L}]+$">
             <p><fmt:message key="p.lecture.teacher_surname"/></p>
-            <input type="text" name="surname" value="${surname}" required>
-            <c:if test="${errorNameAndSurname}">
+            <input type="text" name="surname" value="${surname}" required pattern="^[\p{L}]+$">
+            <c:if test="${errorNameAndSurnameAdd}">
                 <div class="alert alert-danger" role="alert">
                     <fmt:message key="error.lecture.name_and_surname"/>
                 </div>
             </c:if>
-            <c:if test="${errorTeacherNotFound}">
+            <c:if test="${errorTeacherNotFoundAdd}">
                 <div class="alert alert-danger" role="alert">
                     <fmt:message key="error.lecture.teacher_not_found"/>
                 </div>
@@ -137,14 +135,14 @@
             <input type="text" name="start_course" value="${startCourse}" placeholder="2020-01-01" required pattern="^((2000|2400|2800|(19|2[0-9](0[48]|[2468][048]|[13579][26])))-02-29)$|^(((19|2[0-9])[0-9]{2})-02-(0[1-9]|1[0-9]|2[0-8]))$|^(((19|2[0-9])[0-9]{2})-(0[13578]|10|12)-(0[1-9]|[12][0-9]|3[01]))$|^(((19|2[0-9])[0-9]{2})-(0[469]|11)-(0[1-9]|[12][0-9]|30))$">
             <p><fmt:message key="p.lecture.end_course"/></p>
             <input type="text" name="end_course" value="${endCourse}" placeholder="2021-01-01" required pattern="^((2000|2400|2800|(19|2[0-9](0[48]|[2468][048]|[13579][26])))-02-29)$|^(((19|2[0-9])[0-9]{2})-02-(0[1-9]|1[0-9]|2[0-8]))$|^(((19|2[0-9])[0-9]{2})-(0[13578]|10|12)-(0[1-9]|[12][0-9]|3[01]))$|^(((19|2[0-9])[0-9]{2})-(0[469]|11)-(0[1-9]|[12][0-9]|30))$">
-            <c:if test="${errorStartAndEndCourse}">
+            <c:if test="${errorStartAndEndCourseAdd}">
                 <div class="alert alert-danger" role="alert">
                     <fmt:message key="error.lecture.start_and_end_course"/>
                 </div>
             </c:if>
             <p><fmt:message key="p.lecture.cost"/></p>
             <input type="text" name="cost" value="${cost}" required pattern="\d+">
-            <c:if test="${errorCost}">
+            <c:if test="${errorCostAdd}">
                 <div class="alert alert-danger" role="alert">
                     <fmt:message key="error.lecture.cost"/>
                 </div>

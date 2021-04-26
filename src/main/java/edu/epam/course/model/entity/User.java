@@ -24,6 +24,41 @@ public class User extends Entity{
     /**
      * Instantiates a new User.
      *
+     * @param id      the id
+     * @param email   the email
+     * @param name    the name
+     * @param surname the surname
+     * @param role    the role
+     * @param enabled the enabled
+     * @param money   the money
+     * @param photo   the photo
+     * @param course  the course
+     */
+    public User(Long id, String email, String name, String surname, RoleType role,
+                boolean enabled, BigDecimal money, String photo, Course course) {
+        super(id);
+        this.email = email;
+        this.name = name;
+        this.surname = surname;
+        this.role = role;
+        this.enabled = enabled;
+        this.money = money;
+        this.photo = photo;
+        this.course = course;
+    }
+
+    /**
+     * Builder user builder.
+     *
+     * @return the user builder
+     */
+    public static UserBuilder builder() {
+        return new UserBuilder();
+    }
+
+    /**
+     * Instantiates a new User.
+     *
      * @param email   the email
      * @param name    the name
      * @param surname the surname
@@ -228,5 +263,128 @@ public class User extends Entity{
         sb.append(", course=").append(course);
         sb.append('}');
         return sb.toString();
+    }
+
+    /**
+     * The type User builder.
+     */
+    public static class UserBuilder {
+        private Long id;
+        private String email;
+        private String name;
+        private String surname;
+        private RoleType role;
+        private boolean enabled;
+        private BigDecimal money;
+        private String photo;
+        private Course course;
+
+        /**
+         * Sets id.
+         *
+         * @param id the id
+         * @return the id
+         */
+        public UserBuilder setId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        /**
+         * Sets email.
+         *
+         * @param email the email
+         * @return the email
+         */
+        public UserBuilder setEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        /**
+         * Sets name.
+         *
+         * @param name the name
+         * @return the name
+         */
+        public UserBuilder setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        /**
+         * Sets surname.
+         *
+         * @param surname the surname
+         * @return the surname
+         */
+        public UserBuilder setSurname(String surname) {
+            this.surname = surname;
+            return this;
+        }
+
+        /**
+         * Sets role.
+         *
+         * @param role the role
+         * @return the role
+         */
+        public UserBuilder setRole(RoleType role) {
+            this.role = role;
+            return this;
+        }
+
+        /**
+         * Sets enabled.
+         *
+         * @param enabled the enabled
+         * @return the enabled
+         */
+        public UserBuilder setEnabled(boolean enabled) {
+            this.enabled = enabled;
+            return this;
+        }
+
+        /**
+         * Sets money.
+         *
+         * @param money the money
+         * @return the money
+         */
+        public UserBuilder setMoney(BigDecimal money) {
+            this.money = money;
+            return this;
+        }
+
+        /**
+         * Sets photo.
+         *
+         * @param photo the photo
+         * @return the photo
+         */
+        public UserBuilder setPhoto(String photo) {
+            this.photo = photo;
+            return this;
+        }
+
+        /**
+         * Sets course.
+         *
+         * @param course the course
+         * @return the course
+         */
+        public UserBuilder setCourse(Course course) {
+            this.course = course;
+            return this;
+        }
+
+        /**
+         * Build user.
+         *
+         * @return the user
+         */
+        public User build() {
+            return new User(id, email, name, surname, role, enabled, money, photo, course);
+        }
     }
 }

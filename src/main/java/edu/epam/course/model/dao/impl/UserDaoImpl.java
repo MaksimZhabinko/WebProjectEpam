@@ -102,16 +102,17 @@ public class UserDaoImpl implements UserDao {
             preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                User user = new User();
-                user.setId(resultSet.getLong(1));
-                user.setEmail(resultSet.getString(2));
-                user.setName(resultSet.getString(3));
-                user.setSurname(resultSet.getString(4));
-                user.setRole(RoleType.valueOf(resultSet.getString(5).toUpperCase()));
-                user.setEnabled(resultSet.getBoolean(6));
-                user.setMoney(resultSet.getBigDecimal(7));
-                user.setPhoto(resultSet.getString(8));
-                userOptional = Optional.ofNullable(user);
+                User user = User.builder()
+                        .setId(resultSet.getLong(1))
+                        .setEmail(resultSet.getString(2))
+                        .setName(resultSet.getString(3))
+                        .setSurname(resultSet.getString(4))
+                        .setRole(RoleType.valueOf(resultSet.getString(5).toUpperCase()))
+                        .setEnabled(resultSet.getBoolean(6))
+                        .setMoney(resultSet.getBigDecimal(7))
+                        .setPhoto(resultSet.getString(8))
+                        .build();
+                userOptional = Optional.of(user);
             }
         } catch (SQLException e) {
             logger.error(e);
@@ -128,15 +129,16 @@ public class UserDaoImpl implements UserDao {
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                User user = new User();
-                user.setId(resultSet.getLong(1));
-                user.setEmail(resultSet.getString(2));
-                user.setName(resultSet.getString(3));
-                user.setSurname(resultSet.getString(4));
-                user.setRole(RoleType.valueOf(resultSet.getString(5).toUpperCase()));
-                user.setEnabled(resultSet.getBoolean(6));
-                user.setMoney(resultSet.getBigDecimal(7));
-                userOptional = Optional.ofNullable(user);
+                User user = User.builder()
+                        .setId(resultSet.getLong(1))
+                        .setEmail(resultSet.getString(2))
+                        .setName(resultSet.getString(3))
+                        .setSurname(resultSet.getString(4))
+                        .setRole(RoleType.valueOf(resultSet.getString(5).toUpperCase()))
+                        .setEnabled(resultSet.getBoolean(6))
+                        .setMoney(resultSet.getBigDecimal(7))
+                        .build();
+                userOptional = Optional.of(user);
             }
         } catch (SQLException e) {
             logger.error(e);
@@ -169,15 +171,16 @@ public class UserDaoImpl implements UserDao {
             preparedStatement.setInt(2, limit);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                User user = new User();
-                user.setId(resultSet.getLong(1));
-                user.setEmail(resultSet.getString(2));
-                user.setName(resultSet.getString(3));
-                user.setSurname(resultSet.getString(4));
-                user.setRole(RoleType.valueOf(resultSet.getString(5).toUpperCase()));
-                user.setEnabled(resultSet.getBoolean(6));
-                user.setMoney(resultSet.getBigDecimal(7));
-                user.setPhoto(resultSet.getString(8));
+                User user = User.builder()
+                        .setId(resultSet.getLong(1))
+                        .setEmail(resultSet.getString(2))
+                        .setName(resultSet.getString(3))
+                        .setSurname(resultSet.getString(4))
+                        .setRole(RoleType.valueOf(resultSet.getString(5).toUpperCase()))
+                        .setEnabled(resultSet.getBoolean(6))
+                        .setMoney(resultSet.getBigDecimal(7))
+                        .setPhoto(resultSet.getString(8))
+                        .build();
                 users.add(user);
             }
         } catch (SQLException e) {
@@ -195,15 +198,16 @@ public class UserDaoImpl implements UserDao {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                User user = new User();
-                user.setId(resultSet.getLong(1));
-                user.setEmail(resultSet.getString(2));
-                user.setName(resultSet.getString(3));
-                user.setSurname(resultSet.getString(4));
-                user.setRole(RoleType.valueOf(resultSet.getString(5).toUpperCase()));
-                user.setEnabled(resultSet.getBoolean(6));
-                user.setMoney(resultSet.getBigDecimal(7));
-                userOptional = Optional.ofNullable(user);
+                User user = User.builder()
+                        .setId(resultSet.getLong(1))
+                        .setEmail(resultSet.getString(2))
+                        .setName(resultSet.getString(3))
+                        .setSurname(resultSet.getString(4))
+                        .setRole(RoleType.valueOf(resultSet.getString(5).toUpperCase()))
+                        .setEnabled(resultSet.getBoolean(6))
+                        .setMoney(resultSet.getBigDecimal(7))
+                        .build();
+                userOptional = Optional.of(user);
             }
         } catch (SQLException e) {
             logger.error(e);
@@ -407,15 +411,17 @@ public class UserDaoImpl implements UserDao {
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_USERS_ENROLLED_COURSE)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                User user = new User();
-                user.setId(resultSet.getLong(1));
-                user.setEmail(resultSet.getString(2));
-                user.setName(resultSet.getString(3));
-                user.setSurname(resultSet.getString(4));
-                Course course = new Course();
-                course.setId(resultSet.getLong(5));
-                course.setName(resultSet.getString(6));
-                user.setCourse(course);
+                Course course = Course.builder()
+                        .setId(resultSet.getLong(5))
+                        .setName(resultSet.getString(6))
+                        .build();
+                User user = User.builder()
+                        .setId(resultSet.getLong(1))
+                        .setEmail(resultSet.getString(2))
+                        .setName(resultSet.getString(3))
+                        .setSurname(resultSet.getString(4))
+                        .setCourse(course)
+                        .build();
                 users.add(user);
             }
         } catch (SQLException e) {

@@ -54,9 +54,10 @@ public class CourseDetailsCostUpdateCommand implements Command {
                     dataCorrect = false;
                 }
                 if (dataCorrect) {
-                    CourseDetails courseDetails = new CourseDetails();
-                    courseDetails.setId(courseDetailsOptional.get().getId());
-                    courseDetails.setCost(new BigDecimal(cost));
+                    CourseDetails courseDetails = CourseDetails.builder()
+                            .setId(courseDetailsOptional.get().getId())
+                            .setCost(new BigDecimal(cost))
+                            .build();
                     courseDetailsService.updateCost(courseDetails);
                 }
                 router.setType(Router.Type.REDIRECT);

@@ -24,6 +24,42 @@ public class CourseDetails extends Entity {
     }
 
     /**
+     * Instantiates a new Course details.
+     *
+     * @param id           the id
+     * @param hours        the hours
+     * @param description  the description
+     * @param startCourse  the start course
+     * @param endCourse    the end course
+     * @param startOfClass the start of class
+     * @param cost         the cost
+     * @param course       the course
+     * @param teacher      the teacher
+     */
+    public CourseDetails(Long id, Integer hours, String description, LocalDate startCourse,
+                         LocalDate endCourse, LocalTime startOfClass, BigDecimal cost, Course course,
+                         Teacher teacher) {
+        super(id);
+        this.hours = hours;
+        this.description = description;
+        this.startCourse = startCourse;
+        this.endCourse = endCourse;
+        this.startOfClass = startOfClass;
+        this.cost = cost;
+        this.course = course;
+        this.teacher = teacher;
+    }
+
+    /**
+     * Builder course details builder.
+     *
+     * @return the course details builder
+     */
+    public static CourseDetailsBuilder builder() {
+        return new CourseDetailsBuilder();
+    }
+
+    /**
      * Gets hours.
      *
      * @return the hours
@@ -213,5 +249,128 @@ public class CourseDetails extends Entity {
         sb.append(", teacher=").append(teacher);
         sb.append('}');
         return sb.toString();
+    }
+
+    /**
+     * The type Course details builder.
+     */
+    public static class CourseDetailsBuilder {
+        private Long id;
+        private Integer hours;
+        private String description;
+        private LocalDate startCourse;
+        private LocalDate endCourse;
+        private LocalTime startOfClass;
+        private BigDecimal cost;
+        private Course course;
+        private Teacher teacher;
+
+        /**
+         * Sets id.
+         *
+         * @param id the id
+         * @return the id
+         */
+        public CourseDetailsBuilder setId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        /**
+         * Sets hours.
+         *
+         * @param hours the hours
+         * @return the hours
+         */
+        public CourseDetailsBuilder setHours(Integer hours) {
+            this.hours = hours;
+            return this;
+        }
+
+        /**
+         * Sets description.
+         *
+         * @param description the description
+         * @return the description
+         */
+        public CourseDetailsBuilder setDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        /**
+         * Sets start course.
+         *
+         * @param startCourse the start course
+         * @return the start course
+         */
+        public CourseDetailsBuilder setStartCourse(LocalDate startCourse) {
+            this.startCourse = startCourse;
+            return this;
+        }
+
+        /**
+         * Sets end course.
+         *
+         * @param endCourse the end course
+         * @return the end course
+         */
+        public CourseDetailsBuilder setEndCourse(LocalDate endCourse) {
+            this.endCourse = endCourse;
+            return this;
+        }
+
+        /**
+         * Sets start of class.
+         *
+         * @param startOfClass the start of class
+         * @return the start of class
+         */
+        public CourseDetailsBuilder setStartOfClass(LocalTime startOfClass) {
+            this.startOfClass = startOfClass;
+            return this;
+        }
+
+        /**
+         * Sets cost.
+         *
+         * @param cost the cost
+         * @return the cost
+         */
+        public CourseDetailsBuilder setCost(BigDecimal cost) {
+            this.cost = cost;
+            return this;
+        }
+
+        /**
+         * Sets course.
+         *
+         * @param course the course
+         * @return the course
+         */
+        public CourseDetailsBuilder setCourse(Course course) {
+            this.course = course;
+            return this;
+        }
+
+        /**
+         * Sets teacher.
+         *
+         * @param teacher the teacher
+         * @return the teacher
+         */
+        public CourseDetailsBuilder setTeacher(Teacher teacher) {
+            this.teacher = teacher;
+            return this;
+        }
+
+        /**
+         * Build course details.
+         *
+         * @return the course details
+         */
+        public CourseDetails build() {
+            return new CourseDetails(id, hours, description, startCourse, endCourse, startOfClass, cost, course, teacher);
+        }
     }
 }

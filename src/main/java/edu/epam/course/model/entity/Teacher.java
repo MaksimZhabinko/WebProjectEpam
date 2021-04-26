@@ -15,6 +15,30 @@ public class Teacher extends Entity {
     }
 
     /**
+     * Instantiates a new Teacher.
+     *
+     * @param id      the id
+     * @param name    the name
+     * @param surname the surname
+     * @param photo   the photo
+     */
+    public Teacher(Long id, String name, String surname, String photo) {
+        super(id);
+        this.name = name;
+        this.surname = surname;
+        this.photo = photo;
+    }
+
+    /**
+     * Builder teacher builder.
+     *
+     * @return the teacher builder
+     */
+    public static TeacherBuilder builder() {
+        return new TeacherBuilder();
+    }
+
+    /**
      * Gets name.
      *
      * @return the name
@@ -99,5 +123,68 @@ public class Teacher extends Entity {
         sb.append(", photo='").append(photo).append('\'');
         sb.append('}');
         return sb.toString();
+    }
+
+    /**
+     * The type Teacher builder.
+     */
+    public static class TeacherBuilder {
+        private Long id;
+        private String name;
+        private String surname;
+        private String photo;
+
+        /**
+         * Sets id.
+         *
+         * @param id the id
+         * @return the id
+         */
+        public TeacherBuilder setId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        /**
+         * Sets name.
+         *
+         * @param name the name
+         * @return the name
+         */
+        public TeacherBuilder setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        /**
+         * Sets surname.
+         *
+         * @param surname the surname
+         * @return the surname
+         */
+        public TeacherBuilder setSurname(String surname) {
+            this.surname = surname;
+            return this;
+        }
+
+        /**
+         * Sets photo.
+         *
+         * @param photo the photo
+         * @return the photo
+         */
+        public TeacherBuilder setPhoto(String photo) {
+            this.photo = photo;
+            return this;
+        }
+
+        /**
+         * Build teacher.
+         *
+         * @return the teacher
+         */
+        public Teacher build() {
+            return new Teacher(id, name, surname, photo);
+        }
     }
 }

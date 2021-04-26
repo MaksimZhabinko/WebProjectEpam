@@ -118,7 +118,7 @@ public class CourseDetailsValidator {
     public static boolean isValidDate(String startCourse, String endCourse) {
         boolean isCorrect = true;
         if (startCourse == null || startCourse.isBlank() || endCourse == null || endCourse.isBlank()) {
-            isCorrect = false;
+            return false;
         }
         Matcher matcherStart = DATE_PATTERN.matcher(startCourse);
         Matcher matcherEnd = DATE_PATTERN.matcher(endCourse);

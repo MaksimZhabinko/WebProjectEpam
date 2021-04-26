@@ -10,6 +10,7 @@ import edu.epam.course.model.entity.User;
 import edu.epam.course.model.service.UserService;
 import edu.epam.course.util.FileUtil;
 import edu.epam.course.util.PropertyReaderUtil;
+import edu.epam.course.validator.FileValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -51,7 +52,7 @@ public class UploadFileCommand implements Command {
         String oldUserImage = user.getPhoto();
         try {
             for (Part part : request.getParts()) {
-                if (part.getSubmittedFileName() != null) {
+                if (FileValidator.isValidFile(part)) {
                     String fileName = part.getSubmittedFileName();
                     String newFileName = FileUtil.generateName(fileName);
                     part.write(PATH + newFileName);

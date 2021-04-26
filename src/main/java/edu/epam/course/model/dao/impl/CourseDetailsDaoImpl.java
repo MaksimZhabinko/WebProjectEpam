@@ -77,25 +77,28 @@ public class CourseDetailsDaoImpl implements CourseDetailsDao {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                CourseDetails courseDetails = new CourseDetails();
-                Course course = new Course();
-                Teacher teacher = new Teacher();
-                courseDetails.setId(resultSet.getLong(1));
-                courseDetails.setHours(resultSet.getInt(2));
-                courseDetails.setDescription(resultSet.getString(3));
-                courseDetails.setStartCourse(resultSet.getDate(4).toLocalDate());
-                courseDetails.setEndCourse(resultSet.getDate(5).toLocalDate());
-                courseDetails.setStartOfClass(resultSet.getTime(6).toLocalTime());
-                courseDetails.setCost(resultSet.getBigDecimal(7));
-                course.setId(resultSet.getLong(8));
-                course.setName(resultSet.getString(9));
-                course.setEnrollmentActive(resultSet.getBoolean(10));
-                teacher.setId(resultSet.getLong(11));
-                teacher.setName(resultSet.getString(12));
-                teacher.setSurname(resultSet.getString(13));
-                teacher.setPhoto(resultSet.getString(14));
-                courseDetails.setCourse(course);
-                courseDetails.setTeacher(teacher);
+                Teacher teacher = Teacher.builder()
+                        .setId(resultSet.getLong(11))
+                        .setName(resultSet.getString(12))
+                        .setSurname(resultSet.getString(13))
+                        .setPhoto(resultSet.getString(14))
+                        .build();
+                Course course = Course.builder()
+                        .setId(resultSet.getLong(8))
+                        .setName(resultSet.getString(9))
+                        .setEnrollmentActive(resultSet.getBoolean(10))
+                        .build();
+                CourseDetails courseDetails = CourseDetails.builder()
+                        .setId(resultSet.getLong(1))
+                        .setHours(resultSet.getInt(2))
+                        .setDescription(resultSet.getString(3))
+                        .setStartCourse(resultSet.getDate(4).toLocalDate())
+                        .setEndCourse(resultSet.getDate(5).toLocalDate())
+                        .setStartOfClass(resultSet.getTime(6).toLocalTime())
+                        .setCost(resultSet.getBigDecimal(7))
+                        .setCourse(course)
+                        .setTeacher(teacher)
+                        .build();
                 courseDetailsOptional = Optional.of(courseDetails);
             }
         } catch (SQLException e) {
@@ -113,25 +116,28 @@ public class CourseDetailsDaoImpl implements CourseDetailsDao {
             preparedStatement.setLong(1, courseId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                CourseDetails courseDetails = new CourseDetails();
-                Course course = new Course();
-                Teacher teacher = new Teacher();
-                courseDetails.setId(resultSet.getLong(1));
-                courseDetails.setHours(resultSet.getInt(2));
-                courseDetails.setDescription(resultSet.getString(3));
-                courseDetails.setStartCourse(resultSet.getDate(4).toLocalDate());
-                courseDetails.setEndCourse(resultSet.getDate(5).toLocalDate());
-                courseDetails.setStartOfClass(resultSet.getTime(6).toLocalTime());
-                courseDetails.setCost(resultSet.getBigDecimal(7));
-                course.setId(resultSet.getLong(8));
-                course.setName(resultSet.getString(9));
-                course.setEnrollmentActive(resultSet.getBoolean(10));
-                teacher.setId(resultSet.getLong(11));
-                teacher.setName(resultSet.getString(12));
-                teacher.setSurname(resultSet.getString(13));
-                teacher.setPhoto(resultSet.getString(14));
-                courseDetails.setCourse(course);
-                courseDetails.setTeacher(teacher);
+                Teacher teacher = Teacher.builder()
+                        .setId(resultSet.getLong(11))
+                        .setName(resultSet.getString(12))
+                        .setSurname(resultSet.getString(13))
+                        .setPhoto(resultSet.getString(14))
+                        .build();
+                Course course = Course.builder()
+                        .setId(resultSet.getLong(8))
+                        .setName(resultSet.getString(9))
+                        .setEnrollmentActive(resultSet.getBoolean(10))
+                        .build();
+                CourseDetails courseDetails = CourseDetails.builder()
+                        .setId(resultSet.getLong(1))
+                        .setHours(resultSet.getInt(2))
+                        .setDescription(resultSet.getString(3))
+                        .setStartCourse(resultSet.getDate(4).toLocalDate())
+                        .setEndCourse(resultSet.getDate(5).toLocalDate())
+                        .setStartOfClass(resultSet.getTime(6).toLocalTime())
+                        .setCost(resultSet.getBigDecimal(7))
+                        .setCourse(course)
+                        .setTeacher(teacher)
+                        .build();
                 courseDetailsOptional = Optional.of(courseDetails);
             }
         } catch (SQLException e) {

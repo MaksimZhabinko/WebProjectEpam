@@ -34,7 +34,7 @@ public class SignInCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) {
-        String email = request.getParameter(RequestParameter.EMAIL).strip();
+        String email = request.getParameter(RequestParameter.EMAIL);
         String password = request.getParameter(RequestParameter.PASSWORD);
         HttpSession session = request.getSession();
         Router router = new Router();
@@ -43,6 +43,7 @@ public class SignInCommand implements Command {
             if (!UserValidator.isValidEmailAndPassword(email, password)) {
                 request.setAttribute(RequestAttribute.ERROR_USER_MESSAGE_IS_VALID, true);
                 router.setPagePath(PagePath.SIGN_IN.getDirectUrl());
+                request.setAttribute(RequestAttribute.EMAIL, email);
                 dataCorrect = false;
             }
             if (dataCorrect) {

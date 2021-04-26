@@ -40,7 +40,7 @@ public class CourseUpdateCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {
         String courseIdString = request.getParameter(RequestParameter.COURSE_ID);
-        String courseName = request.getParameter(RequestParameter.COURSE_NAME).strip();
+        String courseName = request.getParameter(RequestParameter.COURSE_NAME);
         HttpSession session = request.getSession();
         Router router = new Router();
         boolean dataCorrect = true;
@@ -58,9 +58,10 @@ public class CourseUpdateCommand implements Command {
                 }
             }
             if (dataCorrect) {
-                Course course = new Course();
-                course.setId(courseId);
-                course.setName(courseName);
+                Course course = Course.builder()
+                        .setId(courseId)
+                        .setName(courseName)
+                        .build();
                 courseService.updateCourseName(course);
             }
             router.setType(Router.Type.REDIRECT);

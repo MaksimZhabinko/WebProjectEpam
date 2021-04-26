@@ -10,6 +10,7 @@ import edu.epam.course.exception.ServiceException;
 import edu.epam.course.model.entity.User;
 import edu.epam.course.model.service.UserService;
 import edu.epam.course.util.IdUtil;
+import edu.epam.course.validator.UserValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -45,17 +46,24 @@ public class BlockUserCommand implements Command {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(SessionAttribute.USER);
         Router router = new Router();
+        boolean dataCorrect = true;
         try {
             Integer pageInt = Math.abs(Integer.parseInt(page));
-            for (int i = 0; i < usersIdString.length; i++) {
-                Long userId = IdUtil.stringToLong(usersIdString[i]);
-                if (user.getId().equals(userId)) {
-                    session.setAttribute(SessionAttribute.ERROR_BLOCK_YOURSELF, true);
-                } else {
-                    usersId.add(userId);
-                }
+            if (!UserValidator.isValidUsersId(usersIdString)) {
+                session.setAttribute(SessionAttribute.ERROR_SELECT_USER_ID, true);
+                dataCorrect = false;
             }
-            userService.blockUser(usersId);
+            if (dataCorrect) {
+                for (int i = 0; i < usersIdString.length; i++) {
+                    Long userId = IdUtil.stringToLong(usersIdString[i]);
+                    if (user.getId().equals(userId)) {
+                        session.setAttribute(SessionAttribute.ERROR_BLOCK_YOURSELF, true);
+                    } else {
+                        usersId.add(userId);
+                    }
+                }
+                userService.blockUser(usersId);
+            }
             router.setPagePath(PagePath.SHOW_ALL_USERS.getServletPath() + pageInt);
         } catch (ServiceException | NumberFormatException e) {
             logger.error(e);

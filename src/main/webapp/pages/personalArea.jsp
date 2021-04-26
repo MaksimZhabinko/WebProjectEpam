@@ -18,7 +18,7 @@
          src="${pageContext.request.contextPath}/upload?url=/Users/dasik/Desktop/photoUsersCourses/${user.getPhoto()}"/>
     <form action="upload" enctype="multipart/form-data" method="POST">
         <input type="hidden" name="command" value="upload_file">
-        <fmt:message key="button.personal_area.upload_file"/>: <input type="file" name="content" height="130">
+        <fmt:message key="button.personal_area.upload_file"/>: <input type="file" name="content" height="130" required>
         <input type="submit" value="<fmt:message key="button.personal_area.upload_file"/>">
     </form>
     <h1><fmt:message key="placeholder.email"/> - ${user.getEmail()}</h1>
@@ -49,14 +49,14 @@
         <fmt:message key="error.signUp.password"/>
     </div>
 </c:if>
-<%--todo localization required pattern--%>
+
 <c:if test="${user.getRole().toString() eq 'USER'}">
-    <h1>Update password</h1>
+    <h1><fmt:message key="button.personal_area.update_password"/></h1>
     <form action="${pageContext.request.contextPath}/controller" method="post">
         <input type="hidden" name="command" value="update_password">
-        <input type="password" name="password">
-        <input type="password" name="repeat_password">
-        <input type="submit" value="Update password">
+        <input type="password" name="password" required pattern="^.*(?=.{8,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$" title='<fmt:message key="input.title.password"/>'>
+        <input type="password" name="repeat_password" required pattern="^.*(?=.{8,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$" title='<fmt:message key="input.title.password"/>'>
+        <input type="submit" value="<fmt:message key="button.personal_area.update_password"/>">
     </form>
 </c:if>
 
@@ -100,25 +100,26 @@
         </form>
     </c:if>
 </c:if>
-<%-- todo localization required pattern--%>
+
 <c:if test="${user.getRole().toString() eq 'ADMIN'}">
     <c:if test="${usersEnrolledCourseLimit == null}">
         <form action="${pageContext.request.contextPath}/controller" method="post">
             <input type="hidden" name="command" value="show_all_users_enrolled_course">
             <input type="hidden" name="page_enrolled" value="1">
-            <input type="submit" value="Show all user enrolled course">
+            <input type="submit" value="<fmt:message key="button.personal_area.show_all_user_enrolled_course"/>">
         </form>
     </c:if>
 </c:if>
+
 <c:if test="${user.getRole().toString() eq 'ADMIN'}">
     <c:if test="${usersEnrolledCourseLimit != null}">
         <form action="${pageContext.request.contextPath}/controller" method="post">
             <input type="hidden" name="command" value="hide_all_users_enrolled_course">
-            <input type="submit" value="Hide all users enrolled course">
+            <input type="submit" value="<fmt:message key="button.personal_area.hide_all_users_enrolled_course"/>">
         </form>
     </c:if>
 </c:if>
-<%-- todo localization--%>
+
 <c:if test="${user.getRole().toString() eq 'ADMIN'}">
     <c:if test="${usersEnrolledCourseLimit != null}">
         <table border="1">
@@ -127,8 +128,8 @@
                 <th><fmt:message key="table.personal_area.th_email"/></th>
                 <th><fmt:message key="table.personal_area.th_name"/></th>
                 <th><fmt:message key="table.personal_area.th_surname"/></th>
-                <th>COURSE_ID</th>
-                <th>COURSE_NAME</th>
+                <th><fmt:message key="table.personal_area.th_course_id"/></th>
+                <th><fmt:message key="table.personal_area.th_course_name"/></th>
             </tr>
             <c:forEach items="${usersEnrolledCourseLimit}" var="userEnrolledCourse">
                 <tr>
@@ -169,7 +170,7 @@
                             <input type="hidden" name="teacher_id" value="${teacher.getId()}">
                             <input type="hidden" name="teacher_photo" value="${teacher.getPhoto()}">
                             <fmt:message key="button.personal_area.upload_file"/>: <input type="file" name="content"
-                                                                                          height="130">
+                                                                                          height="130" required>
                             <input type="submit" value="<fmt:message key="button.personal_area.upload_file"/>">
                         </form>
                     </td>
@@ -343,6 +344,20 @@
         });
     </script>
 </c:if>
+<c:if test="${errorSelectTeacherId}">
+    <script>
+        $(document).ready(function () {
+            $("#myModalBox").modal('show');
+        });
+    </script>
+</c:if>
+<c:if test="${errorSelectUserId}">
+    <script>
+        $(document).ready(function () {
+            $("#myModalBox").modal('show');
+        });
+    </script>
+</c:if>
 <div id="myModalBox" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -383,6 +398,16 @@
                         <fmt:message key="error.personal_area.cannot_update_password"/>
                     </div>
                 </c:if>
+                <c:if test="${errorSelectTeacherId}">
+                    <div class="alert alert-danger" role="alert">
+                        <fmt:message key="error.personal_area.select_teacher_id"/>
+                    </div>
+                </c:if>
+                <c:if test="${errorSelectUserId}">
+                    <div class="alert alert-danger" role="alert">
+                        <fmt:message key="error.personal_area.select_user_id"/>
+                    </div>
+                </c:if>
             </div>
             <!-- Футер модального окна -->
             <div class="modal-footer">
@@ -414,6 +439,16 @@
                 <c:if test="${errorCannotUpdatePassword}">
                     <button type="button" class="btn btn-default" data-dismiss="modal"
                             onclick="<c:remove var="errorCannotUpdatePassword" scope="session"/>">Ок
+                    </button>
+                </c:if>
+                <c:if test="${errorSelectTeacherId}">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                            onclick="<c:remove var="errorSelectTeacherId" scope="session"/>">Ок
+                    </button>
+                </c:if>
+                <c:if test="${errorSelectUserId}">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                            onclick="<c:remove var="errorSelectUserId" scope="session"/>">Ок
                     </button>
                 </c:if>
             </div>

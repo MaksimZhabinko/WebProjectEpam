@@ -11,6 +11,7 @@ import edu.epam.course.model.entity.Teacher;
 import edu.epam.course.model.service.TeacherService;
 import edu.epam.course.util.FileUtil;
 import edu.epam.course.util.PropertyReaderUtil;
+import edu.epam.course.validator.FileValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -53,7 +54,7 @@ public class UploadFileTeacherCommand implements Command {
         boolean isCorrect = false;
         try {
             for (Part part : request.getParts()) {
-                if (part.getSubmittedFileName() != null) {
+                if (FileValidator.isValidFile(part)) {
                     String fileName = part.getSubmittedFileName();
                     String newFileName = FileUtil.generateName(fileName);
                     part.write(PATH + newFileName);

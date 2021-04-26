@@ -42,9 +42,10 @@ public class CreateAdminCommand implements Command {
         try {
             Long userId = IdUtil.stringToLong(userIdString);
             Integer pageInt = Math.abs(Integer.parseInt(page));
-            User user = new User();
-            user.setId(userId);
-            user.setRole(RoleType.ADMIN);
+            User user = User.builder()
+                    .setId(userId)
+                    .setRole(RoleType.ADMIN)
+                    .build();
             userService.updateUserToAdmin(user);
             router.setPagePath(PagePath.SHOW_ALL_USERS.getServletPath() + pageInt);
         } catch (ServiceException | NumberFormatException e) {

@@ -77,7 +77,6 @@
             <div class="modal-body">
                 <c:if test="${errorDeleteNotYourReview}">
                     <div class="alert alert-danger" role="alert">
-                        Вы не можете удалить чужой комментарий
                         <fmt:message key="error.review.delete_another_review"/>
                     </div>
                 </c:if>

@@ -39,7 +39,7 @@ public class AboutUsUpdateCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {
         String aboutUsIdString = request.getParameter(RequestParameter.ABOUT_US_ID);
-        String message = request.getParameter(RequestParameter.MESSAGE).strip();
+        String message = request.getParameter(RequestParameter.MESSAGE);
         HttpSession session = request.getSession();
         Router router = new Router();
         boolean dataCorrect = true;
@@ -50,9 +50,10 @@ public class AboutUsUpdateCommand implements Command {
                 dataCorrect = false;
             }
             if (dataCorrect) {
-                AboutUs aboutUs = new AboutUs();
-                aboutUs.setId(aboutUsId);
-                aboutUs.setMessage(message);
+                AboutUs aboutUs = AboutUs.builder()
+                        .setId(aboutUsId)
+                        .setMessage(message)
+                        .build();
                 aboutUsService.updateMessage(aboutUs);
             }
             router.setPagePath(PagePath.ABOUT_US.getServletPath());

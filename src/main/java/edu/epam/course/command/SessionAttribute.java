@@ -117,6 +117,14 @@ public class SessionAttribute {
      * The constant USERS_ENROLLED_COURSE_LIMIT.
      */
     public static final String USERS_ENROLLED_COURSE_LIMIT = "usersEnrolledCourseLimit";
+    /**
+     * The constant ERROR_SELECT_TEACHER_ID.
+     */
+    public static final String ERROR_SELECT_TEACHER_ID = "errorSelectTeacherId";
+    /**
+     * The constant ERROR_SELECT_USER_ID.
+     */
+    public static final String ERROR_SELECT_USER_ID = "errorSelectUserId";
 
     private SessionAttribute() {
     }

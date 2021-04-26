@@ -38,8 +38,8 @@ public class TeacherAddCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) {
-        String teacherName = request.getParameter(RequestParameter.TEACHER_NAME).strip();
-        String teacherSurname = request.getParameter(RequestParameter.TEACHER_SURNAME).strip();
+        String teacherName = request.getParameter(RequestParameter.TEACHER_NAME);
+        String teacherSurname = request.getParameter(RequestParameter.TEACHER_SURNAME);
         HttpSession session = request.getSession();
         Router router = new Router();
         boolean dataCorrect = true;
@@ -49,7 +49,8 @@ public class TeacherAddCommand implements Command {
                 dataCorrect = false;
             }
             if (dataCorrect) {
-                Optional<Teacher> teacherOptional = teacherService.findByNameAndSurname(teacherName, teacherSurname);
+                Optional<Teacher> teacherOptional = teacherService.findByNameAndSurname(teacherName,
+                        teacherSurname);
                 if (teacherOptional.isPresent()) {
                     session.setAttribute(SessionAttribute.ERROR_TEACHER_HAVE, true);
                     dataCorrect = false;

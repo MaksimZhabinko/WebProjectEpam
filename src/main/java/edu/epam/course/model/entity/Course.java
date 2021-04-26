@@ -8,6 +8,34 @@ public class Course extends Entity {
     private Boolean isEnrollmentActive;
 
     /**
+     * Instantiates a new Course.
+     */
+    public Course() {
+    }
+
+    /**
+     * Instantiates a new Course.
+     *
+     * @param id                 the id
+     * @param name               the name
+     * @param isEnrollmentActive the is enrollment active
+     */
+    public Course(Long id, String name, Boolean isEnrollmentActive) {
+        super(id);
+        this.name = name;
+        this.isEnrollmentActive = isEnrollmentActive;
+    }
+
+    /**
+     * Builder course builder.
+     *
+     * @return the course builder
+     */
+    public static CourseBuilder builder() {
+        return new CourseBuilder();
+    }
+
+    /**
      * Gets name.
      *
      * @return the name
@@ -71,5 +99,56 @@ public class Course extends Entity {
         sb.append(", isEnrollmentActive=").append(isEnrollmentActive);
         sb.append('}');
         return sb.toString();
+    }
+
+    /**
+     * The type Course builder.
+     */
+    public static class CourseBuilder {
+        private Long id;
+        private String name;
+        private Boolean isEnrollmentActive;
+
+        /**
+         * Sets id.
+         *
+         * @param id the id
+         * @return the id
+         */
+        public CourseBuilder setId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        /**
+         * Sets name.
+         *
+         * @param name the name
+         * @return the name
+         */
+        public CourseBuilder setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        /**
+         * Sets enrollment active.
+         *
+         * @param enrollmentActive the enrollment active
+         * @return the enrollment active
+         */
+        public CourseBuilder setEnrollmentActive(Boolean enrollmentActive) {
+            isEnrollmentActive = enrollmentActive;
+            return this;
+        }
+
+        /**
+         * Build course.
+         *
+         * @return the course
+         */
+        public Course build() {
+            return new Course(id, name, isEnrollmentActive);
+        }
     }
 }

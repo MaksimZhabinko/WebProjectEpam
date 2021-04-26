@@ -53,9 +53,10 @@ public class CourseDetailsDescriptionUpdateCommand implements Command {
                     dataCorrect = false;
                 }
                 if (dataCorrect) {
-                    CourseDetails courseDetails = new CourseDetails();
-                    courseDetails.setId(courseDetailsOptional.get().getId());
-                    courseDetails.setDescription(description);
+                    CourseDetails courseDetails = CourseDetails.builder()
+                            .setId(courseDetailsOptional.get().getId())
+                            .setDescription(description)
+                            .build();
                     courseDetailsService.updateDescription(courseDetails);
                 }
                 router.setType(Router.Type.REDIRECT);

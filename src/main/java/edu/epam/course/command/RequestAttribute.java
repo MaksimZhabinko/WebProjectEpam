@@ -124,30 +124,31 @@ public class RequestAttribute {
      * The constant COST.
      */
     public static final String COST = "cost";
+
     /**
-     * The constant ERROR_DESCRIPTION.
+     * The constant ERROR_DESCRIPTION_ADD.
      */
-    public static final String ERROR_DESCRIPTION = "errorDescription";
+    public static final String ERROR_DESCRIPTION_ADD = "errorDescriptionAdd";
     /**
      * The constant ERROR_HOURS.
      */
-    public static final String ERROR_HOURS = "errorHours";
+    public static final String ERROR_HOURS_ADD = "errorHoursAdd";
     /**
      * The constant ERROR_NAME_AND_SURNAME.
      */
-    public static final String ERROR_NAME_AND_SURNAME = "errorNameAndSurname";
+    public static final String ERROR_NAME_AND_SURNAME_ADD = "errorNameAndSurnameAdd";
     /**
      * The constant ERROR_COST.
      */
-    public static final String ERROR_COST = "errorCost";
+    public static final String ERROR_COST_ADD = "errorCostAdd";
     /**
      * The constant ERROR_START_OF_CLASS.
      */
-    public static final String ERROR_START_OF_CLASS = "errorStartOfClass";
+    public static final String ERROR_START_OF_CLASS_ADD = "errorStartOfClassAdd";
     /**
      * The constant ERROR_START_AND_END_COURSE.
      */
-    public static final String ERROR_START_AND_END_COURSE = "errorStartAndEndCourse";
+    public static final String ERROR_START_AND_END_COURSE_ADD = "errorStartAndEndCourseAdd";
     /**
      * The constant ERROR_COURSE_NOT_FOUND.
      */
@@ -155,7 +156,7 @@ public class RequestAttribute {
     /**
      * The constant ERROR_TEACHER_NOT_FOUND.
      */
-    public static final String ERROR_TEACHER_NOT_FOUND = "errorTeacherNotFound";
+    public static final String ERROR_TEACHER_NOT_FOUND_ADD = "errorTeacherNotFoundAdd";
     /**
      * The constant ERROR_IS_HAVE_DETAILS.
      */

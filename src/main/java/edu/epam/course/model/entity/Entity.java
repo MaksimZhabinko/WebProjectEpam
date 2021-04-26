@@ -7,6 +7,21 @@ public abstract class Entity {
     private Long id;
 
     /**
+     * Instantiates a new Entity.
+     */
+    public Entity() {
+    }
+
+    /**
+     * Instantiates a new Entity.
+     *
+     * @param id the id
+     */
+    public Entity(Long id) {
+        this.id = id;
+    }
+
+    /**
      * Gets id.
      *
      * @return the id

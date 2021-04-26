@@ -54,9 +54,10 @@ public class CourseDetailsStartOfClassUpdateCommand implements Command {
                     dataCorrect = false;
                 }
                 if (dataCorrect) {
-                    CourseDetails courseDetails = new CourseDetails();
-                    courseDetails.setId(courseDetailsOptional.get().getId());
-                    courseDetails.setStartOfClass(LocalTime.parse(startOfClass));
+                    CourseDetails courseDetails = CourseDetails.builder()
+                            .setId(courseDetailsOptional.get().getId())
+                            .setStartOfClass(LocalTime.parse(startOfClass))
+                            .build();
                     courseDetailsService.updateStartOfClass(courseDetails);
                 }
                 router.setType(Router.Type.REDIRECT);

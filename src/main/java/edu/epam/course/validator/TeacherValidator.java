@@ -30,4 +30,18 @@ public class TeacherValidator {
         }
         return isCorrect;
     }
+
+    /**
+     * Is valid teachers boolean.
+     *
+     * @param teachersId the teachers
+     * @return the boolean
+     */
+    public static boolean isValidTeachersId(String[] teachersId) {
+        boolean isCorrect = true;
+        if (teachersId == null || teachersId.length == 0) {
+            isCorrect = false;
+        }
+        return isCorrect;
+    }
 }

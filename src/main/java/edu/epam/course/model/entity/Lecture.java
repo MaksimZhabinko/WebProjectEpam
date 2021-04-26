@@ -14,6 +14,28 @@ public class Lecture extends Entity {
     }
 
     /**
+     * Instantiates a new Lecture.
+     *
+     * @param id      the id
+     * @param lecture the lecture
+     * @param course  the course
+     */
+    public Lecture(Long id, String lecture, Course course) {
+        super(id);
+        this.lecture = lecture;
+        this.course = course;
+    }
+
+    /**
+     * Builder lecture builder.
+     *
+     * @return the lecture builder
+     */
+    public static LectureBuilder builder() {
+        return new LectureBuilder();
+    }
+
+    /**
      * Gets lecture.
      *
      * @return the lecture
@@ -77,5 +99,56 @@ public class Lecture extends Entity {
         sb.append(", course=").append(course);
         sb.append('}');
         return sb.toString();
+    }
+
+    /**
+     * The type Lecture builder.
+     */
+    public static class LectureBuilder {
+        private Long id;
+        private String lecture;
+        private Course course;
+
+        /**
+         * Sets id.
+         *
+         * @param id the id
+         * @return the id
+         */
+        public LectureBuilder setId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        /**
+         * Sets lecture.
+         *
+         * @param lecture the lecture
+         * @return the lecture
+         */
+        public LectureBuilder setLecture(String lecture) {
+            this.lecture = lecture;
+            return this;
+        }
+
+        /**
+         * Sets course.
+         *
+         * @param course the course
+         * @return the course
+         */
+        public LectureBuilder setCourse(Course course) {
+            this.course = course;
+            return this;
+        }
+
+        /**
+         * Build lecture.
+         *
+         * @return the lecture
+         */
+        public Lecture build() {
+            return new Lecture(id, lecture, course);
+        }
     }
 }

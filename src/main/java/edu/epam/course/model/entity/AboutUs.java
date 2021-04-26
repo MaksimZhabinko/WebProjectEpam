@@ -7,6 +7,32 @@ public class AboutUs extends Entity{
     private String message;
 
     /**
+     * Instantiates a new About us.
+     */
+    public AboutUs() {
+    }
+
+    /**
+     * Instantiates a new About us.
+     *
+     * @param id      the id
+     * @param message the message
+     */
+    public AboutUs(Long id, String message) {
+        super(id);
+        this.message = message;
+    }
+
+    /**
+     * Builder about us builder.
+     *
+     * @return the about us builder
+     */
+    public static AboutUsBuilder builder() {
+        return new AboutUsBuilder();
+    }
+
+    /**
      * Get message.
      *
      * @return the email
@@ -49,5 +75,44 @@ public class AboutUs extends Entity{
         sb.append(", message='").append(message).append('\'');
         sb.append('}');
         return sb.toString();
+    }
+
+    /**
+     * The type About us builder.
+     */
+    public static class AboutUsBuilder {
+        private Long id;
+        private String message;
+
+        /**
+         * Sets id.
+         *
+         * @param id the id
+         * @return the id
+         */
+        public AboutUsBuilder setId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        /**
+         * Sets message.
+         *
+         * @param message the message
+         * @return the message
+         */
+        public AboutUsBuilder setMessage(String message) {
+            this.message = message;
+            return this;
+        }
+
+        /**
+         * Build about us.
+         *
+         * @return the about us
+         */
+        public AboutUs build() {
+            return new AboutUs(id, message);
+        }
     }
 }

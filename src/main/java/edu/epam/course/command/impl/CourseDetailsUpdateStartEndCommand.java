@@ -55,10 +55,11 @@ public class CourseDetailsUpdateStartEndCommand implements Command {
                     dataCorrect = false;
                 }
                 if (dataCorrect) {
-                    CourseDetails courseDetails = new CourseDetails();
-                    courseDetails.setId(courseDetailsOptional.get().getId());
-                    courseDetails.setStartCourse(LocalDate.parse(start));
-                    courseDetails.setEndCourse(LocalDate.parse(end));
+                    CourseDetails courseDetails = CourseDetails.builder()
+                            .setId(courseDetailsOptional.get().getId())
+                            .setStartCourse(LocalDate.parse(start))
+                            .setEndCourse(LocalDate.parse(end))
+                            .build();
                     courseDetailsService.updateStartEnd(courseDetails);
                 }
                 router.setType(Router.Type.REDIRECT);

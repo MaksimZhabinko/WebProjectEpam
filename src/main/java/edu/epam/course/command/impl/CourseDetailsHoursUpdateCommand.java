@@ -53,9 +53,10 @@ public class CourseDetailsHoursUpdateCommand implements Command {
                     dataCorrect = false;
                 }
                 if (dataCorrect) {
-                    CourseDetails courseDetails = new CourseDetails();
-                    courseDetails.setId(courseDetailsOptional.get().getId());
-                    courseDetails.setHours(Integer.parseInt(hours));
+                    CourseDetails courseDetails = CourseDetails.builder()
+                            .setId(courseDetailsOptional.get().getId())
+                            .setHours(Integer.parseInt(hours))
+                            .build();
                     courseDetailsService.updateHours(courseDetails);
                 }
                 router.setType(Router.Type.REDIRECT);

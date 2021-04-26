@@ -103,4 +103,12 @@ public class UserValidator {
         Matcher matcher = PASSWORD_PATTERN.matcher(password);
         return matcher.matches();
     }
+
+    public static boolean isValidUsersId(String[] usersId) {
+        boolean isCorrect = true;
+        if (usersId == null || usersId.length == 0) {
+            isCorrect = false;
+        }
+        return isCorrect;
+    }
 }

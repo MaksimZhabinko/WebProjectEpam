@@ -215,10 +215,11 @@ public class UserServiceImpl implements UserService {
     public boolean updateNameAndSurname(String name, String surname, Long userId) throws ServiceException {
         boolean isUpdate;
         try {
-            User user = new User();
-            user.setId(userId);
-            user.setName(name);
-            user.setSurname(surname);
+            User user = User.builder()
+                    .setId(userId)
+                    .setName(name)
+                    .setSurname(surname)
+                    .build();
             isUpdate = userDao.updateNameAndSurname(user);
         } catch (DaoException e) {
             logger.error(e);

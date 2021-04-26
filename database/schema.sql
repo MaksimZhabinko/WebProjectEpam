@@ -111,6 +111,7 @@ INSERT INTO `course_details` (`number_of_hours`, `description`, `start_course`, 
 INSERT INTO `course_details` (`number_of_hours`, `description`, `start_course`, `end_course`, `start_of_class`, `cost`, `fk_course_id`, `fk_teacher_name_id`) VALUES (60, 'Java lab description', '2021-03-25', '2021-06-25', '19:00', 1499, 3, 1);
 INSERT INTO `course_details` (`number_of_hours`, `description`, `start_course`, `end_course`, `start_of_class`, `cost`,  `fk_course_id`, `fk_teacher_name_id`) VALUES (60, 'Основы программирования на Python description', '2021-04-01', '2021-07-01', '19:00', 499, 4, 2);
 INSERT INTO `course_details` (`number_of_hours`, `description`, `start_course`, `end_course`, `start_of_class`, `cost`,  `fk_course_id`, `fk_teacher_name_id`) VALUES (68, 'Основы программирования на C# description', '2021-04-20', '2021-07-20', '19:00', 499, 5, 3);
+-- INSERT INTO `course_details` (`number_of_hours`, `description`, `start_course`, `end_course`, `start_of_class`, `cost`,  `fk_course_id`, `fk_teacher_name_id`) VALUES (68, 'Test', '2021-04-20', '2021-07-20', '19:00', 499, 6, 3);
 
 INSERT INTO `lectures` (`lecture`, `fk_lecture_x_course_id`) VALUES ('Занятие 1. Введение в Java. Основы языка.', 1);
 INSERT INTO `lectures` (`lecture`, `fk_lecture_x_course_id`) VALUES ('Занятие 2. Операторы управления. Циклы.', 1);
@@ -151,6 +152,11 @@ INSERT INTO `lectures` (`lecture`, `fk_lecture_x_course_id`) VALUES ('Занят
 
 INSERT INTO `users_x_courses` (`fk_user_id`, `fk_course_id`) VALUES (3, 1);
 INSERT INTO `users_x_courses` (`fk_user_id`, `fk_course_id`) VALUES (3, 2);
+INSERT INTO `users_x_courses` (`fk_user_id`, `fk_course_id`) VALUES (4, 5);
+INSERT INTO `users_x_courses` (`fk_user_id`, `fk_course_id`) VALUES (4, 4);
+INSERT INTO `users_x_courses` (`fk_user_id`, `fk_course_id`) VALUES (4, 3);
+INSERT INTO `users_x_courses` (`fk_user_id`, `fk_course_id`) VALUES (4, 2);
+INSERT INTO `users_x_courses` (`fk_user_id`, `fk_course_id`) VALUES (4, 1);
 
 INSERT INTO `reviews` (`message`, `date_message`, `fk_reviews_x_user_id`) VALUES ('прошел java SE все поравилось!', '2008-11-11', 3);
 INSERT INTO `reviews` (`message`, `date_message`, `fk_reviews_x_user_id`) VALUES ('прошел java SE все поравилось! НО ужасно сложно', '2008-11-11', 4);

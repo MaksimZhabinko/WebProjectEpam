@@ -44,7 +44,7 @@ public class LectureAddCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) {
-        String message = request.getParameter(RequestParameter.MESSAGE).strip();
+        String message = request.getParameter(RequestParameter.MESSAGE);
         String courseIdString = request.getParameter(RequestParameter.COURSE_ID);
         HttpSession session = request.getSession();
         Router router = new Router();
@@ -58,11 +58,13 @@ public class LectureAddCommand implements Command {
                     dataCorrect = false;
                 }
                 if (dataCorrect) {
-                    Course course = new Course();
-                    course.setId(courseId);
-                    Lecture lecture = new Lecture();
-                    lecture.setLecture(message);
-                    lecture.setCourse(course);
+                    Course course = Course.builder()
+                            .setId(courseId)
+                            .build();
+                    Lecture lecture = Lecture.builder()
+                            .setLecture(message)
+                            .setCourse(course)
+                            .build();
                     lectureService.add(lecture);
                 }
                 router.setType(Router.Type.REDIRECT);

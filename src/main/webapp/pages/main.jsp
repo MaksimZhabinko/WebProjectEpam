@@ -46,7 +46,7 @@
 <c:if test="${user.getRole().toString() eq 'ADMIN'}">
     <form action="${pageContext.request.contextPath}/controller" method="post">
         <input type="hidden" name="command" value="course_add">
-        <input type="text" name="course_name" required pattern="^[\p{L}]+$">
+        <input type="text" name="course_name" required>
         <input type="submit" value="<fmt:message key="button.add_course"/>">
     </form>
 </c:if>

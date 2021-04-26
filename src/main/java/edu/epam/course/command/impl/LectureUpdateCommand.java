@@ -46,7 +46,7 @@ public class LectureUpdateCommand implements Command {
     public Router execute(HttpServletRequest request) {
         String courseIdString = request.getParameter(RequestParameter.COURSE_ID);
         String lectureIdString = request.getParameter(RequestParameter.LECTURE_ID);
-        String message = request.getParameter(RequestParameter.MESSAGE).strip();
+        String message = request.getParameter(RequestParameter.MESSAGE);
         HttpSession session = request.getSession();
         Router router = new Router();
         boolean dataCorrect = true;
@@ -74,9 +74,10 @@ public class LectureUpdateCommand implements Command {
                 }
             }
             if (dataCorrect) {
-                Lecture lecture = new Lecture();
-                lecture.setLecture(message);
-                lecture.setId(lectureId);
+                Lecture lecture = Lecture.builder()
+                        .setLecture(message)
+                        .setId(lectureId)
+                        .build();
                 lectureService.update(lecture);
             }
             router.setType(Router.Type.REDIRECT);

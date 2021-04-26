@@ -50,18 +50,20 @@ public class ReviewDaoImpl implements ReviewDao {
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_REVIEW)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Review review = new Review();
-                User user = new User();
-                review.setId(resultSet.getLong(1));
-                review.setMessage(resultSet.getString(2));
-                review.setDateMessage(resultSet.getDate(3).toLocalDate());
-                user.setId(resultSet.getLong(4));
-                user.setEmail(resultSet.getString(5));
-                user.setName(resultSet.getString(6));
-                user.setSurname(resultSet.getString(7));
-                user.setRole(RoleType.valueOf(resultSet.getString(8).toUpperCase()));
-                user.setEnabled(resultSet.getBoolean(9));
-                review.setUser(user);
+                User user = User.builder()
+                        .setId(resultSet.getLong(4))
+                        .setEmail(resultSet.getString(5))
+                        .setName(resultSet.getString(6))
+                        .setSurname(resultSet.getString(7))
+                        .setRole(RoleType.valueOf(resultSet.getString(8).toUpperCase()))
+                        .setEnabled(resultSet.getBoolean(9))
+                        .build();
+                Review review = Review.builder()
+                        .setId(resultSet.getLong(1))
+                        .setMessage(resultSet.getString(2))
+                        .setDateMessage(resultSet.getDate(3).toLocalDate())
+                        .setUser(user)
+                        .build();
                 reviews.add(review);
             }
         } catch (SQLException e) {
@@ -107,7 +109,7 @@ public class ReviewDaoImpl implements ReviewDao {
     public boolean isHaveReviewByUserId(Long reviewId, Long userId) throws DaoException {
         boolean isHave = false;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(USER_HAVE_REVIEW)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(USER_HAVE_REVIEW)) {
             preparedStatement.setLong(1, reviewId);
             preparedStatement.setLong(2, userId);
             ResultSet resultSet = preparedStatement.executeQuery();

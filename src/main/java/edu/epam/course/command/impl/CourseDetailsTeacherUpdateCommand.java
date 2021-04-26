@@ -45,8 +45,8 @@ public class CourseDetailsTeacherUpdateCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {
         String courseIdString = request.getParameter(RequestParameter.COURSE_ID);
-        String teacherName = request.getParameter(RequestParameter.TEACHER_NAME).strip();
-        String teacherSurname = request.getParameter(RequestParameter.TEACHER_SURNAME).strip();
+        String teacherName = request.getParameter(RequestParameter.TEACHER_NAME);
+        String teacherSurname = request.getParameter(RequestParameter.TEACHER_SURNAME);
         HttpSession session = request.getSession();
         Router router = new Router();
         boolean dataCorrect = true;
@@ -67,9 +67,10 @@ public class CourseDetailsTeacherUpdateCommand implements Command {
                     }
                 }
                 if (dataCorrect) {
-                    CourseDetails courseDetails = new CourseDetails();
-                    courseDetails.setId(courseDetailsOptional.get().getId());
-                    courseDetails.setTeacher(teacherOptional.get());
+                    CourseDetails courseDetails = CourseDetails.builder()
+                            .setId(courseDetailsOptional.get().getId())
+                            .setTeacher(teacherOptional.get())
+                            .build();
                     courseDetailsService.updateTeacher(courseDetails);
                 }
                 router.setType(Router.Type.REDIRECT);

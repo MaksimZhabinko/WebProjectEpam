@@ -52,10 +52,12 @@ public class BalanceReplenishmentCommand implements Command {
                 router.setPagePath(PagePath.BALANCE_REPLENISHMENT.getDirectUrl());
                 dataCorrect = false;
             }
-            if (Integer.parseInt(money) > LIMIT_MONEY) {
-                request.setAttribute(RequestAttribute.ERROR_LIMIT_MONEY, true);
-                router.setPagePath(PagePath.BALANCE_REPLENISHMENT.getDirectUrl());
-                dataCorrect = false;
+            if (dataCorrect) {
+                if (Integer.parseInt(money) > LIMIT_MONEY) {
+                    request.setAttribute(RequestAttribute.ERROR_LIMIT_MONEY, true);
+                    router.setPagePath(PagePath.BALANCE_REPLENISHMENT.getDirectUrl());
+                    dataCorrect = false;
+                }
             }
             if (dataCorrect) {
                 userService.updateBalance(money, user);

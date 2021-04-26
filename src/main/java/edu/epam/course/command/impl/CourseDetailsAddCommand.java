@@ -45,11 +45,11 @@ public class CourseDetailsAddCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {
         String courseIdString = request.getParameter(RequestParameter.COURSE_ID);
-        String description = request.getParameter(RequestParameter.DESCRIPTION).strip();
+        String description = request.getParameter(RequestParameter.DESCRIPTION);
         String hours = request.getParameter(RequestParameter.HOURS);
         String startOfClass = request.getParameter(RequestParameter.START_OF_CLASS);
-        String name = request.getParameter(RequestParameter.NAME).strip();
-        String surname = request.getParameter(RequestParameter.SURNAME).strip();
+        String name = request.getParameter(RequestParameter.NAME);
+        String surname = request.getParameter(RequestParameter.SURNAME);
         String startCourse = request.getParameter(RequestParameter.START_COURSE);
         String endCourse = request.getParameter(RequestParameter.END_COURSE);
         String cost = request.getParameter(RequestParameter.COST);
@@ -58,27 +58,27 @@ public class CourseDetailsAddCommand implements Command {
         boolean dataCorrect = true;
         try {
             if (!CourseDetailsValidator.isValidDescription(description)) {
-                request.setAttribute(RequestAttribute.ERROR_DESCRIPTION, true);
+                request.setAttribute(RequestAttribute.ERROR_DESCRIPTION_ADD, true);
                 dataCorrect = false;
             }
             if (!CourseDetailsValidator.isValidHours(hours)) {
-                request.setAttribute(RequestAttribute.ERROR_HOURS, true);
+                request.setAttribute(RequestAttribute.ERROR_HOURS_ADD, true);
                 dataCorrect = false;
             }
             if (!CourseDetailsValidator.isValidNameAndSurname(name, surname)) {
-                request.setAttribute(RequestAttribute.ERROR_NAME_AND_SURNAME, true);
+                request.setAttribute(RequestAttribute.ERROR_NAME_AND_SURNAME_ADD, true);
                 dataCorrect = false;
             }
             if (!CourseDetailsValidator.isValidCost(cost)) {
-                request.setAttribute(RequestAttribute.ERROR_COST, true);
+                request.setAttribute(RequestAttribute.ERROR_COST_ADD, true);
                 dataCorrect = false;
             }
             if (!CourseDetailsValidator.isValidStartOfClass(startOfClass)) {
-                request.setAttribute(RequestAttribute.ERROR_START_OF_CLASS, true);
+                request.setAttribute(RequestAttribute.ERROR_START_OF_CLASS_ADD, true);
                 dataCorrect = false;
             }
             if (!CourseDetailsValidator.isValidDate(startCourse, endCourse)) {
-                request.setAttribute(RequestAttribute.ERROR_START_AND_END_COURSE, true);
+                request.setAttribute(RequestAttribute.ERROR_START_AND_END_COURSE_ADD, true);
                 dataCorrect = false;
             }
             Long courseId = IdUtil.stringToLong(courseIdString);
@@ -91,7 +91,7 @@ public class CourseDetailsAddCommand implements Command {
             }
             Optional<Teacher> teacherOptional = teacherService.findByNameAndSurname(name, surname);
             if (!teacherOptional.isPresent()) {
-                request.setAttribute(RequestAttribute.ERROR_TEACHER_NOT_FOUND, true);
+                request.setAttribute(RequestAttribute.ERROR_TEACHER_NOT_FOUND_ADD, true);
                 dataCorrect = false;
             }
             boolean isHaveDetails = courseDetailsService.isCourseHaveDetails(courseId);

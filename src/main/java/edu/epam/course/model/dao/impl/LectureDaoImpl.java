@@ -84,13 +84,15 @@ public class LectureDaoImpl implements LectureDao {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Lecture lecture = new Lecture();
-                Course course = new Course();
-                lecture.setId(resultSet.getLong(1));
-                lecture.setLecture(resultSet.getString(2));
-                course.setId(resultSet.getLong(3));
-                course.setName(resultSet.getString(4));
-                lecture.setCourse(course);
+                Course course = Course.builder()
+                        .setId(resultSet.getLong(3))
+                        .setName(resultSet.getString(4))
+                        .build();
+                Lecture lecture = Lecture.builder()
+                        .setId(resultSet.getLong(1))
+                        .setLecture(resultSet.getString(2))
+                        .setCourse(course)
+                        .build();
                 lectures.add(lecture);
             }
         } catch (SQLException e) {
@@ -125,13 +127,16 @@ public class LectureDaoImpl implements LectureDao {
             preparedStatement.setLong(2, courseId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Lecture lecture = new Lecture();
-                lecture.setId(resultSet.getLong(1));
-                lecture.setLecture(resultSet.getString(2));
-                Course course = new Course();
-                course.setId(resultSet.getLong(3));
-                course.setName(resultSet.getString(4));
-                course.setEnrollmentActive(resultSet.getBoolean(5));
+                Course course = Course.builder()
+                        .setId(resultSet.getLong(3))
+                        .setName(resultSet.getString(4))
+                        .setEnrollmentActive(resultSet.getBoolean(5))
+                        .build();
+                Lecture lecture = Lecture.builder()
+                        .setId(resultSet.getLong(1))
+                        .setLecture(resultSet.getString(2))
+                        .setCourse(course)
+                        .build();
                 lectureOptional = Optional.of(lecture);
             }
         } catch (SQLException e) {

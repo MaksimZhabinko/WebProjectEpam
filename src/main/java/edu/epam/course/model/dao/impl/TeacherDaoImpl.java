@@ -52,11 +52,12 @@ public class TeacherDaoImpl implements TeacherDao {
         PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_TEACHERS)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Teacher teacher = new Teacher();
-                teacher.setId(resultSet.getLong(1));
-                teacher.setName(resultSet.getString(2));
-                teacher.setSurname(resultSet.getString(3));
-                teacher.setPhoto(resultSet.getString(4));
+                Teacher teacher = Teacher.builder()
+                        .setId(resultSet.getLong(1))
+                        .setName(resultSet.getString(2))
+                        .setSurname(resultSet.getString(3))
+                        .setPhoto(resultSet.getString(4))
+                        .build();
                 teachers.add(teacher);
             }
         } catch (SQLException e) {
@@ -133,12 +134,13 @@ public class TeacherDaoImpl implements TeacherDao {
             preparedStatement.setString(2, surname);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Teacher teacher = new Teacher();
-                teacher.setId(resultSet.getLong(1));
-                teacher.setName(resultSet.getString(2));
-                teacher.setSurname(resultSet.getString(3));
-                teacher.setPhoto(resultSet.getString(4));
-                teacherOptional = Optional.ofNullable(teacher);
+                Teacher teacher = Teacher.builder()
+                        .setId(resultSet.getLong(1))
+                        .setName(resultSet.getString(2))
+                        .setSurname(resultSet.getString(3))
+                        .setPhoto(resultSet.getString(4))
+                        .build();
+                teacherOptional = Optional.of(teacher);
             }
         } catch (SQLException e) {
             logger.error(e);

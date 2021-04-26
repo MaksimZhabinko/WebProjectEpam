@@ -22,7 +22,7 @@
         <div id="formContent">
             <form action="${pageContext.request.contextPath}/controller" method="post">
                 <input type="hidden" name="command" value="balance_replenishment">
-                <input type="text" id="money" class="fadeIn second" name="money" title="<fmt:message key="input.title.balance_replenishment"/>" required pattern="\d+(\.\d{0,2})?">
+                <input type="text" id="money" class="fadeIn second" name="money" placeholder="<fmt:message key="input.title.balance_replenishment"/>" title="<fmt:message key="input.title.balance_replenishment"/>" required pattern="\d+(\.\d{0,2})?">
                 <input type="submit" class="fadeIn fourth" value="<fmt:message key="header.balance_replenishment"/>">
             </form>
             <c:if test="${errorBalanceMessageIsValid}">

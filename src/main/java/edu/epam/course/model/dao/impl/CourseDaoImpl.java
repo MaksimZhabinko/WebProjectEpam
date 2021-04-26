@@ -67,10 +67,11 @@ public class CourseDaoImpl implements CourseDao {
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_COURSE)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Course course = new Course();
-                course.setId(resultSet.getLong(1));
-                course.setName(resultSet.getString(2));
-                course.setEnrollmentActive(resultSet.getBoolean(3));
+                Course course = Course.builder()
+                        .setId(resultSet.getLong(1))
+                        .setName(resultSet.getString(2))
+                        .setEnrollmentActive(resultSet.getBoolean(3))
+                        .build();
                 courses.add(course);
             }
         } catch (SQLException e) {
@@ -88,11 +89,12 @@ public class CourseDaoImpl implements CourseDao {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Course course = new Course();
-                course.setId(resultSet.getLong(1));
-                course.setName(resultSet.getString(2));
-                course.setEnrollmentActive(resultSet.getBoolean(3));
-                courseOptional = Optional.ofNullable(course);
+                Course course = Course.builder()
+                        .setId(resultSet.getLong(1))
+                        .setName(resultSet.getString(2))
+                        .setEnrollmentActive(resultSet.getBoolean(3))
+                        .build();
+                courseOptional = Optional.of(course);
             }
         } catch (SQLException e) {
             logger.error(e);
@@ -140,10 +142,11 @@ public class CourseDaoImpl implements CourseDao {
             preparedStatement.setLong(1, userId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Course course = new Course();
-                course.setId(resultSet.getLong(1));
-                course.setName(resultSet.getString(2));
-                course.setEnrollmentActive(resultSet.getBoolean(3));
+                Course course = Course.builder()
+                        .setId(resultSet.getLong(1))
+                        .setName(resultSet.getString(2))
+                        .setEnrollmentActive(resultSet.getBoolean(3))
+                        .build();
                 courses.add(course);
             }
         } catch (SQLException e) {

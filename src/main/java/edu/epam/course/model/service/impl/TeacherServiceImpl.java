@@ -26,9 +26,10 @@ public class TeacherServiceImpl implements TeacherService {
     public boolean add(String name, String surname) throws ServiceException {
         boolean isAdd;
         try {
-            Teacher teacher = new Teacher();
-            teacher.setName(name);
-            teacher.setSurname(surname);
+            Teacher teacher = Teacher.builder()
+                    .setName(name)
+                    .setSurname(surname)
+                    .build();
             isAdd = teacherDao.add(teacher);
         } catch (DaoException e) {
             logger.error(e);

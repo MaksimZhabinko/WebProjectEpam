@@ -39,9 +39,9 @@ public class SignUpCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) {
-        String email = request.getParameter(RequestParameter.EMAIL).strip();
-        String name = request.getParameter(RequestParameter.NAME).strip();
-        String surname = request.getParameter(RequestParameter.SURNAME).strip();
+        String email = request.getParameter(RequestParameter.EMAIL);
+        String name = request.getParameter(RequestParameter.NAME);
+        String surname = request.getParameter(RequestParameter.SURNAME);
         String password = request.getParameter(RequestParameter.PASSWORD);
         String repeatPassword = request.getParameter(RequestParameter.REPEAT_PASSWORD);
         Router router = new Router();
@@ -59,10 +59,12 @@ public class SignUpCommand implements Command {
                 request.setAttribute(RequestAttribute.ERROR_PASSWORD_MESSAGE, true);
                 dataCorrect = false;
             }
-            Optional<User> userByEmail = service.findByEmail(email);
-            if (userByEmail.isPresent()) {
-                request.setAttribute(RequestAttribute.ERROR_EMAIL_MESSAGE_IS_EXIST, true);
-                dataCorrect = false;
+            if (dataCorrect) {
+                Optional<User> userByEmail = service.findByEmail(email);
+                if (userByEmail.isPresent()) {
+                    request.setAttribute(RequestAttribute.ERROR_EMAIL_MESSAGE_IS_EXIST, true);
+                    dataCorrect = false;
+                }
             }
             if (dataCorrect) {
                 User user = new User(email, name, surname, RoleType.USER, true);

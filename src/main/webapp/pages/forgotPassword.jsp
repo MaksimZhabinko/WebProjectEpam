@@ -20,7 +20,7 @@
     <div id="formContent">
         <form action="${pageContext.request.contextPath}/controller" method="post">
             <input type="hidden" name="command" value="forgot_password">
-            <input type="text" id="email" class="fadeIn second" name="email" placeholder="<fmt:message key="placeholder.email"/>" value="${email}" >
+            <input type="text" id="email" class="fadeIn second" name="email" placeholder="<fmt:message key="placeholder.email"/>" value="${email}" required>
             <input type="submit" class="fadeIn fourth" value="<fmt:message key="button.forgotPassword"/> ">
         </form>
         <c:if test="${errorEmailMessageInvalidForForgotPassword}">

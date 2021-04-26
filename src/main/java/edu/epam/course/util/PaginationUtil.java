@@ -35,6 +35,13 @@ public class PaginationUtil {
         return paginationPages;
     }
 
+    /**
+     * Users enrolled course limit list.
+     *
+     * @param allUsersEnrolledCourse the all users enrolled course
+     * @param page                   the page
+     * @return the list
+     */
     public static List<User> usersEnrolledCourseLimit(List<User> allUsersEnrolledCourse, int page) {
         List<User> userLimit = new ArrayList<>();
         int start;

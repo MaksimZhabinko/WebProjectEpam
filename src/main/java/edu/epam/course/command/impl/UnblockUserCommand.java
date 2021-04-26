@@ -1,17 +1,16 @@
 package edu.epam.course.command.impl;
 
-import edu.epam.course.command.Command;
-import edu.epam.course.command.PagePath;
-import edu.epam.course.command.RequestAttribute;
-import edu.epam.course.command.RequestParameter;
-import edu.epam.course.command.Router;
+import edu.epam.course.command.*;
 import edu.epam.course.exception.ServiceException;
 import edu.epam.course.model.service.UserService;
 import edu.epam.course.util.IdUtil;
+import edu.epam.course.validator.TeacherValidator;
+import edu.epam.course.validator.UserValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,14 +38,22 @@ public class UnblockUserCommand implements Command {
         String page = request.getParameter(RequestParameter.PAGE);
         String[] usersIdString = request.getParameterValues(RequestParameter.USER_ID);
         List<Long> usersId = new ArrayList<>();
+        HttpSession session = request.getSession();
         Router router = new Router();
+        boolean dataCorrect = true;
         try {
             Integer pageInt = Math.abs(Integer.parseInt(page));
-            for (int i = 0; i < usersIdString.length; i++) {
-                Long userId = IdUtil.stringToLong(usersIdString[i]);
-                usersId.add(userId);
+            if (!UserValidator.isValidUsersId(usersIdString)) {
+                session.setAttribute(SessionAttribute.ERROR_SELECT_USER_ID, true);
+                dataCorrect = false;
             }
-            userService.unblockUser(usersId);
+            if (dataCorrect) {
+                for (int i = 0; i < usersIdString.length; i++) {
+                    Long userId = IdUtil.stringToLong(usersIdString[i]);
+                    usersId.add(userId);
+                }
+                userService.unblockUser(usersId);
+            }
             router.setPagePath(PagePath.SHOW_ALL_USERS.getServletPath() + pageInt);
         } catch (ServiceException | NumberFormatException e) {
             logger.error(e);

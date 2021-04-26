@@ -65,6 +65,7 @@ public class CourseDetailsUpdateNewCourseCommand implements Command {
                     session.setAttribute(SessionAttribute.ERROR_START_END_UPDATE, true);
                     router.setType(Router.Type.REDIRECT);
                     router.setPagePath(PagePath.LECTURE.getServletPath() + courseId);
+                    dataCorrect = false;
                 }
                 if (dataCorrect) {
                     List<Lecture> lectures = lectureService.findAllLectureByCourseId(courseDetailsOptional.get().getCourse().getId());

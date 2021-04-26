@@ -39,9 +39,10 @@ public class AboutUsDaoImpl implements AboutUsDao {
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_ABOUT_US)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                AboutUs aboutUs = new AboutUs();
-                aboutUs.setId(resultSet.getLong(1));
-                aboutUs.setMessage(resultSet.getString(2));
+                AboutUs aboutUs = AboutUs.builder()
+                        .setId(resultSet.getLong(1))
+                        .setMessage(resultSet.getString(2))
+                        .build();
                 aboutUsList.add(aboutUs);
             }
         } catch (SQLException e) {

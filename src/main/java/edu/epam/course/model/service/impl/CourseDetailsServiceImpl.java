@@ -67,15 +67,16 @@ public class CourseDetailsServiceImpl implements CourseDetailsService {
                        String startOfClass, String cost, Course course,
                        Teacher teacher) throws ServiceException {
         boolean isAdd;
-        CourseDetails courseDetails = new CourseDetails();
-        courseDetails.setHours(Integer.valueOf(hours));
-        courseDetails.setDescription(description);
-        courseDetails.setStartCourse(LocalDate.parse(startCourse));
-        courseDetails.setEndCourse(LocalDate.parse(endCourse));
-        courseDetails.setStartOfClass(LocalTime.parse(startOfClass));
-        courseDetails.setCost(new BigDecimal(cost));
-        courseDetails.setCourse(course);
-        courseDetails.setTeacher(teacher);
+        CourseDetails courseDetails = CourseDetails.builder()
+                .setHours(Integer.valueOf(hours))
+                .setDescription(description)
+                .setStartCourse(LocalDate.parse(startCourse))
+                .setEndCourse(LocalDate.parse(endCourse))
+                .setStartOfClass(LocalTime.parse(startOfClass))
+                .setCost(new BigDecimal(cost))
+                .setCourse(course)
+                .setTeacher(teacher)
+                .build();
         try {
             isAdd = courseDetailsDao.add(courseDetails);
         } catch (DaoException e) {
