@@ -37,12 +37,4 @@ public class PaginationUtilTest {
         List<Integer> actual =  PaginationUtil.paginationUserPages(size);
         Assert.assertEquals(actual, expected);
     }
-
-    /**
-     * Test users enrolled course limit.
-     */
-    @Test
-    public void testUsersEnrolledCourseLimit() {
-        // todo
-    }
 }

@@ -103,15 +103,6 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testForgotPassword() throws DaoException, ServiceException {
-        // todo там еще емайл
-//        Mockito.when(userDao.updatePassword(Mockito.anyString(), Mockito.anyLong()))
-//                .thenReturn(true);
-//        boolean condition = userService.updatePassword("password", expected);
-//        Assert.assertTrue(condition);
-    }
-
-    @Test
     public void testUpdateBalance() throws DaoException, ServiceException {
         Mockito.when(userDao.updateBalance(Mockito.any(), Mockito.anyLong()))
                 .thenReturn(true);
@@ -181,18 +172,6 @@ public class UserServiceImplTest {
                 .thenReturn(true);
         boolean condition = userService.updateNameAndSurname("name", "surname", 1L);
         Assert.assertTrue(condition);
-    }
-
-    @Test
-    public void testUpdatePassword() throws DaoException, ServiceException {
-        // todo email sender
-//        Mockito.when(userDao.updatePassword(Mockito.anyString(), Mockito.anyLong()))
-//                .thenReturn(true);
-//        try (MockedStatic<MailSenderUtil> mail = Mockito.mockStatic(MailSenderUtil.class)) {
-//            mail.when(() -> MailSenderUtil.sendPassword(Mockito.anyString(), Mockito.anyString()));
-//        }
-//        boolean condition = userService.updatePassword("password", expected);
-//        Assert.assertTrue(condition);
     }
 
     @Test
